@@ -25,6 +25,12 @@ apply plugin: 'com.google.cloud.tools.appengine'
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
+    jcenter()
+}
+
+configurations {
+    compile.exclude module: "spring-boot-starter-tomcat"
+    compile.exclude module: "tomcat-juli"
 }
 
 dependencies {
@@ -32,7 +38,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-autoconfigure"
     compile "org.grails:grails-core"
     compile "org.springframework.boot:spring-boot-starter-actuator"
-    provided "org.springframework.boot:spring-boot-starter-tomcat"
+    provided "org.springframework.boot:spring-boot-starter-jetty"
     compile "org.grails:grails-dependencies"
     compile "org.grails:grails-web-boot"
     compile "org.grails.plugins:cache"
@@ -51,7 +57,7 @@ dependencies {
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
     testCompile "org.grails:grails-datastore-rest-client"
 
-    compile 'com.google.cloud:google-cloud-datastore:0.11.0-beta'
+    compile 'com.google.cloud:google-cloud-datastore:0.12.0-beta'
 }
 
 bootRun {
