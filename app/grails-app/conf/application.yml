@@ -1,5 +1,5 @@
 bookshelf:
-    storageType: cloudSQL
+    storageType: datastore
     limit: 10
     orderBy: title
 ---
