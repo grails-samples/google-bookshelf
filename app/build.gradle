@@ -60,3 +60,7 @@ assets {
     minifyJs = true
     minifyCss = true
 }
+
+bootRun {
+    systemProperties System.properties
+}
