@@ -1,3 +1,7 @@
+bookshelf:
+    storageType: cloudSQL
+    limit: 10
+    orderBy: title
 ---
 grails:
     profile: web
@@ -99,23 +103,27 @@ hibernate:
 dataSource:
     pooled: true
     jmxExport: true
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 environments:
     development:
         dataSource:
             dbCreate: create-drop
-            url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            url: jdbc:mysql://127.0.0.1:8889/grailsbookshelf_dev?useTimezone=true&serverTimezone=GMT
+            driverClassName: com.mysql.jdbc.Driver
+            username: root
+            password: root
     test:
         dataSource:
             dbCreate: update
-            url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            url: jdbc:mysql://127.0.0.1:8889/grailsbookshelf_test?useTimezone=true&serverTimezone=GMT
+            driverClassName: com.mysql.jdbc.Driver
+            username: root
+            password: root
     production:
         dataSource:
-            dbCreate: none
-            url: jdbc:h2:./prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            driverClassName: com.mysql.jdbc.Driver
+            dbCreate: update
+            url: jdbc:mysql://google/DB_NAME?cloudSqlInstance=INSTANCE_NAME&socketFactory=com.google.cloud.sql.mysql.SocketFactory&user=USERNAME&password=PASSWORD&useSSL=false # <1>
             properties:
                 jmxEnabled: true
                 initialSize: 5
