@@ -1,4 +1,4 @@
-package app
+package com.example.getstarted
 
 class BootStrap {
 

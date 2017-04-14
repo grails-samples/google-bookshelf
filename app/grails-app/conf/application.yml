@@ -2,7 +2,7 @@
 grails:
     profile: web
     codegen:
-        defaultPackage: app
+        defaultPackage: com.example.getstarted
     spring:
         transactionManagement:
             proxies: false
