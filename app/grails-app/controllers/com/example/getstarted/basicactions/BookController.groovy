@@ -1,5 +1,6 @@
 package com.example.getstarted.basicactions
 
+import com.example.getstarted.UploadBookCoverService
 import com.example.getstarted.basicactions.CreateBookCommand
 import com.example.getstarted.basicactions.UpdateBookCommand
 import com.example.getstarted.daos.BookDao
@@ -10,6 +11,7 @@ import com.example.getstarted.objects.Result
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
 import groovy.transform.CompileStatic
+import org.grails.plugins.googlecloud.storage.GoogleCloudStorageService
 
 @CompileStatic
 class BookController implements GrailsConfigurationAware {
@@ -27,6 +29,10 @@ class BookController implements GrailsConfigurationAware {
     DatastoreService datastoreService
 
     CloudSqlService cloudSqlService
+
+    GoogleCloudStorageService googleCloudStorageService
+
+    UploadBookCoverService uploadBookCoverService
 
     private BookDao getDao() {
 
@@ -54,6 +60,12 @@ class BookController implements GrailsConfigurationAware {
         }
 
         def book = cmd as Book
+
+        if ( cmd.file ) {
+            String fileName = uploadBookCoverService.nameForFile(cmd.file)
+            String imageUrl = googleCloudStorageService.storeMultipartFile(fileName, cmd.file)
+            book.imageUrl = imageUrl
+        }
         Long id = dao.createBook(book)
 
         redirect(action: 'show', id: id)
@@ -72,6 +84,11 @@ class BookController implements GrailsConfigurationAware {
             return
         }
         def book = cmd as Book
+        if ( cmd.file ) {
+            String fileName = uploadBookCoverService.nameForFile(cmd.file)
+            String imageUrl = googleCloudStorageService.storeMultipartFile(fileName, cmd.file)
+            book.imageUrl = imageUrl
+        }
         dao.updateBook(book)
         redirect(action: 'show', id: book.id)
     }

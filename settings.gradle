@@ -1,2 +1,3 @@
 include 'app'
 include 'docs'
+include 'grails-googlecloud-storage'

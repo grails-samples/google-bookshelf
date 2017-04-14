@@ -2,18 +2,24 @@ package com.example.getstarted.basicactions
 
 import com.example.getstarted.objects.Book
 import com.example.getstarted.objects.BookImpl
+import grails.compiler.GrailsCompileStatic
 import grails.validation.Validateable
-import groovy.transform.CompileStatic
 
-@CompileStatic
+import org.springframework.web.multipart.MultipartFile
+
+@GrailsCompileStatic
 class CreateBookCommand implements Validateable {
     String author
     String description
     String publishedDate
     String title
+    MultipartFile file
 
     static constraints = {
-
+        author nullable: true
+        description nullable: true
+        publishedDate nullable: true
+        file nullable: true
     }
 
     Object asType(Class clazz) {

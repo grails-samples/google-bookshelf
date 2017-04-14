@@ -6,7 +6,7 @@
 <body>
 <div class="container">
     <h3>Edit book</h3>
-    <g:render template="form" model="${[book: book, destination: 'update', isCloudStorageConfigured: false]}"/>
+    <g:render template="form" model="${[book: book, destination: 'update', isCloudStorageConfigured: true]}"/>
 </div>
 </body>
 </html>

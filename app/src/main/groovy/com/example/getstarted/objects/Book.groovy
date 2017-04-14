@@ -12,4 +12,5 @@ interface Book {
     String getDescription()
     Long getId()
     String getImageUrl()
+    void setImageUrl(String imageUrl)
 }

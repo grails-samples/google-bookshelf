@@ -1,5 +1,12 @@
+org:
+    grails:
+        plugins:
+            googlecloud:
+                storage:
+                    bucket: grails-bookshelf.appspot.com
+---
 bookshelf:
-    storageType: datastore
+    storageType: cloudSQL
     limit: 10
     orderBy: title
 ---
