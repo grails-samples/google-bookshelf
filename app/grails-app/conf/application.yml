@@ -9,6 +9,9 @@ bookshelf:
     storageType: cloudSQL
     limit: 10
     orderBy: title
+    clientID: CLIENTID
+    clientSecret: SECRET
+    callback: http://localhost:8080/oauth2callback
 ---
 grails:
     profile: web
