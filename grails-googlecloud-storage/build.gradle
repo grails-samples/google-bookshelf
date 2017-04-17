@@ -5,6 +5,9 @@ buildscript {
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "net.saliman:gradle-cobertura-plugin:$coberturaPluginVersion"
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:$jfrogGradlePluginVersion"
+
     }
 }
 
@@ -16,6 +19,8 @@ apply plugin:"idea"
 apply plugin:"org.grails.grails-plugin"
 apply plugin:"org.grails.grails-plugin-publish"
 apply from: "${rootProject.projectDir}/gradle/codenarc.gradle"
+apply plugin: 'net.saliman.cobertura'
+apply plugin: "com.jfrog.artifactory"
 
 repositories {
     mavenLocal()
@@ -31,7 +36,7 @@ dependencies {
     provided "org.grails:grails-plugin-services"
     provided "org.grails:grails-plugin-domain-class"
     testCompile "org.grails:grails-plugin-testing"
-    compile 'com.google.cloud:google-cloud-storage:0.12.0-beta'
+    compile "com.google.cloud:google-cloud-storage:$googleCloudStorageVersion"
 }
 
 bootRun {
@@ -41,16 +46,17 @@ bootRun {
 // enable if you wish to package this plugin as a standalone application
 bootRepackage.enabled = false
 grailsPublish {
-    // TODO: Provide values here
-    user = 'user'
-    key = 'key'
-    githubSlug = 'foo/bar'
+    user = System.getenv("BINTRAY_USER") ?: project.bintrayUser
+    key = System.getenv("BINTRAY_KEY") ?: project.bintrayKey
+    portalUser = System.getenv("GRAILS_PORTAL_USER") ?: project.grailsPortalUser
+    portalPassword = System.getenv("GRAILS_PORTAL_PASSWORD") ?: project.grailsPortalPassword
+    githubSlug = 'grails-plugins/grails-googlecloud'
     license {
         name = 'Apache-2.0'
     }
-    title = "My Plugin"
+    title = "Grails Google Cloud Storage Plugin"
     desc = "Full plugin description"
-    developers = [johndoe:"John Doe"]
-    portalUser = ""
-    portalPassword = ""    
+    developers = [sdelamo: 'Sergio del Amo']
+
 }
+

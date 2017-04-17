@@ -5,6 +5,8 @@ buildscript {
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "net.saliman:gradle-cobertura-plugin:$coberturaPluginVersion"
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:$jfrogGradlePluginVersion"
     }
 }
 
@@ -16,6 +18,8 @@ apply plugin:"idea"
 apply plugin:"org.grails.grails-plugin"
 apply plugin:"org.grails.grails-plugin-publish"
 apply from: "${rootProject.projectDir}/gradle/codenarc.gradle"
+apply plugin: 'net.saliman.cobertura'
+apply plugin: "com.jfrog.artifactory"
 
 repositories {
     mavenLocal()
@@ -31,9 +35,9 @@ dependencies {
     provided "org.grails:grails-plugin-services"
     provided "org.grails:grails-plugin-domain-class"
     testCompile "org.grails:grails-plugin-testing"
-    compile 'com.google.api-client:google-api-client:1.22.0'
-    compile 'com.google.http-client:google-http-client-jackson:1.22.0'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.8'
+    compile "com.google.api-client:google-api-client:$googleApiClientVersion"
+    compile "com.google.http-client:google-http-client-jackson:$googleHttpClientJacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonDatabindVersion"
 }
 
 bootRun {
@@ -43,16 +47,29 @@ bootRun {
 // enable if you wish to package this plugin as a standalone application
 bootRepackage.enabled = false
 grailsPublish {
-    // TODO: Provide values here
-    user = 'user'
-    key = 'key'
-    githubSlug = 'foo/bar'
+    user = System.getenv("BINTRAY_USER") ?: project.bintrayUser
+    key = System.getenv("BINTRAY_KEY") ?: project.bintrayKey
+    portalUser = System.getenv("GRAILS_PORTAL_USER") ?: project.grailsPortalUser
+    portalPassword = System.getenv("GRAILS_PORTAL_PASSWORD") ?: project.grailsPortalPassword
+    githubSlug = 'grails-plugins/grails-googlecloud'
     license {
         name = 'Apache-2.0'
     }
-    title = "My Plugin"
+    title = "Grails Google Cloud Authorization Plugin"
     desc = "Full plugin description"
-    developers = [johndoe:"John Doe"]
-    portalUser = ""
-    portalPassword = ""    
+    developers = [sdelamo: 'Sergio del Amo']
+}
+
+artifactory {
+    contextUrl = 'http://oss.jfrog.org'
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local'
+            username = System.getenv("BINTRAY_USER") ?: project.bintrayUser
+            password = System.getenv("BINTRAY_KEY") ?: project.bintrayKey
+        }
+        defaults {
+            publications('maven')
+        }
+    }
 }
