@@ -10,13 +10,14 @@ import com.google.api.client.http.HttpRequest
 import com.google.api.client.http.HttpRequestFactory
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.http.javanet.NetHttpTransport
-import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.JsonFactory
 import com.google.api.client.json.jackson.JacksonFactory
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
 import java.security.SecureRandom
 import groovy.transform.CompileStatic
 
+@SuppressWarnings('GrailsStatelessService')
 @CompileStatic
 class GoogleAuthorizationService implements GrailsConfigurationAware {
     private static final String USERINFO_ENDPOINT = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect'
@@ -29,9 +30,8 @@ class GoogleAuthorizationService implements GrailsConfigurationAware {
     String clientSecret
     String callback
 
-
     static String randomState() {
-        new BigInteger(130, new SecureRandom()).toString(32);
+        new BigInteger(130, new SecureRandom()).toString(32)
     }
 
     /**
@@ -47,7 +47,6 @@ class GoogleAuthorizationService implements GrailsConfigurationAware {
                 clientSecret,
                 SCOPES)
                 .build()
-
         flow.newAuthorizationUrl()
                 .setRedirectUri(callback)
                 .setState(state)            // Prevent request forgery
@@ -69,14 +68,14 @@ class GoogleAuthorizationService implements GrailsConfigurationAware {
                 .execute()
     }
 
-    HashMap<String, String> useIdResultForTokenResponse(GoogleAuthorizationCodeFlow flow, TokenResponse tokenResponse) {
+    Map<String, String> useIdResultForTokenResponse(GoogleAuthorizationCodeFlow flow, TokenResponse tokenResponse) {
         final Credential credential = flow.createAndStoreCredential(tokenResponse, null)
         final HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(credential)
         final GenericUrl url = new GenericUrl(USERINFO_ENDPOINT)      // Make an authenticated request.
         final HttpRequest request = requestFactory.buildGetRequest(url)
-        request.getHeaders().setContentType("application/json")
+        request.headers.contentType = 'application/json'
         final String jsonIdentity = request.execute().parseAsString()
-        new ObjectMapper().readValue(jsonIdentity, HashMap.class)
+        new ObjectMapper().readValue(jsonIdentity, HashMap)
     }
 
     @Override

@@ -1,11 +1,10 @@
 package com.example.getstarted.basicactions
 
+import static javax.servlet.http.HttpServletResponse.SC_METHOD_NOT_ALLOWED
+import static javax.servlet.http.HttpServletResponse.SC_MOVED_TEMPORARILY
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 import spock.lang.Unroll
-
-import static javax.servlet.http.HttpServletResponse.SC_METHOD_NOT_ALLOWED
-import static javax.servlet.http.HttpServletResponse.SC_MOVED_TEMPORARILY
 
 @TestFor(Oauth2CallbackController)
 class Oauth2CallbackControllerAllowedMethodsSpec extends Specification {

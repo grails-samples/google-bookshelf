@@ -21,6 +21,7 @@ class Oauth2CallbackController implements GrailsConfigurationAware {
 
     GoogleAuthorizationService googleAuthorizationService
 
+    @SuppressWarnings('LineLength')
     def index(String state, String code) {
 
         // Ensure that this is no request forgery going on, and that the user
@@ -38,7 +39,7 @@ class Oauth2CallbackController implements GrailsConfigurationAware {
 
         session[SESSION_ATTRIBUTE_TOKEN] = tokenResponse.toString() // Keep track of the token.
 
-        HashMap<String, String> userIdResult = googleAuthorizationService.useIdResultForTokenResponse(flow, tokenResponse)
+        Map<String, String> userIdResult = googleAuthorizationService.useIdResultForTokenResponse(flow, tokenResponse)
 
         // From this map, extract the relevant profile info and store it in the session.
         session[SESSION_USER_EMAIL] = userIdResult['email']

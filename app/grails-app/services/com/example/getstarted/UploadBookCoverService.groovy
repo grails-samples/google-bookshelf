@@ -11,10 +11,9 @@ import org.springframework.web.multipart.MultipartFile
 class UploadBookCoverService {
 
     String nameForFile(MultipartFile file) {
-        DateTimeFormatter dtf = DateTimeFormat.forPattern("-YYYY-MM-dd-HHmmssSSS")
+        DateTimeFormatter dtf = DateTimeFormat.forPattern('-YYYY-MM-dd-HHmmssSSS')
         DateTime dt = DateTime.now(DateTimeZone.UTC)
         String dtString = dt.toString(dtf)
-        "${file.originalFilename}dtString"
+        "${file.originalFilename}${dtString}"
     }
-
 }

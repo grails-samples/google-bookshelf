@@ -1,12 +1,11 @@
 package com.example.getstarted.basicactions
 
+import static javax.servlet.http.HttpServletResponse.SC_METHOD_NOT_ALLOWED
+import static javax.servlet.http.HttpServletResponse.SC_OK
 import grails.test.mixin.TestFor
 import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
-
-import static javax.servlet.http.HttpServletResponse.SC_METHOD_NOT_ALLOWED
-import static javax.servlet.http.HttpServletResponse.SC_OK
 
 @TestFor(BookController)
 class BookControllerIndexAllowedMethodsSpec extends Specification {
@@ -34,5 +33,3 @@ class BookControllerIndexAllowedMethodsSpec extends Specification {
         response.status == SC_OK
     }
 }
-
-

@@ -1,13 +1,12 @@
 package com.example.getstarted.basicactions
 
+import static javax.servlet.http.HttpServletResponse.SC_METHOD_NOT_ALLOWED
+import static javax.servlet.http.HttpServletResponse.SC_MOVED_TEMPORARILY
 import grails.test.mixin.TestFor
 import org.grails.plugins.googlecloud.authorization.GoogleAuthorizationService
 import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
-
-import static javax.servlet.http.HttpServletResponse.SC_METHOD_NOT_ALLOWED
-import static javax.servlet.http.HttpServletResponse.SC_MOVED_TEMPORARILY
 
 @TestFor(LoginController)
 class LoginControllerAllowedMethodsSpec extends Specification {

@@ -3,16 +3,16 @@ package com.example.getstarted.basicactions
 class UrlMappings {
 
     static mappings = {
-        "/$controller/$action?/$id?(.$format)?"{
+        "/$controller/$action?/$id?(.$format)?" {
             constraints {
                 // apply constraints here
             }
         }
 
-        "/"(controller: 'book', action: 'index', method: 'GET')
+        '/'(controller: 'book', action: 'index', method: 'GET')
         '/oauth2callback'(controller: 'oauth2Callback', action: 'index')
-        "/books"(controller: 'book', action: 'index', method: 'GET')
-        "/list"(controller: 'book', action: 'index', method: 'GET')
+        '/books'(controller: 'book', action: 'index', method: 'GET')
+        '/list'(controller: 'book', action: 'index', method: 'GET')
         "/read/$id"(controller: 'book', action: 'show', method: 'GET')
         '/create'(controller: 'book', action: 'save', method: 'POST')
         '/create'(controller: 'book', action: 'create', method: 'GET')
@@ -48,8 +48,7 @@ class UrlMappings {
                                            // a shutdown script
                                            // https://g.co/cloud/compute/docs/shutdownscript
                                            // can be used.
-
-        "500"(view:'/error')
-        "404"(view:'/notFound')
+        '500'(view: '/error')
+        '404'(view: '/notFound')
     }
 }

@@ -4,6 +4,7 @@ import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
 import groovy.transform.CompileStatic
 
+@SuppressWarnings('GrailsServletContextReference')
 @CompileStatic
 class ConfigurationInterceptor implements GrailsConfigurationAware {
 
@@ -17,7 +18,6 @@ class ConfigurationInterceptor implements GrailsConfigurationAware {
     boolean before() {
         servletContext['isCloudStorageConfigured'] = bucket as boolean
         servletContext['isAuthConfigured'] = clientID as boolean
-
         true
     }
 

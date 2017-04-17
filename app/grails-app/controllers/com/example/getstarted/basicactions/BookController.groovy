@@ -1,8 +1,6 @@
 package com.example.getstarted.basicactions
 
 import com.example.getstarted.UploadBookCoverService
-import com.example.getstarted.basicactions.CreateBookCommand
-import com.example.getstarted.basicactions.UpdateBookCommand
 import com.example.getstarted.daos.BookDao
 import com.example.getstarted.daos.CloudSqlService
 import com.example.getstarted.daos.DatastoreService
@@ -48,7 +46,7 @@ class BookController implements GrailsConfigurationAware {
             return cloudSqlService
         }
 
-        return cloudSqlService
+        cloudSqlService
     }
 
     def index(String cursor) {
@@ -57,10 +55,13 @@ class BookController implements GrailsConfigurationAware {
         [books: result.result, cursor: result.cursor, title: title]
     }
 
-    def create() {}
+    @SuppressWarnings('EmptyMethod')
+    def create() {
+
+    }
 
     def save(CreateBookCommand cmd) {
-        if(cmd.hasErrors()) {
+        if ( cmd.hasErrors() ) {
             return
         }
 
@@ -90,7 +91,7 @@ class BookController implements GrailsConfigurationAware {
     }
 
     def update(UpdateBookCommand cmd) {
-        if(cmd.hasErrors()) {
+        if ( cmd.hasErrors() ) {
             return
         }
         def book = cmd as Book
@@ -112,7 +113,6 @@ class BookController implements GrailsConfigurationAware {
     def delete(Long id) {
         dao.deleteBook(id)
         redirect action: 'index'
-
     }
 
     def mine(String cursor) {

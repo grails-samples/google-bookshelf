@@ -22,9 +22,10 @@ import grails.core.support.GrailsConfigurationAware
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 
+@SuppressWarnings('GrailsStatelessService')
 @CompileStatic
 class DatastoreService implements BookDao, GrailsConfigurationAware {
-    static final String BOOK_KIND = 'Book2'
+    static final String BOOK_KIND = 'Book'
     int limit
     String orderBy
 
@@ -35,7 +36,7 @@ class DatastoreService implements BookDao, GrailsConfigurationAware {
         BookImpl.builder()
                 .author(entity.getString(BookProperties.AUTHOR))
                 .description(entity.getString(BookProperties.DESCRIPTION))
-                .id(entity.getKey().getId())
+                .id(entity.key.id)
                 .publishedDate(entity.getString(BookProperties.PUBLISHED_DATE))
                 .title(entity.getString(BookProperties.TITLE))
                 .build()
@@ -52,7 +53,7 @@ class DatastoreService implements BookDao, GrailsConfigurationAware {
                 .set(BookProperties.TITLE, book.title)
                 .build()
         Entity bookEntity = datastore.add(incBookEntity)                 // Save the Entity
-        bookEntity.getKey().getId()                                      // The ID of the Key
+        bookEntity.key.id                                      // The ID of the Key
     }
 
     @Override
@@ -63,7 +64,7 @@ class DatastoreService implements BookDao, GrailsConfigurationAware {
 
     @Override
     void updateBook(Book book) {
-        Key key = keyFactory.newKey(book.getId()) // From a book, create a Key
+        Key key = keyFactory.newKey(book.id) // From a book, create a Key
         Entity entity = Entity.newBuilder(key)    // Convert Book to an Entity
                 .set(BookProperties.AUTHOR, book.author)
                 .set(BookProperties.DESCRIPTION, book.description)
@@ -93,7 +94,7 @@ class DatastoreService implements BookDao, GrailsConfigurationAware {
                 .build()
         QueryResults<Entity> resultList = datastore.run(query)   // Run the query
         List<Book> resultBooks = entitiesToBooks(resultList)     // Retrieve and convert Entities
-        Cursor cursor = resultList.getCursorAfter()              // Where to start next time
+        Cursor cursor = resultList.cursorAfter                   // Where to start next time
         if (cursor != null && resultBooks.size() == limit) {     // Are we paging? Save Cursor
             String cursorString = cursor.toUrlSafe()            // Cursors are WebSafe
             return new Result<Book>(resultBooks, cursorString)
@@ -108,9 +109,9 @@ class DatastoreService implements BookDao, GrailsConfigurationAware {
             startCursor = Cursor.fromUrlSafe(startCursorString)    // Where we left off
         }
         Query<Entity> query = Query.newEntityQueryBuilder()          // Build the Query
-                .setKind("Book4")                                        // We only care about Books
+                .setKind(BOOK_KIND)                                        // We only care about Books
                 .setFilter(StructuredQuery.PropertyFilter.eq(BookProperties.CREATED_BY_ID, userId))// Only for this user
-                .setLimit(10)                                            // Only show 10 at a time
+                .setLimit(limit)                                            // Only show 10 at a time
                 .setStartCursor(startCursor)                             // Where we left off
                 // a custom datastore index is required since you are filtering by one property
                 // but ordering by another
@@ -118,16 +119,16 @@ class DatastoreService implements BookDao, GrailsConfigurationAware {
                 .build()
         QueryResults<Entity> resultList = datastore.run(query)   // Run the Query
         List<Book> resultBooks = entitiesToBooks(resultList)     // Retrieve and convert Entities
-        Cursor cursor = resultList.getCursorAfter()              // Where to start next time
-        if (cursor != null && resultBooks.size() == limit) {          // Are we paging? Save Cursor
-            String cursorString = cursor.toUrlSafe()               // Cursors are WebSafe
+        Cursor cursor = resultList.cursorAfter                   // Where to start next time
+        if (cursor != null && resultBooks.size() == limit) {     // Are we paging? Save Cursor
+            String cursorString = cursor.toUrlSafe()             // Cursors are WebSafe
             return new Result<>(resultBooks, cursorString)
         }
-        return new Result<>(resultBooks)
+        new Result<>(resultBooks)
     }
 
     private List<Book> entitiesToBooks(QueryResults<Entity> resultList) {
-        def resultBooks = [] as List<Book>
+        List<Book> resultBooks = []
         while (resultList.hasNext()) {  // We still have data
             resultBooks << entityToBook(resultList.next()) // Add the Book to the List
         }

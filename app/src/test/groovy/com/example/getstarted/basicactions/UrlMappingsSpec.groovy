@@ -14,5 +14,4 @@ class UrlMappingsSpec extends Specification {
         expect:
         assertUrlMapping('/oauth2callback?state=yyyy&code=xxx',controller: 'oauth2Callback', action: 'index')
     }
-
 }

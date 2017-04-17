@@ -1,14 +1,13 @@
 package com.example.getstarted.basicactions
 
-import com.example.getstarted.daos.CloudSqlService
-import com.example.getstarted.daos.DatastoreService
-import grails.test.mixin.TestFor
-import spock.lang.Ignore
-import spock.lang.Specification
-import spock.lang.Unroll
-
 import static javax.servlet.http.HttpServletResponse.SC_METHOD_NOT_ALLOWED
 import static javax.servlet.http.HttpServletResponse.SC_OK
+import com.example.getstarted.daos.CloudSqlService
+import com.example.getstarted.daos.DatastoreService
+import spock.lang.Specification
+import grails.test.mixin.TestFor
+import spock.lang.Ignore
+import spock.lang.Unroll
 
 @TestFor(BookController)
 class BookControllerDeleteAllowedMethodsSpec extends Specification {
@@ -38,5 +37,3 @@ class BookControllerDeleteAllowedMethodsSpec extends Specification {
         response.status == SC_OK
     }
 }
-
-

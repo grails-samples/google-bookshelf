@@ -28,9 +28,7 @@ class CreateBookCommand implements Validateable {
             copyProperties(this, book)
             return book
         }
-        else {
-            super.asType(clazz)
-        }
+        super.asType(clazz)
     }
 
     def copyProperties(source, target) {

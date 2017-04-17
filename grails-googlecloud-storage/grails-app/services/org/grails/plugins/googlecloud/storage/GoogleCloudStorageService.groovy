@@ -1,10 +1,9 @@
 package org.grails.plugins.googlecloud.storage
 
-import com.google.cloud.storage.Acl
-import com.google.cloud.storage.BlobId
 import groovy.transform.CompileStatic
 
-
+import com.google.cloud.storage.Acl
+import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
 import com.google.cloud.storage.Storage
 import com.google.cloud.storage.StorageOptions
@@ -12,12 +11,13 @@ import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
 import org.springframework.web.multipart.MultipartFile
 
+@SuppressWarnings('GrailsStatelessService')
 @CompileStatic
 class GoogleCloudStorageService implements GrailsConfigurationAware {
     // Cloud Storage Bucket
     String bucket
 
-    Storage storage = StorageOptions.getDefaultInstance().getService()
+    Storage storage = StorageOptions.defaultInstance.service
 
     String storeMultipartFile(String fileName, MultipartFile multipartFile) {
         storeInputStream(fileName, multipartFile.inputStream)
@@ -34,8 +34,10 @@ class GoogleCloudStorageService implements GrailsConfigurationAware {
     }
 
     private static BlobInfo readableBlobInfo(String bucket, String fileName) {
+        // Modify access list to allow all users with link to read file
+        List<Acl> acl = [Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER)]
         BlobInfo.newBuilder(bucket, fileName)
-                .setAcl([Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER)]) // Modify access list to allow all users with link to read file
+                .setAcl(acl)
                 .build()
     }
 

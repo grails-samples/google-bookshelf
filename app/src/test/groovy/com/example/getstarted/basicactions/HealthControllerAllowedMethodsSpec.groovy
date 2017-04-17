@@ -1,17 +1,13 @@
 package com.example.getstarted.basicactions
 
+import static javax.servlet.http.HttpServletResponse.SC_METHOD_NOT_ALLOWED
+import static javax.servlet.http.HttpServletResponse.SC_OK
 import grails.test.mixin.TestFor
-import org.grails.plugins.googlecloud.authorization.GoogleAuthorizationService
-import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static javax.servlet.http.HttpServletResponse.SC_METHOD_NOT_ALLOWED
-import static javax.servlet.http.HttpServletResponse.SC_OK
-
 @TestFor(HealthController)
 class HealthControllerAllowedMethodsSpec extends Specification {
-    static loadExternalBeans = true
 
     @Unroll
     def "test HealthController.index does not accept #method requests"(String method) {
@@ -35,4 +31,3 @@ class HealthControllerAllowedMethodsSpec extends Specification {
         response.status == SC_OK
     }
 }
-

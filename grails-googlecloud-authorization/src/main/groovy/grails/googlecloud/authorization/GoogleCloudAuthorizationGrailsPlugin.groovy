@@ -1,26 +1,29 @@
 package grails.googlecloud.authorization
 
-import grails.plugins.*
+import grails.plugins.Plugin
+import groovy.transform.CompileStatic
 
+@SuppressWarnings(['EmptyMethod', 'UnusedMethodParameter'])
+@CompileStatic
 class GoogleCloudAuthorizationGrailsPlugin extends Plugin {
 
     // the version or versions of Grails the plugin is designed for
-    def grailsVersion = "3.2.8 > *"
+    def grailsVersion = '3.2.8 > *'
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
-        "grails-app/views/error.gsp"
+        'grails-app/views/error.gsp'
     ]
 
     // TODO Fill in these fields
-    def title = "" // Headline display name of the plugin
-    def author = "Your name"
-    def authorEmail = ""
+    def title = 'Grails Google Cloud Authorization Plugin' // Headline display name of the plugin
+    def author = 'Your name'
+    def authorEmail = ''
     def description = '''\
 Brief summary/description of the plugin.
 '''
 
     // URL to the plugin's documentation
-    def documentation = "http://grails.org/plugin/"
+    def documentation = 'http://grails.org/plugin/'
 
     // Extra (optional) plugin metadata
 
@@ -39,7 +42,7 @@ Brief summary/description of the plugin.
     // Online location of the plugin's browseable source code.
 //    def scm = [ url: "http://svn.codehaus.org/grails-plugins/" ]
 
-    Closure doWithSpring() { {->
+    Closure doWithSpring() { { ->
             // TODO Implement runtime spring config (optional)
         }
     }

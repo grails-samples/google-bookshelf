@@ -46,7 +46,6 @@ class BookGormEntitySpec extends Specification {
         domain.validate(['publishedDate'])
     }
 
-
     def "test description is nullable"() {
         when:
         domain.description = null

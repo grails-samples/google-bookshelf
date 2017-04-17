@@ -12,5 +12,3 @@ class LogoutController {
         redirect(controller: 'book', action: 'index')
     }
 }
-
-

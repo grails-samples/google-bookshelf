@@ -6,9 +6,11 @@ import com.example.getstarted.objects.BookProperties
 import com.example.getstarted.objects.Result
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
+import grails.gorm.DetachedCriteria
 import grails.transaction.Transactional
 import groovy.transform.CompileStatic
 
+@SuppressWarnings('GrailsStatelessService')
 @CompileStatic
 @Transactional
 class CloudSqlService implements BookDao, GrailsConfigurationAware {
@@ -58,12 +60,25 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
     @Transactional(readOnly = true)
     @Override
     Result<Book> listBooks(String cursor) {
+        def query = listBooksQuery()
+        listBooksByQuery(cursor, query)
+    }
+
+    private DetachedCriteria<BookGormEntity> listBooksQuery() {
+        BookGormEntity.where { }
+    }
+
+    private DetachedCriteria<BookGormEntity> listBooksByUserQuery(String userId) {
+        BookGormEntity.where { createdById == userId }
+    }
+
+    private Result<Book> listBooksByQuery(String cursor, DetachedCriteria<BookGormEntity> query) {
         def offset = cursor ? Integer.parseInt(cursor) : 0
         def max = limit
-        def query = BookGormEntity.where {}
+
         def books = query.list(max: max, offset: offset)
         int total = query.count() as int
-        if (total > offset + limit) {
+        if (total > (offset + limit)) {
             return new Result<>(books, Integer.toString(offset + limit))
         }
         new Result<>(books)
@@ -72,15 +87,8 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
     @Transactional(readOnly = true)
     @Override
     Result<Book> listBooksByUser(String userId, String cursor) {
-        def offset = cursor ? Integer.parseInt(cursor) : 0
-        def max = limit
-        def query = BookGormEntity.where { createdById == userId }
-        def books = query.list(max: max, offset: offset)
-        int total = query.count() as int
-        if (total > offset + limit) {
-            return new Result<>(books, Integer.toString(offset + limit))
-        }
-        new Result<>(books)
+        def query = listBooksByUserQuery(userId)
+        listBooksByQuery(cursor, query)
     }
 
     @Override
