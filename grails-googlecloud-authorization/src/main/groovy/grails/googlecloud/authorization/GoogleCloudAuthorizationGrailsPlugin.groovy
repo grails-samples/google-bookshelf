@@ -14,10 +14,9 @@ class GoogleCloudAuthorizationGrailsPlugin extends Plugin {
         'grails-app/views/error.gsp'
     ]
 
-    // TODO Fill in these fields
     def title = 'Grails Google Cloud Authorization Plugin' // Headline display name of the plugin
-    def author = 'Your name'
-    def authorEmail = ''
+    def author = 'Sergio del Amo'
+    def authorEmail = 'sergio.delamo@softamo.com'
     def description = '''\
 Brief summary/description of the plugin.
 '''
