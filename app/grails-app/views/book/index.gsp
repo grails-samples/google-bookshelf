@@ -5,10 +5,10 @@
 </head>
 <body>
 <div class="container">
-    <h3>Books</h3>
+    <h3>${title}</h3>
     <a href="/create">
         <i class="glyphicon glyphicon-plus"></i>
-        Add book
+        <g:message code="book.add" default="Add book"/>
     </a>
     <g:if test="${books}">
         <g:each in="${books}" var="book">
@@ -27,14 +27,13 @@
         <g:if test="${cursor}">
             <nav>
                 <ul class="pager">
-                    <li><a href="?cursor=${cursor}">More</a></li>
+                    <li><a href="?cursor=${cursor}"><g:message code="book.list.more" default="More"/></a></li>
                 </ul>
             </nav>
         </g:if>
     </g:if>
     <g:else>
-        <p>No books found</p>
-
+        <p><g:message code="book.list.notFound" default="No books found"/></p>
     </g:else>
 </div>
 </body>

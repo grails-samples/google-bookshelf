@@ -2,7 +2,7 @@ package grails.googlecloud.storage
 
 import grails.plugins.*
 
-class GrailsPlugin extends Plugin {
+class GoogleCloudStorageGrailsPlugin extends Plugin {
 
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "3.2.8 > *"

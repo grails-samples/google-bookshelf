@@ -15,6 +15,7 @@ import com.google.cloud.datastore.Key
 import com.google.cloud.datastore.KeyFactory
 import com.google.cloud.datastore.Query
 import com.google.cloud.datastore.QueryResults
+import com.google.cloud.datastore.StructuredQuery
 import com.google.cloud.datastore.StructuredQuery.OrderBy
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
@@ -98,6 +99,31 @@ class DatastoreService implements BookDao, GrailsConfigurationAware {
             return new Result<Book>(resultBooks, cursorString)
         }
         new Result<Book>(resultBooks)
+    }
+
+    @Override
+    Result<Book> listBooksByUser(String userId, String startCursorString) {
+        Cursor startCursor = null
+        if ( startCursorString ) {
+            startCursor = Cursor.fromUrlSafe(startCursorString)    // Where we left off
+        }
+        Query<Entity> query = Query.newEntityQueryBuilder()          // Build the Query
+                .setKind("Book4")                                        // We only care about Books
+                .setFilter(StructuredQuery.PropertyFilter.eq(BookProperties.CREATED_BY_ID, userId))// Only for this user
+                .setLimit(10)                                            // Only show 10 at a time
+                .setStartCursor(startCursor)                             // Where we left off
+                // a custom datastore index is required since you are filtering by one property
+                // but ordering by another
+                .setOrderBy(OrderBy.asc(orderBy))
+                .build()
+        QueryResults<Entity> resultList = datastore.run(query)   // Run the Query
+        List<Book> resultBooks = entitiesToBooks(resultList)     // Retrieve and convert Entities
+        Cursor cursor = resultList.getCursorAfter()              // Where to start next time
+        if (cursor != null && resultBooks.size() == limit) {          // Are we paging? Save Cursor
+            String cursorString = cursor.toUrlSafe()               // Cursors are WebSafe
+            return new Result<>(resultBooks, cursorString)
+        }
+        return new Result<>(resultBooks)
     }
 
     private List<Book> entitiesToBooks(QueryResults<Entity> resultList) {

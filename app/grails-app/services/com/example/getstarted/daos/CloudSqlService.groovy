@@ -69,6 +69,20 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
         new Result<>(books)
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    Result<Book> listBooksByUser(String userId, String cursor) {
+        def offset = cursor ? Integer.parseInt(cursor) : 0
+        def max = limit
+        def query = BookGormEntity.where { createdById == userId }
+        def books = query.list(max: max, offset: offset)
+        int total = query.count() as int
+        if (total > offset + limit) {
+            return new Result<>(books, Integer.toString(offset + limit))
+        }
+        new Result<>(books)
+    }
+
     @Override
     void setConfiguration(Config co) {
         limit = co.getProperty('bookshelf.limit', Integer, 10)

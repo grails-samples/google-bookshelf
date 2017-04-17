@@ -19,6 +19,8 @@ import groovy.transform.CompileStatic
 class HealthController implements GrailsConfigurationAware {
     String contentType
 
+    static allowedMethods = [index: 'GET']
+
     def index() {
         response.contentType = contentType
         render 'ok'
@@ -26,6 +28,6 @@ class HealthController implements GrailsConfigurationAware {
 
     @Override
     void setConfiguration(Config co) {
-        contentType = co.getRequiredProperty('grails.mime.types.text', String)
+        contentType = co.getProperty('grails.mime.types.text', String, 'text/plain')
     }
 }

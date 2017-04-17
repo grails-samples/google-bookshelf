@@ -12,6 +12,7 @@ import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
 import groovy.transform.CompileStatic
 import org.grails.plugins.googlecloud.storage.GoogleCloudStorageService
+import org.springframework.context.MessageSource
 
 @CompileStatic
 class BookController implements GrailsConfigurationAware {
@@ -24,7 +25,8 @@ class BookController implements GrailsConfigurationAware {
                              edit: 'GET',
                              update: 'POST',
                              delete: 'GET',
-                             show: 'GET']
+                             show: 'GET',
+                             mine: 'GET']
 
     DatastoreService datastoreService
 
@@ -33,6 +35,8 @@ class BookController implements GrailsConfigurationAware {
     GoogleCloudStorageService googleCloudStorageService
 
     UploadBookCoverService uploadBookCoverService
+
+    MessageSource messageSource
 
     private BookDao getDao() {
 
@@ -44,12 +48,13 @@ class BookController implements GrailsConfigurationAware {
             return cloudSqlService
         }
 
-        return datastoreService
+        return cloudSqlService
     }
 
     def index(String cursor) {
         Result<Book> result = dao.listBooks(cursor)
-        [books: result.result, cursor: result.cursor]
+        String title = messageSource.getMessage('books', null, 'Books', request.locale)
+        [books: result.result, cursor: result.cursor, title: title]
     }
 
     def create() {}
@@ -60,6 +65,11 @@ class BookController implements GrailsConfigurationAware {
         }
 
         def book = cmd as Book
+
+        if ( session[Oauth2CallbackController.SESSION_ATTRIBUTE_TOKEN] ) {
+            book.createdBy = session[Oauth2CallbackController.SESSION_USER_EMAIL]
+            book.createdById = session[Oauth2CallbackController.SESSION_USER_ID]
+        }
 
         if ( cmd.file ) {
             String fileName = uploadBookCoverService.nameForFile(cmd.file)
@@ -84,6 +94,12 @@ class BookController implements GrailsConfigurationAware {
             return
         }
         def book = cmd as Book
+
+        if ( session[Oauth2CallbackController.SESSION_ATTRIBUTE_TOKEN] ) {
+            book.createdBy = session[Oauth2CallbackController.SESSION_USER_EMAIL]
+            book.createdById = session[Oauth2CallbackController.SESSION_USER_ID]
+        }
+
         if ( cmd.file ) {
             String fileName = uploadBookCoverService.nameForFile(cmd.file)
             String imageUrl = googleCloudStorageService.storeMultipartFile(fileName, cmd.file)
@@ -96,10 +112,18 @@ class BookController implements GrailsConfigurationAware {
     def delete(Long id) {
         dao.deleteBook(id)
         redirect action: 'index'
+
+    }
+
+    def mine(String cursor) {
+        String userId = session[Oauth2CallbackController.SESSION_USER_ID]
+        Result<Book> result = dao.listBooksByUser(userId, cursor)
+        String title = messageSource.getMessage('books.mine', null, 'My Books', request.locale)
+        render(view: 'index', model: [books: result.result, cursor: result.cursor, title: title])
     }
 
     @Override
     void setConfiguration(Config co) {
-        storageType = co.getRequiredProperty('bookshelf.storageType', String)
+        storageType = co.getProperty('bookshelf.storageType', String, 'cloudSQL')
     }
 }

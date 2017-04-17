@@ -17,4 +17,6 @@ interface BookDao {
     void deleteBook(Long bookId)
 
     Result<Book> listBooks(String startCursor)
+
+    Result<Book> listBooksByUser(String userId, String startCursor)
 }

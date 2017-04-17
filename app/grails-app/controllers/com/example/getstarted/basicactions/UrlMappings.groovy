@@ -10,6 +10,8 @@ class UrlMappings {
         }
 
         "/"(controller: 'book', action: 'index', method: 'GET')
+        '/oauth2callback'(controller: 'oauth2Callback', action: 'index')
+        "/books"(controller: 'book', action: 'index', method: 'GET')
         "/list"(controller: 'book', action: 'index', method: 'GET')
         "/read/$id"(controller: 'book', action: 'show', method: 'GET')
         '/create'(controller: 'book', action: 'save', method: 'POST')

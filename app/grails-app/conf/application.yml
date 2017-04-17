@@ -9,8 +9,8 @@ bookshelf:
     storageType: cloudSQL
     limit: 10
     orderBy: title
-    clientID: CLIENTID
-    clientSecret: SECRET
+    clientID: 1094017223620-g0fogaf1phf7l1ljjl91q0gkuoipeie8.apps.googleusercontent.com
+    clientSecret: BS6E6w2UbtqjP4ZnkpiAFhfb
     callback: http://localhost:8080/oauth2callback
 ---
 grails:
@@ -101,7 +101,6 @@ grails:
 endpoints:
     jmx:
         unique-names: true
-
 ---
 hibernate:
     cache:
@@ -129,26 +128,3 @@ environments:
             driverClassName: com.mysql.jdbc.Driver
             username: root
             password: root
-    production:
-        dataSource:
-            driverClassName: com.mysql.jdbc.Driver
-            dbCreate: update
-            url: jdbc:mysql://google/DB_NAME?cloudSqlInstance=INSTANCE_NAME&socketFactory=com.google.cloud.sql.mysql.SocketFactory&user=USERNAME&password=PASSWORD&useSSL=false # <1>
-            properties:
-                jmxEnabled: true
-                initialSize: 5
-                maxActive: 50
-                minIdle: 5
-                maxIdle: 25
-                maxWait: 10000
-                maxAge: 600000
-                timeBetweenEvictionRunsMillis: 5000
-                minEvictableIdleTimeMillis: 60000
-                validationQuery: SELECT 1
-                validationQueryTimeout: 3
-                validationInterval: 15000
-                testOnBorrow: true
-                testWhileIdle: true
-                testOnReturn: false
-                jdbcInterceptors: ConnectionState
-                defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED

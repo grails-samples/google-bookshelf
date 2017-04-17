@@ -46,6 +46,6 @@ class GoogleCloudStorageService implements GrailsConfigurationAware {
 
     @Override
     void setConfiguration(Config co) {
-        bucket = co.getRequiredProperty('org.grails.plugins.googlecloud.storage.bucket', String)
+        bucket = co.getProperty('org.grails.plugins.googlecloud.storage.bucket', String)
     }
 }
