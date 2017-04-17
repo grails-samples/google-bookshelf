@@ -13,7 +13,7 @@
     <g:if test="${books}">
         <g:each in="${books}" var="book">
             <div class="media">
-                <a href="/read?id=${book.id}">
+                <g:link controller="book" action="show" id="${book.id}">
                     <div class="media-left">
                         <img alt="ahhh" src="${book?.imageUrl ?: 'http://placekitten.com/g/128/192'}">
                     </div>
@@ -21,7 +21,7 @@
                         <h4>${book.title}</h4>
                         <p>${book.author}</p>
                     </div>
-                </a>
+                </g:link>
             </div>
         </g:each>
         <g:if test="${cursor}">
