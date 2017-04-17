@@ -9,8 +9,10 @@ import com.google.cloud.storage.Storage
 import com.google.cloud.storage.StorageOptions
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
+import groovy.util.logging.Slf4j
 import org.springframework.web.multipart.MultipartFile
 
+@Slf4j
 @SuppressWarnings('GrailsStatelessService')
 @CompileStatic
 class GoogleCloudStorageService implements GrailsConfigurationAware {
@@ -20,11 +22,14 @@ class GoogleCloudStorageService implements GrailsConfigurationAware {
     Storage storage = StorageOptions.defaultInstance.service
 
     String storeMultipartFile(String fileName, MultipartFile multipartFile) {
+        log.info 'Uploaded file {0}', multipartFile.originalFilename
         storeInputStream(fileName, multipartFile.inputStream)
     }
 
     String storeInputStream(String fileName, InputStream inputStream) {
         BlobInfo blobInfo = storage.create(readableBlobInfo(bucket, fileName), inputStream)
+        log.info 'Uploaded file as {0} with mediaLink {1}',fileName, blobInfo.mediaLink
+
         blobInfo.mediaLink
     }
 

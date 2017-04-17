@@ -9,9 +9,11 @@ import com.example.getstarted.objects.Result
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
 import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 import org.grails.plugins.googlecloud.storage.GoogleCloudStorageService
 import org.springframework.context.MessageSource
 
+@Slf4j
 @CompileStatic
 class BookController implements GrailsConfigurationAware {
 
@@ -51,6 +53,7 @@ class BookController implements GrailsConfigurationAware {
 
     def index(String cursor) {
         Result<Book> result = dao.listBooks(cursor)
+        log.info 'Retrieved list of all books'
         String title = messageSource.getMessage('books', null, 'Books', request.locale)
         [books: result.result, cursor: result.cursor, title: title]
     }
@@ -78,11 +81,13 @@ class BookController implements GrailsConfigurationAware {
             book.imageUrl = imageUrl
         }
         Long id = dao.createBook(book)
+        log.info 'Created book {0}', book.toString()
 
         redirect(action: 'show', id: id)
     }
 
     def show(Long id) {
+        log.info 'Read book with id {0}', id
         [book: dao.readBook(id)]
     }
 
@@ -118,6 +123,7 @@ class BookController implements GrailsConfigurationAware {
     def mine(String cursor) {
         String userId = session[Oauth2CallbackController.SESSION_USER_ID]
         Result<Book> result = dao.listBooksByUser(userId, cursor)
+        log.info 'Retrieved list of all books for user: {0}', userId
         String title = messageSource.getMessage('books.mine', null, 'My Books', request.locale)
         render(view: 'index', model: [books: result.result, cursor: result.cursor, title: title])
     }

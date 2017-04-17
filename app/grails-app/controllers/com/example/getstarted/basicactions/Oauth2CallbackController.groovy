@@ -4,10 +4,12 @@ import com.google.api.client.auth.oauth2.TokenResponse
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
 import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 import org.grails.plugins.googlecloud.authorization.GoogleAuthorizationService
 
 import javax.servlet.http.HttpServletResponse
 
+@Slf4j
 @CompileStatic
 class Oauth2CallbackController implements GrailsConfigurationAware {
     static allowedMethods = [index: 'GET']
@@ -45,7 +47,9 @@ class Oauth2CallbackController implements GrailsConfigurationAware {
         session[SESSION_USER_EMAIL] = userIdResult['email']
         session[SESSION_USER_ID] = userIdResult['sub']
         session[SESSION_USER_IMAGE_URL] = userIdResult['picture']
-        redirect(uri: session[LoginController.SESSION_ATTRIBUTE_LOGIN_DESTINATION])
+        def destination = session[LoginController.SESSION_ATTRIBUTE_LOGIN_DESTINATION]
+        log.info 'Login successful, redirecting to {0}', destination
+        redirect(uri: destination)
     }
 
     @Override

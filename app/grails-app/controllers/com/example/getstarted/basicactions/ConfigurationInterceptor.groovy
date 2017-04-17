@@ -3,7 +3,9 @@ package com.example.getstarted.basicactions
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
 import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 
+@Slf4j
 @SuppressWarnings('GrailsServletContextReference')
 @CompileStatic
 class ConfigurationInterceptor implements GrailsConfigurationAware {
@@ -15,7 +17,11 @@ class ConfigurationInterceptor implements GrailsConfigurationAware {
         matchAll()
     }
 
+    @SuppressWarnings('LineLength')
     boolean before() {
+        String instanceId =  System.getenv().containsKey('GAE_MODULE_INSTANCE') ?: '-1'
+        log.info 'ConfigurationInterceptor processing new request for path: {0} and instance {1}', request.requestURI, instanceId
+
         servletContext['isCloudStorageConfigured'] = bucket as boolean
         servletContext['isAuthConfigured'] = clientID as boolean
         true

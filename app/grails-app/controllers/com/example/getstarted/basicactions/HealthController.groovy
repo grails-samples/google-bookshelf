@@ -3,6 +3,7 @@ package com.example.getstarted.basicactions
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
 import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 
 /**
  * Controller to respond to health checks.
@@ -15,6 +16,7 @@ import groovy.transform.CompileStatic
  * for Google Compute Engine, but App Engine flexible environment provides one
  * for you if you do not supply one.
  */
+@Slf4j
 @CompileStatic
 class HealthController implements GrailsConfigurationAware {
     String contentType
@@ -22,6 +24,8 @@ class HealthController implements GrailsConfigurationAware {
     static allowedMethods = [index: 'GET']
 
     def index() {
+        log.info 'Got request to my ok servlet for {0}', request.requestURI
+
         response.contentType = contentType
         render 'ok'
     }
