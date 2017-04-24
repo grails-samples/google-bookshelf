@@ -13,4 +13,3 @@ codenarcTest {
     ignoreFailures false
     configFile file("${rootProject.projectDir}/config/codenarc/codenarcTest.groovy")
 }
-

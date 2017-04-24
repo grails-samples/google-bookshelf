@@ -1,0 +1,8 @@
+apply plugin: 'net.saliman.cobertura'
+
+cobertura {
+    coverageExcludes = ['.*Application.*',
+                        '.*BootStrap.*',
+                        '.*UrlMappings.*']
+}
+

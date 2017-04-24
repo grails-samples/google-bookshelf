@@ -31,6 +31,7 @@ dependencies {
     provided "org.grails:grails-plugin-domain-class"
     testCompile "org.grails:grails-plugin-testing"
     compile 'com.google.cloud:google-cloud-translate:0.11.0-alpha'
+    apply from: "${rootProject.projectDir}/gradle/codenarc.gradle"
 }
 
 bootRun {

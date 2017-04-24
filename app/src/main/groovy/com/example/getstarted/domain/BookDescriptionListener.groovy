@@ -1,5 +1,7 @@
 package com.example.getstarted.domain
 
+import grails.config.Config
+import grails.core.support.GrailsConfigurationAware
 import org.grails.plugins.googlecloud.translate.GoogleCloudTranslateService
 import org.grails.datastore.mapping.core.Datastore
 import org.grails.datastore.mapping.engine.event.AbstractPersistenceEvent
@@ -12,10 +14,13 @@ import org.springframework.context.ApplicationEvent
 import groovy.transform.CompileStatic
 
 @CompileStatic
-class BookDescriptionListener extends AbstractPersistenceEventListener {
+class BookDescriptionListener extends AbstractPersistenceEventListener implements GrailsConfigurationAware {
 
     @Autowired
     GoogleCloudTranslateService googleCloudTranslateService
+
+    String source
+    String target
 
     BookDescriptionListener(final Datastore datastore) {
         super(datastore)
@@ -25,8 +30,13 @@ class BookDescriptionListener extends AbstractPersistenceEventListener {
     protected void onPersistenceEvent(AbstractPersistenceEvent event) {
         if (event.entityObject instanceof BookGormEntity) {
             def book = (event.entityObject as BookGormEntity)
-            if (book.description && (event.eventType == EventType.PreInsert || (event.eventType == EventType.PreUpdate && book.isDirty('description')))) {
-                event.getEntityAccess().setProperty("descriptionSpanish", googleCloudTranslateService.translate(book.description, 'en', 'es'))
+            if (book.description && (event.eventType == EventType.PreInsert
+                    || (event.eventType == EventType.PreUpdate && book.isDirty('description')))) {
+                def text = googleCloudTranslateService.translateTextFromSourceToTarget(book.description, source, target)
+                if ( text ) {
+                    event.entityAccess.setProperty('descriptionSpanish', text)
+                }
+
             }
         }
     }
@@ -34,5 +44,12 @@ class BookDescriptionListener extends AbstractPersistenceEventListener {
     @Override
     boolean supportsEventType(Class<? extends ApplicationEvent> eventType) {
         eventType == PreUpdateEvent || eventType == PreInsertEvent
+    }
+
+    @Override
+    void setConfiguration(Config co) {
+        source = co.getProperty('bookshelf.translation.source', String, 'en')
+        target = co.getProperty('bookshelf.translation.target', String, 'es')
+
     }
 }

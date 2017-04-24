@@ -1,0 +1,11 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "net.saliman:gradle-cobertura-plugin:$coberturaPluginVersion"
+    }
+}
+subprojects { project ->
+    apply from: "${rootProject.projectDir}/gradle/cobertura.gradle"
+}
