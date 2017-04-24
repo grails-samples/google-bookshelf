@@ -106,7 +106,7 @@ class BookController implements GrailsConfigurationAware {
             book.createdById = session[Oauth2CallbackController.SESSION_USER_ID]
         }
 
-        if ( cmd.file ) {
+        if ( cmd.file && !cmd.file.isEmpty() ) {
             String fileName = uploadBookCoverService.nameForFile(cmd.file)
             String imageUrl = googleCloudStorageService.storeMultipartFile(fileName, cmd.file)
             if ( imageUrl ) {
