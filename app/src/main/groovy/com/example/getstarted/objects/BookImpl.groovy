@@ -12,6 +12,7 @@ class BookImpl implements Book {
     String createdById
     String publishedDate
     String description
+    String descriptionSpanish
     Long id
     String imageUrl
 

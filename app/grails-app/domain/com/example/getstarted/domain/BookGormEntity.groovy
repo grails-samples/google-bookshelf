@@ -11,6 +11,7 @@ class BookGormEntity implements Book {
     String createdById
     String publishedDate
     String description
+    String descriptionSpanish
     String imageUrl
 
     static constraints = {
@@ -21,6 +22,7 @@ class BookGormEntity implements Book {
         publishedDate nullable: true
         description nullable: true
         imageUrl    nullable: true
+        descriptionSpanish nullable: true
     }
 
     static mapping = {
