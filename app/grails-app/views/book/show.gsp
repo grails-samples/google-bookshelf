@@ -7,7 +7,7 @@
 <div class="container">
     <h3><g:message code="book" default="Book"/></h3>
     <div class="btn-group">
-        <g:link controller="book" action="update" id="${book?.id}"  class="btn btn-primary btn-sm">
+        <g:link controller="book" action="edit" id="${book?.id}"  class="btn btn-primary btn-sm">
             <i class="glyphicon glyphicon-edit"></i>
             <g:message code="book.edit" default="Edit book"/>
         </g:link>
