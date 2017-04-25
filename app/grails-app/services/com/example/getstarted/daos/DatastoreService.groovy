@@ -2,6 +2,7 @@ package com.example.getstarted.daos
 
 import com.example.getstarted.objects.Book
 import com.example.getstarted.objects.BookImpl
+import com.example.getstarted.objects.BookLocalization
 import com.example.getstarted.objects.BookProperties
 import com.example.getstarted.objects.Result
 
@@ -35,10 +36,10 @@ class DatastoreService implements BookDao, GrailsConfigurationAware {
     Book entityToBook(Entity entity) {
         BookImpl.builder()
                 .author(entity.getString(BookProperties.AUTHOR))
-                .description(entity.getString(BookProperties.DESCRIPTION))
+                //.description(entity.getString(BookProperties.DESCRIPTION))
                 .id(entity.key.id)
                 .publishedDate(entity.getString(BookProperties.PUBLISHED_DATE))
-                .title(entity.getString(BookProperties.TITLE))
+                //.title(entity.getString(BookProperties.TITLE))
                 .build()
     }
 
@@ -48,9 +49,9 @@ class DatastoreService implements BookDao, GrailsConfigurationAware {
         IncompleteKey key = keyFactory.newKey()                           // Key will be assigned once written
         FullEntity<IncompleteKey> incBookEntity = Entity.newBuilder(key)  // Create the Entity
                 .set(BookProperties.AUTHOR, book.author)                  // Add Property ("author", book.getAuthor())
-                .set(BookProperties.DESCRIPTION, book.description)
+                //.set(BookProperties.DESCRIPTION, book.description)
                 .set(BookProperties.PUBLISHED_DATE, book.publishedDate)
-                .set(BookProperties.TITLE, book.title)
+                //.set(BookProperties.TITLE, book.title)
                 .build()
         Entity bookEntity = datastore.add(incBookEntity)                 // Save the Entity
         bookEntity.key.id                                      // The ID of the Key
@@ -67,9 +68,9 @@ class DatastoreService implements BookDao, GrailsConfigurationAware {
         Key key = keyFactory.newKey(book.id) // From a book, create a Key
         Entity entity = Entity.newBuilder(key)    // Convert Book to an Entity
                 .set(BookProperties.AUTHOR, book.author)
-                .set(BookProperties.DESCRIPTION, book.description)
                 .set(BookProperties.PUBLISHED_DATE, book.publishedDate)
-                .set(BookProperties.TITLE, book.title)
+                //.set(BookProperties.DESCRIPTION, book.description)
+                //.set(BookProperties.TITLE, book.title)
                 .build()
         datastore.update(entity)
     }
@@ -125,6 +126,11 @@ class DatastoreService implements BookDao, GrailsConfigurationAware {
             return new Result<>(resultBooks, cursorString)
         }
         new Result<>(resultBooks)
+    }
+
+    @Override
+    BookLocalization getLocalization(Long bookId, String languageCode) {
+        // TODO Implement this
     }
 
     private List<Book> entitiesToBooks(QueryResults<Entity> resultList) {

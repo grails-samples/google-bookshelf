@@ -10,6 +10,7 @@ import groovy.util.logging.Slf4j
 @CompileStatic
 class GoogleCloudTranslateService {
 
+    @SuppressWarnings('ReturnNullFromCatchBlock')
     String translateTextFromSourceToTarget(String text, String source, String target) {
         try {
             return TranslateOptions.defaultInstance.service.translate(text,

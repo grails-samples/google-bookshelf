@@ -12,7 +12,6 @@ interface Book {
     void setCreatedById(String createdById)
     String getPublishedDate()
     String getDescription()
-    String getDescriptionSpanish()
     Long getId()
     String getImageUrl()
     void setImageUrl(String imageUrl)

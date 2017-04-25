@@ -1,7 +1,10 @@
 package com.example.getstarted.daos
 
+import com.example.getstarted.BookLocalizationTagLib
 import com.example.getstarted.domain.BookGormEntity
+import com.example.getstarted.domain.BookLocalizationGormEntity
 import com.example.getstarted.objects.Book
+import com.example.getstarted.objects.BookLocalization
 import com.example.getstarted.objects.BookProperties
 import com.example.getstarted.objects.Result
 import grails.config.Config
@@ -17,23 +20,25 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
 
     int limit
     String orderBy
+    String defaultLanguageCode
 
     @Override
     Long createBook(Book book) {
         BookGormEntity entity = new BookGormEntity()
         populateEntityWithBook(entity, book)
+        entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: defaultLanguageCode,
+                title: book.title,
+                description: book.description))
         entity.save()
         entity.id
     }
 
-    private void populateEntityWithBook(BookGormEntity entity, Book book) {
+    private static void populateEntityWithBook(BookGormEntity entity, Book book) {
         entity.with {
-            title = book.title
             author = book.author
             createdBy = book.createdBy
             createdById = book.createdById
             publishedDate = book.publishedDate
-            description = book.description
             imageUrl = book.imageUrl
         }
     }
@@ -45,10 +50,15 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
     }
 
     @Override
-    void updateBook(Book book, boolean flush = false) {
+    void updateBook(Book book) {
         def entity = BookGormEntity.get(book.id)
         populateEntityWithBook(entity, book)
-        entity.save(flush: flush)
+        def bookLocalization = entity.localizations.find { it.languageCode = defaultLanguageCode }
+        if ( bookLocalization ) {
+            bookLocalization.title = book.title
+            bookLocalization.description = book.description
+        }
+        entity.save(flush: true)
     }
 
     @Override
@@ -91,9 +101,17 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
         listBooksByQuery(cursor, query)
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    BookLocalization getLocalization(Long bookId, String code) {
+        String language = code ?: defaultLanguageCode
+        BookLocalizationGormEntity.where { book.id == bookId && languageCode == language }.get()
+    }
+
     @Override
     void setConfiguration(Config co) {
         limit = co.getProperty('bookshelf.limit', Integer, 10)
         orderBy = co.getProperty('bookshelf.orderBy', String, BookProperties.TITLE)
+        defaultLanguageCode = co.getProperty('bookshelf.defaultLanguageCode', String, 'en')
     }
 }

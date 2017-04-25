@@ -1,6 +1,7 @@
 package com.example.getstarted.daos
 
 import com.example.getstarted.objects.Book
+import com.example.getstarted.objects.BookLocalization
 import com.example.getstarted.objects.Result
 import groovy.transform.CompileStatic
 
@@ -17,4 +18,6 @@ interface BookDao {
     Result<Book> listBooks(String startCursor)
 
     Result<Book> listBooksByUser(String userId, String startCursor)
+
+    BookLocalization getLocalization(Long bookId, String languageCode)
 }

@@ -7,12 +7,11 @@ import groovy.transform.builder.Builder
 @CompileStatic
 class BookImpl implements Book {
     String title
+    String description
     String author
     String createdBy
     String createdById
     String publishedDate
-    String description
-    String descriptionSpanish
     Long id
     String imageUrl
 

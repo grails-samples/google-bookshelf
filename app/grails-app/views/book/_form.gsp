@@ -29,6 +29,8 @@
         <label for="imageUrl"><g:message code="book.cover.image.url" default="Cover Image URL"/></label>
         <input type="hidden" name="id" value="${book?.id}" />
         <input type="text" name="imageUrl" id="imageUrl" value="${book?.imageUrl}" class="form-control" />
+        <input type="text" name="createdById" id="createdById" value="${book?.createdById}" class="form-control" />
+        <input type="text" name="createdBy" id="createdBy" value="${book?.createdBy}" class="form-control" />
     </div>
     <button type="submit" class="btn btn-success"><g:message code="book.save" default="Save"/></button>
 </g:form>

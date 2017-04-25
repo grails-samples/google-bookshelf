@@ -2,31 +2,50 @@ package com.example.getstarted.domain
 
 import com.example.getstarted.objects.Book
 import grails.compiler.GrailsCompileStatic
+import org.springframework.beans.factory.annotation.Value
 
 @GrailsCompileStatic
 class BookGormEntity implements Book {
-    String title
+
+    @Value('bookshelf.defaultLanguageCode')
+    String defaultLanguageCode
+
     String author
     String createdBy
     String createdById
     String publishedDate
-    String description
-    String descriptionSpanish
     String imageUrl
+    static hasMany = [localizations: BookLocalizationGormEntity]
+
+    static transients = ['defaultLanguageCode', 'defaultLocalization']
 
     static constraints = {
-        title nullable: false, unique: true
         author nullable: true
         createdBy nullable: true
         createdById nullable: true
         publishedDate nullable: true
-        description nullable: true
         imageUrl    nullable: true
-        descriptionSpanish nullable: true
     }
 
     static mapping = {
         table 'book'
-        description type: 'text'
+    }
+
+    BookLocalizationGormEntity getDefaultLocalization() {
+        def bookLocalization = localizations.find { it.languageCode = defaultLanguageCode}
+        if ( bookLocalization ) {
+            return bookLocalization
+        }
+        localizations.isEmpty() ? null : localizations.first()
+    }
+
+    @Override
+    String getTitle() {
+        defaultLocalization?.title
+    }
+
+    @Override
+    String getDescription() {
+        defaultLocalization?.description
     }
 }
