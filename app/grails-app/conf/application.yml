@@ -12,6 +12,10 @@ bookshelf:
     clientID: 1094017223620-g0fogaf1phf7l1ljjl91q0gkuoipeie8.apps.googleusercontent.com
     clientSecret: BS6E6w2UbtqjP4ZnkpiAFhfb
     callback: http://localhost:8080/oauth2callback
+    defaultLanguageCode: en
+    localizations:
+        - it
+        - es
 ---
 grails:
     profile: web
@@ -123,7 +127,7 @@ environments:
             password: root
     test:
         dataSource:
-            dbCreate: update
+            dbCreate: create-drop
             url: jdbc:mysql://127.0.0.1:8889/grailsbookshelf_test?useTimezone=true&serverTimezone=GMT
             driverClassName: com.mysql.jdbc.Driver
             username: root

@@ -20,6 +20,7 @@
                 <li><g:link controller="book" action="mine"><g:message code="books.mine" default="My books"/></g:link></li>
             </g:if>
         </ul>
+        <bookshelfLocalizations:navbar uri="${request.forwardURI}"/>
         <p class="navbar-text navbar-right">
             <g:if test="${session[Oauth2CallbackController.SESSION_ATTRIBUTE_TOKEN]}">
                 <g:link controller="logout">

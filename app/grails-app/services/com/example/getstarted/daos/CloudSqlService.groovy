@@ -1,6 +1,7 @@
 package com.example.getstarted.daos
 
-import com.example.getstarted.BookLocalizationTagLib
+import com.example.getstarted.objects.BookImpl
+import org.grails.plugins.googlecloud.translate.GoogleCloudTranslateService
 import com.example.getstarted.domain.BookGormEntity
 import com.example.getstarted.domain.BookLocalizationGormEntity
 import com.example.getstarted.objects.Book
@@ -12,7 +13,10 @@ import grails.core.support.GrailsConfigurationAware
 import grails.gorm.DetachedCriteria
 import grails.transaction.Transactional
 import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 
+
+@Slf4j
 @SuppressWarnings('GrailsStatelessService')
 @CompileStatic
 @Transactional
@@ -21,6 +25,9 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
     int limit
     String orderBy
     String defaultLanguageCode
+    List<String> localizations
+
+    GoogleCloudTranslateService googleCloudTranslateService
 
     @Override
     Long createBook(Book book) {
@@ -29,6 +36,15 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
         entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: defaultLanguageCode,
                 title: book.title,
                 description: book.description))
+
+        for (String languageCode : localizations ) {
+            String title = googleCloudTranslateService.translateTextFromSourceToTarget(book.title, defaultLanguageCode, languageCode)
+            String description = googleCloudTranslateService.translateTextFromSourceToTarget(book.description, defaultLanguageCode, languageCode)
+            entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: languageCode,
+                    title: title,
+                    description: description))
+        }
+
         entity.save()
         entity.id
     }
@@ -46,19 +62,47 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
     @Transactional(readOnly = true)
     @Override
     Book readBook(Long bookId) {
-        BookGormEntity.get(bookId)
+        def entity = BookGormEntity.get(bookId)
+        def book = new BookImpl()
+        book.with {
+            id = entity.id
+            author = entity.author
+            createdBy = entity.createdById
+            createdById = entity.createdById
+            publishedDate = entity.publishedDate
+            imageUrl = entity.imageUrl
+        }
+        BookLocalization bookLocalization = getLocalization(bookId, defaultLanguageCode)
+        book.title = bookLocalization?.title
+        book.description = bookLocalization?.description
+        book
     }
 
     @Override
     void updateBook(Book book) {
         def entity = BookGormEntity.get(book.id)
         populateEntityWithBook(entity, book)
-        def bookLocalization = entity.localizations.find { it.languageCode = defaultLanguageCode }
-        if ( bookLocalization ) {
-            bookLocalization.title = book.title
-            bookLocalization.description = book.description
+        addOrUpdateBookLocalizationWithTitleAndDescriptionByLanguageCode(entity, defaultLanguageCode, book.title, book.description)
+
+        for (String languageCode : localizations ) {
+            String title = googleCloudTranslateService.translateTextFromSourceToTarget(book.title, defaultLanguageCode, languageCode)
+            String description = googleCloudTranslateService.translateTextFromSourceToTarget(book.description, defaultLanguageCode, languageCode)
+            addOrUpdateBookLocalizationWithTitleAndDescriptionByLanguageCode(entity, languageCode, title, description)
         }
-        entity.save(flush: true)
+
+        entity.save()
+    }
+
+    static void addOrUpdateBookLocalizationWithTitleAndDescriptionByLanguageCode(BookGormEntity entity, String languageCode, String title, String description) {
+        BookLocalizationGormEntity defaultBookLocalizationGormEntity = entity.localizations.find { it.languageCode == languageCode }
+        if ( defaultBookLocalizationGormEntity ) {
+            defaultBookLocalizationGormEntity.title = title
+            defaultBookLocalizationGormEntity.description = description
+        } else {
+            entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: languageCode,
+                    title: title,
+                    description: description))
+        }
     }
 
     @Override
@@ -105,7 +149,9 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
     @Override
     BookLocalization getLocalization(Long bookId, String code) {
         String language = code ?: defaultLanguageCode
-        BookLocalizationGormEntity.where { book.id == bookId && languageCode == language }.get()
+        def q = BookLocalizationGormEntity.where { book.id == bookId && languageCode == language }
+        log.info 'code: ' + code + 'size: ' + q.list().size()
+        q.get()
     }
 
     @Override
@@ -113,5 +159,6 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
         limit = co.getProperty('bookshelf.limit', Integer, 10)
         orderBy = co.getProperty('bookshelf.orderBy', String, BookProperties.TITLE)
         defaultLanguageCode = co.getProperty('bookshelf.defaultLanguageCode', String, 'en')
+        localizations = co.getProperty('bookshelf.localizations', List)
     }
 }

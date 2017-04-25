@@ -5,10 +5,7 @@ import grails.compiler.GrailsCompileStatic
 import org.springframework.beans.factory.annotation.Value
 
 @GrailsCompileStatic
-class BookGormEntity implements Book {
-
-    @Value('bookshelf.defaultLanguageCode')
-    String defaultLanguageCode
+class BookGormEntity {
 
     String author
     String createdBy
@@ -29,23 +26,5 @@ class BookGormEntity implements Book {
 
     static mapping = {
         table 'book'
-    }
-
-    BookLocalizationGormEntity getDefaultLocalization() {
-        def bookLocalization = localizations.find { it.languageCode = defaultLanguageCode}
-        if ( bookLocalization ) {
-            return bookLocalization
-        }
-        localizations.isEmpty() ? null : localizations.first()
-    }
-
-    @Override
-    String getTitle() {
-        defaultLocalization?.title
-    }
-
-    @Override
-    String getDescription() {
-        defaultLocalization?.description
     }
 }

@@ -1,6 +1,6 @@
 <%@ page import="com.example.getstarted.domain.BookGormEntity" %>
 <%@ page import="com.example.getstarted.domain.BookLocalizationGormEntity" %>
-
+<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +25,7 @@
             <img class="book-image" src="${book?.imageUrl ?: 'http://placekitten.com/g/128/192'}">
         </div>
         <div class="media-body">
-            <h4 class="book-title"><bookshelf:bookTitle id="${book?.id}" languageCode="${request.locale.language}"/> <small>${book?.publishedDate}</small></h4>
+            <h4 class="book-title"><bookshelf:bookTitle id="${book?.id}" languageCode="${RequestContextUtils.getLocale(request).language}"/> <small>${book?.publishedDate}</small></h4>
             <h5 class="book-author">
                 <g:if test="${book?.author}">
                     <g:message code="book.author.by" args="${[book.author]}"/>
@@ -35,7 +35,8 @@
                 </g:else>
             </h5>
             <p class="book-description"><bookshelf:bookDescription  id="${book?.id}" languageCode="${request.locale.language}"/></p>
-            <small>${request.locale.language}</small><br/>
+
+            <small>Locale: ${RequestContextUtils.getLocale(request).language}</small><br/>
 
             <small class="book-added-by">
                 <g:if test="${book?.createdBy}">

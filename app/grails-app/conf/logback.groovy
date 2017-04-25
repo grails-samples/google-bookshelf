@@ -36,4 +36,4 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
 root(ERROR, ['STDOUT'])
 logger 'com.example.getstarted.basicactions', INFO, ['STDOUT'], false
 logger 'org.grails.plugins.googlecloud', INFO, ['STDOUT'], false
-logger 'com.example.getstarted.domain', INFO,  ['STDOUT'], false
+logger 'com.example.getstarted', INFO,  ['STDOUT'], false

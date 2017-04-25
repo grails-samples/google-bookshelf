@@ -1,3 +1,4 @@
+<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +19,7 @@
                         <img alt="ahhh" src="${book?.imageUrl ?: 'http://placekitten.com/g/128/192'}">
                     </div>
                     <div class="media-body">
-                        <h4>${book.title}</h4>
+                        <h4><bookshelf:bookTitle id="${book?.id}" languageCode="${RequestContextUtils.getLocale(request).language}"/></h4>
                         <p>${book.author}</p>
                     </div>
                 </g:link>

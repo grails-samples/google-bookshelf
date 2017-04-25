@@ -53,5 +53,4 @@ class BookLocalizationTagLib implements GrailsConfigurationAware {
         defaultLanguageCode = co.getProperty('bookshelf.defaultLanguageCode', String, 'en')
         storageType = co.getProperty('bookshelf.storageType', String, 'cloudSQL')
     }
-
 }
