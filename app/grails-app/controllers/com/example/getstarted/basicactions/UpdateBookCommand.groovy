@@ -14,12 +14,14 @@ class UpdateBookCommand implements Validateable {
     String publishedDate
     String title
     MultipartFile file
+    String imageUrl
 
     static constraints = {
         author nullable: true
         description nullable: true
         publishedDate nullable: true
         file nullable: true
+        imageUrl nullable: true
     }
 
     Object asType(Class clazz) {

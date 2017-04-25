@@ -109,10 +109,7 @@ class BookController implements GrailsConfigurationAware {
         if ( cmd.file && !cmd.file.isEmpty() ) {
             String fileName = uploadBookCoverService.nameForFile(cmd.file)
             String imageUrl = googleCloudStorageService.storeMultipartFile(fileName, cmd.file)
-            if ( imageUrl ) {
-                book.imageUrl = imageUrl
-            }
-
+            book.imageUrl = imageUrl ?: cmd.imageUrl
         }
         dao.updateBook(book)
         redirect(action: 'show', id: book.id)
