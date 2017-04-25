@@ -51,8 +51,8 @@ class BookDescriptionListener extends AbstractPersistenceEventListener implement
 
     @Override
     void setConfiguration(Config co) {
-        source = co.getProperty('bookshelf.translation.source', String, 'en')
-        target = co.getProperty('bookshelf.translation.target', String, 'es')
+        source = co.getProperty('bookshelf.translate.source', String, 'en')
+        target = co.getProperty('bookshelf.translate.target', String, 'es')
 
     }
 }
