@@ -15,7 +15,7 @@ class LangNavbarTagLib implements GrailsConfigurationAware {
     def navbar = { args ->
         String uri = args.uri
         out << '<ul class="nav navbar-nav navbar-right">'
-        for (String language : (localizations + defaultLanguageCode) ) {
+        for (String language : (localizations + defaultLanguageCode).sort() ) {
             out << "<li><a href='${uri}?lang=${language}'>${language}</a></li>" as String
         }
         out << '</ul>'
