@@ -15,7 +15,6 @@ import grails.transaction.Transactional
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 
-
 @Slf4j
 @SuppressWarnings('GrailsStatelessService')
 @CompileStatic
@@ -29,6 +28,7 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
 
     GoogleCloudTranslateService googleCloudTranslateService
 
+    @SuppressWarnings('LineLength')
     @Override
     Long createBook(Book book) {
         BookGormEntity entity = new BookGormEntity()
@@ -78,6 +78,7 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
         book
     }
 
+    @SuppressWarnings('LineLength')
     @Override
     void updateBook(Book book) {
         def entity = BookGormEntity.get(book.id)
@@ -93,6 +94,7 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
         entity.save()
     }
 
+    @SuppressWarnings('LineLength')
     static void addOrUpdateBookLocalizationWithTitleAndDescriptionByLanguageCode(BookGormEntity entity, String languageCode, String title, String description) {
         BookLocalizationGormEntity defaultBookLocalizationGormEntity = entity.localizations.find { it.languageCode == languageCode }
         if ( defaultBookLocalizationGormEntity ) {

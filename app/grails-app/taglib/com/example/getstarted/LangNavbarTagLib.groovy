@@ -5,9 +5,9 @@ import grails.core.support.GrailsConfigurationAware
 
 class LangNavbarTagLib implements GrailsConfigurationAware {
 
-    static namespace = "bookshelfLocalizations"
+    static namespace = 'bookshelfLocalizations'
 
-    static defaultEncodeAs = [taglib:'none']
+    static defaultEncodeAs = [taglib: 'none']
 
     List<String> localizations
     String defaultLanguageCode

@@ -101,7 +101,10 @@ class BookController implements GrailsConfigurationAware {
         }
         def book = cmd as Book
 
-        if ( (book.createdById == null || book.createdBy == null) && session[Oauth2CallbackController.SESSION_ATTRIBUTE_TOKEN] ) {
+        if ( (
+                book.createdById == null ||
+                        book.createdBy == null
+             ) && session[Oauth2CallbackController.SESSION_ATTRIBUTE_TOKEN] ) {
             book.createdBy = session[Oauth2CallbackController.SESSION_USER_EMAIL]
             book.createdById = session[Oauth2CallbackController.SESSION_USER_ID]
         }

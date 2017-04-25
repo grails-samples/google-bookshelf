@@ -13,7 +13,7 @@ class BookLocalizationTagLib implements GrailsConfigurationAware {
 
     static namespace = 'bookshelf'
 
-    static defaultEncodeAs = [taglib:'html']
+    static defaultEncodeAs = [taglib: 'html']
 
     String storageType
 

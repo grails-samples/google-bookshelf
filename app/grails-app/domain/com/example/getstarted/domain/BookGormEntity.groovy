@@ -1,8 +1,6 @@
 package com.example.getstarted.domain
 
-import com.example.getstarted.objects.Book
 import grails.compiler.GrailsCompileStatic
-import org.springframework.beans.factory.annotation.Value
 
 @GrailsCompileStatic
 class BookGormEntity {
