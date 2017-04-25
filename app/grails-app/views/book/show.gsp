@@ -34,7 +34,7 @@
                     <g:message code="book.author.unknown" default="By Unknown"/>
                 </g:else>
             </h5>
-            <p class="book-description"><bookshelf:bookDescription  id="${book?.id}" languageCode="${request.locale.language}"/></p>
+            <p class="book-description"><bookshelf:bookDescription  id="${book?.id}" languageCode="${RequestContextUtils.getLocale(request).language}"/></p>
 
             <small>Locale: ${RequestContextUtils.getLocale(request).language}</small><br/>
 
