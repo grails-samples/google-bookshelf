@@ -25,7 +25,7 @@
             <h4 class="book-title">${book?.title}<small>${book?.publishedDate}</small></h4>
             <h5 class="book-author">
                 <g:if test="${book?.author}">
-                    <g:message code="book.author.by" args="${book.author}"/>
+                    <g:message code="book.author.by" args="${[book.author]}"/>
                 </g:if>
                 <g:else>
                     <g:message code="book.author.unknown" default="By Unknown"/>
@@ -39,7 +39,7 @@
 
             <small class="book-added-by">
                 <g:if test="${book?.createdBy}">
-                    <g:message code="book.added.by" args="${book.createdBy}"/>
+                    <g:message code="book.added.by" args="${[book.createdBy]}"/>
                 </g:if>
                 <g:else>
                     <g:message code="book.added.by.anonymous" default="Added by Anonymous"/>
