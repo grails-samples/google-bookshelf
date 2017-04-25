@@ -3,6 +3,7 @@ package com.example.getstarted
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
+@SuppressWarnings('LineLength')
 @TestFor(LangNavbarTagLib)
 class LangNavbarTagLibSpec extends Specification {
 

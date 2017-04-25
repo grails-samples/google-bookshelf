@@ -6,14 +6,6 @@ import spock.lang.Specification
 @TestFor(BookGormEntity)
 class BookGormEntitySpec extends Specification {
 
-    def "test title is not nulllable"() {
-        when:
-        domain.title = null
-
-        then:
-        !domain.validate(['title'])
-    }
-
     def "test author is nullable"() {
         when:
         domain.author = null
@@ -44,14 +36,6 @@ class BookGormEntitySpec extends Specification {
 
         then:
         domain.validate(['publishedDate'])
-    }
-
-    def "test description is nullable"() {
-        when:
-        domain.description = null
-
-        then:
-        domain.validate(['description'])
     }
 
     def "test imageUrl is nullable"() {

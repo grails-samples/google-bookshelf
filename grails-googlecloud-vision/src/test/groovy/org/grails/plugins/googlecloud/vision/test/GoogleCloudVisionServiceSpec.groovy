@@ -7,6 +7,7 @@ import spock.lang.Specification
 @TestFor(GoogleCloudVisionService)
 class GoogleCloudVisionServiceSpec extends Specification {
 
+    @SuppressWarnings('JavaIoPackageAccess')
     def "test image text extraction"() {
         when:
         def f = new File('src/test/groovy/org/grails/plugins/googlecloud/vision/test/pratical-grails-3-book-cover.png')
