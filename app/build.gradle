@@ -66,6 +66,7 @@ grails {
         compile project(':grails-googlecloud-storage')
         compile project(':grails-googlecloud-authorization')
         compile project(':grails-googlecloud-translate')
+        compile project(':grails-googlecloud-vision')
     }
 }
 
