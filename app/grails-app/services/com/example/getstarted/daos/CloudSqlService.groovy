@@ -45,10 +45,10 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
     }
 
     @Override
-    void updateBook(Book book) {
+    void updateBook(Book book, boolean flush = false) {
         def entity = BookGormEntity.get(book.id)
         populateEntityWithBook(entity, book)
-        entity.save()
+        entity.save(flush: flush)
     }
 
     @Override
