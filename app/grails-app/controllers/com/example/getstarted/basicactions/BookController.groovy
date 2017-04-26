@@ -46,6 +46,7 @@ class BookController {
 
     }
 
+    // tag::save[]
     def save(CreateBookCommand cmd) {
         if ( cmd.hasErrors() ) {
             respond cmd.errors
@@ -60,15 +61,18 @@ class BookController {
 
         Long id = createBookWithCoverImageService.saveBookWithCover(cmd.file, curator)
 
-        log.info 'Created book {0}', id
+        log.info "Created book ${id}"
 
         redirect(action: 'show', id: id)
     }
+    // end::save[]
 
+    // tag:show[]
     def show(Long id) {
         log.info 'Read book with id {0}', id
         [book: daoService.readBook(id)]
     }
+    // tag:show[]
 
     def edit(Long id) {
         [book: daoService.readBook(id)]

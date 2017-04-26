@@ -19,12 +19,12 @@ class LoginController implements GrailsConfigurationAware {
     GoogleAuthorizationService googleAuthorizationService
 
     def index(String loginDestination) {
-        String state = googleAuthorizationService.randomState()
+        String state = googleAuthorizationService.randomState() // <1>
         def url = googleAuthorizationService.authorizationRedirectUrl(state)
         session.setAttribute(SESSION_ATTRIBUTE_STATE, state)
         String destination = loginDestination ?: defaultLoginDestination
         log.info 'logging destination {0}', destination
-        session.setAttribute(SESSION_ATTRIBUTE_LOGIN_DESTINATION, destination)
+        session.setAttribute(SESSION_ATTRIBUTE_LOGIN_DESTINATION, destination) // <2>
         redirect(url: url)
     }
 

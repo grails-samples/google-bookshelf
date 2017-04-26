@@ -31,7 +31,9 @@ dependencies {
     provided "org.grails:grails-plugin-services"
     provided "org.grails:grails-plugin-domain-class"
     testCompile "org.grails:grails-plugin-testing"
+    // tag::googlecloudDatastoreDependency[]
     compile("com.google.cloud:google-cloud-datastore:$googleCloudDatastoreVersion")
+    // tag::googlecloudDatastoreDependency[]
     compile project(':bookshelf-dao')
 }
 

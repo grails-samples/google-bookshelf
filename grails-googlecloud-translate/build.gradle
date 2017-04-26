@@ -31,7 +31,9 @@ dependencies {
     provided "org.grails:grails-plugin-services"
     provided "org.grails:grails-plugin-domain-class"
     testCompile "org.grails:grails-plugin-testing"
+    // tag::googlecloudTranslateDependency[]
     compile "com.google.cloud:google-cloud-translate:$googleCloudTranslateVersion"
+    // end::googlecloudTranslateDependency[]
 }
 
 bootRun {
