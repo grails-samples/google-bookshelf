@@ -1,8 +1,6 @@
 package com.example.getstarted
 
-import com.example.getstarted.daos.BookDao
-import com.example.getstarted.daos.CloudSqlService
-import com.example.getstarted.daos.DatastoreService
+import com.example.getstarted.daos.DaoService
 import com.example.getstarted.objects.BookCurator
 import com.example.getstarted.objects.BookImpl
 import com.example.getstarted.objects.BookLocalization
@@ -26,28 +24,13 @@ class CreateBookWithCoverImageService implements GrailsConfigurationAware {
 
     GoogleCloudVisionService googleCloudVisionService
 
-    DatastoreService datastoreService
-
-    CloudSqlService cloudSqlService
-
-    String storageType
-
     String defaultLanguageCode
+
+    DaoService daoService
 
     @Override
     void setConfiguration(Config co) {
-        storageType = co.getProperty('bookshelf.storageType', String, 'cloudSQL')
         defaultLanguageCode = co.getProperty('bookshelf.defaultLanguageCode', String, 'en')
-    }
-
-    private BookDao getDao() {
-        if ( storageType == 'datastore' ) {
-            return datastoreService
-        }
-        if ( storageType == 'cloudSQL' ) {
-            return cloudSqlService
-        }
-        cloudSqlService
     }
 
     BookLocalization bookLocalizationWithFile(MultipartFile file) {
@@ -88,6 +71,6 @@ class CreateBookWithCoverImageService implements GrailsConfigurationAware {
         def bookLocalization = bookLocalizationWithFile(file)
         book.title = bookLocalization.title
         book.description = bookLocalization.description
-        dao.createBook(book)
+        daoService.createBook(book)
     }
 }

@@ -2,8 +2,8 @@ package com.example.getstarted.basicactions
 
 import static javax.servlet.http.HttpServletResponse.SC_METHOD_NOT_ALLOWED
 import static javax.servlet.http.HttpServletResponse.SC_MOVED_TEMPORARILY
-import grails.test.mixin.TestFor
 import spock.lang.Specification
+import grails.test.mixin.TestFor
 import spock.lang.Unroll
 
 @TestFor(Oauth2CallbackController)

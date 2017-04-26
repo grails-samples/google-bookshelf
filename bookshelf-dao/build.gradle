@@ -1,0 +1,10 @@
+apply plugin: 'groovy'
+apply from: "${rootProject.projectDir}/gradle/codenarc.gradle"
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "org.codehaus.groovy:groovy:$groovyVersion"
+}

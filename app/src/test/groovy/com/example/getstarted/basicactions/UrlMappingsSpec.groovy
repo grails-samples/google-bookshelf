@@ -1,9 +1,9 @@
 package com.example.getstarted.basicactions
 
+import spock.lang.Specification
 import grails.test.mixin.TestFor
 import grails.test.mixin.Mock
 import spock.lang.Ignore
-import spock.lang.Specification
 
 @TestFor(UrlMappings)
 @Mock(Oauth2CallbackController)

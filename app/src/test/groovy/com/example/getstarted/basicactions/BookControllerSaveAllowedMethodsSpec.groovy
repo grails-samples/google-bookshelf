@@ -2,11 +2,10 @@ package com.example.getstarted.basicactions
 
 import static javax.servlet.http.HttpServletResponse.SC_METHOD_NOT_ALLOWED
 import static javax.servlet.http.HttpServletResponse.SC_OK
-import com.example.getstarted.daos.CloudSqlService
-import com.example.getstarted.daos.DatastoreService
+import com.example.getstarted.daos.DaoService
+import spock.lang.Specification
 import grails.test.mixin.TestFor
 import spock.lang.Ignore
-import spock.lang.Specification
 import spock.lang.Unroll
 
 @TestFor(BookController)
@@ -29,8 +28,7 @@ class BookControllerSaveAllowedMethodsSpec extends Specification {
     def "test BookController.save accepts POST requests"() {
         when:
         request.method = 'POST'
-        controller.datastoreService = Mock(DatastoreService)
-        controller.cloudSqlService = Mock(CloudSqlService)
+        controller.daoService = Mock(DaoService)
         controller.save()
 
         then:

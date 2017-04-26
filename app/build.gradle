@@ -58,7 +58,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:$seleniumHtmlunitDriver"
     testRuntime "net.sourceforge.htmlunit:htmlunit:$htmlunitVersion"
     testCompile "org.grails:grails-datastore-rest-client"
-    compile "com.google.cloud:google-cloud-datastore:$googleCloudDatastoreVersion"
+    compile project(':bookshelf-dao')
 }
 
 grails {
@@ -67,6 +67,7 @@ grails {
         compile project(':grails-googlecloud-authorization')
         compile project(':grails-googlecloud-translate')
         compile project(':grails-googlecloud-vision')
+        compile project(':bookshelf-google-cloud-datastore')
     }
 }
 

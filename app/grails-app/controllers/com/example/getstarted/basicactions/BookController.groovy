@@ -2,14 +2,10 @@ package com.example.getstarted.basicactions
 
 import com.example.getstarted.CreateBookWithCoverImageService
 import com.example.getstarted.UploadBookCoverService
-import com.example.getstarted.daos.BookDao
-import com.example.getstarted.daos.CloudSqlService
-import com.example.getstarted.daos.DatastoreService
+import com.example.getstarted.daos.DaoService
 import com.example.getstarted.objects.Book
 import com.example.getstarted.objects.BookCurator
 import com.example.getstarted.objects.Result
-import grails.config.Config
-import grails.core.support.GrailsConfigurationAware
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.grails.plugins.googlecloud.storage.GoogleCloudStorageService
@@ -17,9 +13,7 @@ import org.springframework.context.MessageSource
 
 @Slf4j
 @CompileStatic
-class BookController implements GrailsConfigurationAware {
-
-    String storageType
+class BookController {
 
     static allowedMethods = [index: 'GET',
                              create: 'GET',
@@ -36,27 +30,12 @@ class BookController implements GrailsConfigurationAware {
 
     CreateBookWithCoverImageService createBookWithCoverImageService
 
+    DaoService daoService
+
     MessageSource messageSource
 
-    DatastoreService datastoreService
-
-    CloudSqlService cloudSqlService
-
-    private BookDao getDao() {
-
-        if ( storageType == 'datastore' ) {
-            return datastoreService
-        }
-
-        if ( storageType == 'cloudSQL' ) {
-            return cloudSqlService
-        }
-
-        cloudSqlService
-    }
-
     def index(String cursor) {
-        Result<Book> result = dao.listBooks(cursor)
+        Result<Book> result = daoService.listBooks(cursor)
         log.info 'Retrieved list of all books'
         String title = messageSource.getMessage('books', null, 'Books', request.locale)
         [books: result.result, cursor: result.cursor, title: title]
@@ -88,11 +67,11 @@ class BookController implements GrailsConfigurationAware {
 
     def show(Long id) {
         log.info 'Read book with id {0}', id
-        [book: dao.readBook(id)]
+        [book: daoService.readBook(id)]
     }
 
     def edit(Long id) {
-        [book: dao.readBook(id)]
+        [book: daoService.readBook(id)]
     }
 
     def update(UpdateBookCommand cmd) {
@@ -115,25 +94,20 @@ class BookController implements GrailsConfigurationAware {
             book.imageUrl = imageUrl
         }
 
-        dao.updateBook(book)
+        daoService.updateBook(book)
         redirect(action: 'show', id: book.id)
     }
 
     def delete(Long id) {
-        dao.deleteBook(id)
+        daoService.deleteBook(id)
         redirect action: 'index'
     }
 
     def mine(String cursor) {
         String userId = session[Oauth2CallbackController.SESSION_USER_ID]
-        Result<Book> result = dao.listBooksByUser(userId, cursor)
+        Result<Book> result = daoService.listBooksByUser(userId, cursor)
         log.info 'Retrieved list of all books for user: {0}', userId
         String title = messageSource.getMessage('books.mine', null, 'My Books', request.locale)
         render(view: 'index', model: [books: result.result, cursor: result.cursor, title: title])
-    }
-
-    @Override
-    void setConfiguration(Config co) {
-        storageType = co.getProperty('bookshelf.storageType', String, 'cloudSQL')
     }
 }
