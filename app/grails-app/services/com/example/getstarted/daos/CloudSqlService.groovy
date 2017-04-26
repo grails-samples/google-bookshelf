@@ -33,16 +33,18 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
     Long createBook(Book book) {
         BookGormEntity entity = new BookGormEntity()
         populateEntityWithBook(entity, book)
-        entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: defaultLanguageCode,
-                title: book.title,
-                description: book.description))
+        if ( book.title != null ) {
+            entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: defaultLanguageCode,
+                    title: book.title,
+                    description: book.description))
 
-        for (String languageCode : localizations ) {
-            String title = googleCloudTranslateService.translateTextFromSourceToTarget(book.title, defaultLanguageCode, languageCode)
-            String description = googleCloudTranslateService.translateTextFromSourceToTarget(book.description, defaultLanguageCode, languageCode)
-            entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: languageCode,
-                    title: title,
-                    description: description))
+            for (String languageCode : localizations ) {
+                String title = googleCloudTranslateService.translateTextFromSourceToTarget(book.title, defaultLanguageCode, languageCode)
+                String description = googleCloudTranslateService.translateTextFromSourceToTarget(book.description, defaultLanguageCode, languageCode)
+                entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: languageCode,
+                        title: title,
+                        description: description))
+            }
         }
 
         entity.save()

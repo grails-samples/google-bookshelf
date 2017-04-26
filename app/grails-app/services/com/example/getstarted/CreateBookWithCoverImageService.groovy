@@ -69,8 +69,10 @@ class CreateBookWithCoverImageService implements GrailsConfigurationAware {
         book.createdById = curator.createdById
         book.imageUrl = imageUrlWithFile(file)
         def bookLocalization = bookLocalizationWithFile(file)
-        book.title = bookLocalization.title
-        book.description = bookLocalization.description
+        if ( bookLocalization ) {
+            book.title = bookLocalization.title
+            book.description = bookLocalization.description
+        }
         daoService.createBook(book)
     }
 }

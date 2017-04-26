@@ -16,32 +16,39 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class GoogleCloudVisionService {
 
+    @SuppressWarnings(['ReturnNullFromCatchBlock', 'CatchException'])
     String detectDocumentText(InputStream inputStream) {
-        List<AnnotateImageRequest> requests = []
+        try {
+            List<AnnotateImageRequest> requests = []
 
-        ByteString imgBytes = ByteString.readFrom(inputStream)
+            ByteString imgBytes = ByteString.readFrom(inputStream)
 
-        Image img = Image.newBuilder().setContent(imgBytes).build()
-        Feature feat = Feature.newBuilder().setType(Type.DOCUMENT_TEXT_DETECTION).build()
-        AnnotateImageRequest request =
-                AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build()
-        requests.add(request)
+            Image img = Image.newBuilder().setContent(imgBytes).build()
+            Feature feat = Feature.newBuilder().setType(Type.DOCUMENT_TEXT_DETECTION).build()
+            AnnotateImageRequest request =
+                    AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build()
+            requests.add(request)
 
-        BatchAnnotateImagesResponse response =
-                ImageAnnotatorClient.create().batchAnnotateImages(requests)
-        List<AnnotateImageResponse> responses = response.responsesList
+            BatchAnnotateImagesResponse response =
+                    ImageAnnotatorClient.create().batchAnnotateImages(requests)
+            List<AnnotateImageResponse> responses = response.responsesList
 
-        List<String> responsesText = []
-        for (AnnotateImageResponse res : responses) {
-            if (res.hasError()) {
-                log.error "Error ${res.error.message}"
-                continue
+            List<String> responsesText = []
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    log.error "Error ${res.error.message}"
+                    continue
+                }
+
+                TextAnnotation annotation = res.fullTextAnnotation
+                responsesText << annotation.text
             }
 
-            TextAnnotation annotation = res.fullTextAnnotation
-            responsesText << annotation.text
-        }
+            return responsesText*.replaceAll('\n', ' ').join(' ').trim().replaceAll(' +', ' ')
 
-        responsesText*.replaceAll('\n', ' ').join(' ').trim().replaceAll(' +', ' ')
+        } catch ( Exception e ) {
+            log.error(e.message, e)
+            return null
+        }
     }
 }
