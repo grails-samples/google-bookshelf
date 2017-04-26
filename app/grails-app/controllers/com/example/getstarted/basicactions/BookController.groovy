@@ -1,6 +1,6 @@
 package com.example.getstarted.basicactions
 
-import com.example.getstarted.CreatBookWithCoverImageService
+import com.example.getstarted.CreateBookWithCoverImageService
 import com.example.getstarted.UploadBookCoverService
 import com.example.getstarted.daos.BookDao
 import com.example.getstarted.daos.CloudSqlService
@@ -34,7 +34,7 @@ class BookController implements GrailsConfigurationAware {
 
     UploadBookCoverService uploadBookCoverService
 
-    CreatBookWithCoverImageService creatBookWithCoverImageService
+    CreateBookWithCoverImageService createBookWithCoverImageService
 
     MessageSource messageSource
 
@@ -79,7 +79,7 @@ class BookController implements GrailsConfigurationAware {
             curator.createdById = session[Oauth2CallbackController.SESSION_USER_ID]
         }
 
-        Long id = creatBookWithCoverImageService.saveBookWithCover(cmd.file, curator)
+        Long id = createBookWithCoverImageService.saveBookWithCover(cmd.file, curator)
 
         log.info 'Created book {0}', id
 

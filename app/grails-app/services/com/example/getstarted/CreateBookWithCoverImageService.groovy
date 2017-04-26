@@ -18,7 +18,7 @@ import groovy.util.logging.Slf4j
 @SuppressWarnings('GrailsStatelessService')
 @Slf4j
 @CompileStatic
-class CreatBookWithCoverImageService implements GrailsConfigurationAware {
+class CreateBookWithCoverImageService implements GrailsConfigurationAware {
 
     UploadBookCoverService uploadBookCoverService
 
@@ -51,10 +51,26 @@ class CreatBookWithCoverImageService implements GrailsConfigurationAware {
     }
 
     BookLocalization bookLocalizationWithFile(MultipartFile file) {
-        final int titleMaxSize = 255
         def text = googleCloudVisionService.detectDocumentText(file.inputStream)
-        def title = text[0 .. (titleMaxSize - 1)]
-        def description = text[titleMaxSize .. (text.size() - 1)]
+        bookLocalizationWithText(text)
+    }
+
+    BookLocalization bookLocalizationWithText(String text){
+        if (text == null ) {
+            return null
+        }
+        final int titleMaxSize = 255
+
+        String title = null
+        String description = null
+
+        if ( text.size() >= (titleMaxSize + 1) ) {
+            title = text[0 .. (titleMaxSize - 1)]
+            description = text[titleMaxSize .. (text.size() - 1)]
+
+        } else {
+            title = text
+        }
 
         new BookLocalizationImpl(title: title, description: description)
     }
