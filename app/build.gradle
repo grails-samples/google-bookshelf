@@ -30,6 +30,12 @@ repositories {
     jcenter()
 }
 
+configurations.all {
+    resolutionStrategy {
+        force "com.google.guava:guava:$guavaVersion"
+    }
+}
+
 configurations {
     compile.exclude module: "spring-boot-starter-tomcat"
     compile.exclude module: "tomcat-juli"
@@ -58,6 +64,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:$seleniumHtmlunitDriver"
     testRuntime "net.sourceforge.htmlunit:htmlunit:$htmlunitVersion"
     testCompile "org.grails:grails-datastore-rest-client"
+    compile "com.google.guava:guava:$guavaVersion"
     compile project(':bookshelf-dao')
 }
 
