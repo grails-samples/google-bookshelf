@@ -1,10 +1,12 @@
 package com.example.getstarted.basicactions
 
+import com.example.getstarted.CreatBookWithCoverImageService
 import com.example.getstarted.UploadBookCoverService
 import com.example.getstarted.daos.BookDao
 import com.example.getstarted.daos.CloudSqlService
 import com.example.getstarted.daos.DatastoreService
 import com.example.getstarted.objects.Book
+import com.example.getstarted.objects.BookCurator
 import com.example.getstarted.objects.Result
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
@@ -28,15 +30,17 @@ class BookController implements GrailsConfigurationAware {
                              show: 'GET',
                              mine: 'GET']
 
-    DatastoreService datastoreService
-
-    CloudSqlService cloudSqlService
-
     GoogleCloudStorageService googleCloudStorageService
 
     UploadBookCoverService uploadBookCoverService
 
+    CreatBookWithCoverImageService creatBookWithCoverImageService
+
     MessageSource messageSource
+
+    DatastoreService datastoreService
+
+    CloudSqlService cloudSqlService
 
     private BookDao getDao() {
 
@@ -65,23 +69,19 @@ class BookController implements GrailsConfigurationAware {
 
     def save(CreateBookCommand cmd) {
         if ( cmd.hasErrors() ) {
+            respond cmd.errors
             return
         }
 
-        def book = cmd as Book
-
+        BookCurator curator = new BookCurator()
         if ( session[Oauth2CallbackController.SESSION_ATTRIBUTE_TOKEN] ) {
-            book.createdBy = session[Oauth2CallbackController.SESSION_USER_EMAIL]
-            book.createdById = session[Oauth2CallbackController.SESSION_USER_ID]
+            curator.createdBy = session[Oauth2CallbackController.SESSION_USER_EMAIL]
+            curator.createdById = session[Oauth2CallbackController.SESSION_USER_ID]
         }
 
-        if ( cmd.file ) {
-            String fileName = uploadBookCoverService.nameForFile(cmd.file)
-            String imageUrl = googleCloudStorageService.storeMultipartFile(fileName, cmd.file)
-            book.imageUrl = imageUrl
-        }
-        Long id = dao.createBook(book)
-        log.info 'Created book {0}', book.toString()
+        Long id = creatBookWithCoverImageService.saveBookWithCover(cmd.file, curator)
+
+        log.info 'Created book {0}', id
 
         redirect(action: 'show', id: id)
     }

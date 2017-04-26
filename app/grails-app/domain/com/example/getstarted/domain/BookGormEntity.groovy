@@ -15,9 +15,9 @@ class BookGormEntity {
     static transients = ['defaultLanguageCode', 'defaultLocalization']
 
     static constraints = {
-        author nullable: true
-        createdBy nullable: true
-        createdById nullable: true
+        author nullable: true, maxSize: 255
+        createdBy nullable: true, maxSize: 255
+        createdById nullable: true, maxSize: 255
         publishedDate nullable: true
         imageUrl    nullable: true
     }

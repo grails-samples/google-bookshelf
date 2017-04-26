@@ -11,7 +11,7 @@ class BookLocalizationGormEntity implements BookLocalization {
     static belongsTo = [book: BookGormEntity]
 
     static constraints = {
-        title nullable: false
+        title nullable: false, maxSize: 255
         description nullable: true
     }
 
