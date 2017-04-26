@@ -15,12 +15,11 @@ class CreateBookWithCoverImageServiceSpec extends Specification {
         def output = service.bookLocalizationWithText(null)
 
         then:
-        if ( expectedTitle == null ||expectedDescription == null) {
+        if ( expectedTitle == null || expectedDescription == null ) {
             output == null
         } else {
             output == new BookLocalizationImpl(title: expectedTitle, description: expectedDescription)
         }
-
 
         where:
         text      | expectedTitle | expectedDescription

@@ -55,7 +55,7 @@ class CreateBookWithCoverImageService implements GrailsConfigurationAware {
         bookLocalizationWithText(text)
     }
 
-    BookLocalization bookLocalizationWithText(String text){
+    BookLocalization bookLocalizationWithText(String text) {
         if (text == null ) {
             return null
         }
