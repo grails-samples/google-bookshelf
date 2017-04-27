@@ -1,3 +1,0 @@
-plugins {
-  id "org.asciidoctor.convert" version "1.5.3"
-}

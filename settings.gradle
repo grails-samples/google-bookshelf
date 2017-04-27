@@ -1,8 +1,0 @@
-include 'app'
-include 'docs'
-include 'grails-googlecloud-storage'
-include 'grails-googlecloud-authorization'
-include 'grails-googlecloud-translate'
-include 'grails-googlecloud-vision'
-include 'bookshelf-google-cloud-datastore'
-include 'bookshelf-dao'
