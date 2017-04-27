@@ -93,3 +93,11 @@ assets {
 bootRun {
     systemProperties System.properties
 }
+
+integrationTest {
+    beforeTest { descriptor -> logger.quiet " -- $descriptor" }
+}
+
+test {
+    beforeTest { descriptor -> logger.quiet " -- $descriptor" }
+}
