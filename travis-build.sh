@@ -13,7 +13,7 @@ if [[ $EXIT_STATUS -eq 0 ]]; then
 
         if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
     
-            if [[ -n $TRAVIS_TAG ]]; then
+            # if [[ -n $TRAVIS_TAG ]]; then
 
                 echo "Publishing Documentation"
                 git config --global user.name "$GIT_NAME"
@@ -21,7 +21,7 @@ if [[ $EXIT_STATUS -eq 0 ]]; then
                 git config --global credential.helper "store --file=~/.git-credentials"
                 echo "https://$GH_TOKEN:@github.com" > ~/.git-credentials
 
-                git clone https://${GH_TOKEN}@github.com/grails-samples/google-bookshelf.it -b gh-pages gh-pages --single-branch > /dev/null
+                git clone https://${GH_TOKEN}@github.com/grails-samples/google-bookshelf.git -b gh-pages gh-pages --single-branch > /dev/null
     
                 cp -r build/docs/build/asciidoc/html5/* gh-pages/
 
@@ -33,7 +33,7 @@ if [[ $EXIT_STATUS -eq 0 ]]; then
                 git push origin HEAD
                 cd ..
                 rm -rf gh-pages
-            fi    
+            # fi    
         fi    
     fi    
 fi    
