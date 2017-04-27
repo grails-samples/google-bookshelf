@@ -1,10 +1,11 @@
 [![Build Status](https://travis-ci.org/grails-samples/google-bookshelf.svg)](https://travis-ci.org/grails-samples/google-bookshelf)
 
-# Bookshelf App for Grails on the App Engine Flexible environment
+# Bookshelf App for Grails
 
 Expanded example of the [Bookshelf App for Java](https://cloud.google.com/java/getting-started/tutorial-app) Google Cloud example.
  
-This Bookshelf app is a sample web app written in http://groovy-lang.org[Groovy] with the http://grails.org[Grails framework].
+This Bookshelf app is a sample web app written in [Groovy](http://groovy-lang.org) with the [Grails framework](http://grails.org)
+deployed on the App Engine Flexible environment
  
 It shows how to use a variety of Google Cloud Platform products, including:
  
