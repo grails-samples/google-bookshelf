@@ -2,11 +2,13 @@ package org.grails.plugins.googlecloud.vision.test
 
 import grails.test.mixin.TestFor
 import org.grails.plugins.googlecloud.vision.GoogleCloudVisionService
+import spock.lang.IgnoreIf
 import spock.lang.Specification
 
 @TestFor(GoogleCloudVisionService)
 class GoogleCloudVisionServiceSpec extends Specification {
 
+    @IgnoreIf( { System.getenv('TRAVIS') as boolean } )
     @SuppressWarnings('JavaIoPackageAccess')
     def "test image text extraction"() {
         when:
