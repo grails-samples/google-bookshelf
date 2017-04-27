@@ -2,13 +2,10 @@ language: groovy
 sudo: false
 cache:
   directories:
-  - "$HOME/.gradle/caches"
-  - "$HOME/.gradle/wrapper"
-before_cache:
-- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  - "$HOME/.gradle"
 jdk:
 - oraclejdk8
-install: true
+before_script:
 script: "./travis-build.sh"
 env:
   global:
