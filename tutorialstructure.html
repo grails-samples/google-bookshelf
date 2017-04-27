@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.3">
 <meta name="copyright" content="Apache License, Version 2.0">
-<title>Interact with Cloud SQL: MySQL database with GORM Hibernate implementation</title>
+<title>Tutorial structure</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -424,270 +424,46 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
-<li><a href="#_interact_with_cloud_sql_mysql_database_with_gorm_hibernate_implementation">1. Interact with Cloud SQL: MySQL database with GORM Hibernate implementation</a></li>
+<li><a href="#_tutorial_structure">1. Tutorial structure</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_interact_with_cloud_sql_mysql_database_with_gorm_hibernate_implementation">1. Interact with Cloud SQL: MySQL database with GORM Hibernate implementation</h3>
+<h3 id="_tutorial_structure">1. Tutorial structure</h3>
 <div class="paragraph">
-<p>We use <a href="http://gorm.grails.org">GORM</a>. GORM is the data access toolkit used by Grails and provides a rich set of APIs for
-accessing relational and non-relational data including implementations for Hibernate (SQL), MongoDB, Neo4j, Cassandra and
-an in-memory ConcurrentHashMap for testing.</p>
+<p>The Bookshelf tutorial has several parts that demonstrate how the sample app uses various Cloud Platform services and leverages Grails Features.</p>
 </div>
 <div class="paragraph">
-<p>We map books and localizations in a one-to-many relationship with the use of Grails Domain Classes:</p>
-</div>
-<div class="listingblock">
-<div class="title">app/grails-app/domain/com/example/getstarted/domain/BookGormEntity.groovy</div>
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted.domain
-
-import grails.compiler.GrailsCompileStatic
-
-@GrailsCompileStatic
-class BookGormEntity {
-
-    String author
-    String createdBy
-    String createdById
-    String publishedDate
-    String imageUrl
-    static hasMany = [localizations: BookLocalizationGormEntity]
-
-    static constraints = {
-        author nullable: true, maxSize: 255
-        createdBy nullable: true, maxSize: 255
-        createdById nullable: true, maxSize: 255
-        publishedDate nullable: true
-        imageUrl    nullable: true
-    }
-
-    static mapping = {
-        table 'book'
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">app/grails-app/domain/com/example/getstarted/domain/BookLocalizationGormEntity.groovy</div>
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted.domain
-
-import com.example.getstarted.objects.BookLocalization
-import grails.compiler.GrailsCompileStatic
-
-@GrailsCompileStatic
-class BookLocalizationGormEntity implements BookLocalization {
-    String title
-    String description
-    String languageCode
-    static belongsTo = [book: BookGormEntity]
-
-    static constraints = {
-        title nullable: false, maxSize: 255
-        description nullable: true
-    }
-
-    static mapping = {
-        table 'book_localization'
-        description type: 'text'
-    }
-}</code></pre>
-</div>
+<p>The Controllers and Views part demonstrates how the app uses Grails: Controllers, Command Objects and GSPs to generate the UI and handle interaction.</p>
 </div>
 <div class="paragraph">
-<p>We encapsulate the GORM database access in a service:</p>
+<p>The Services part shows how Grails can interact with different Cloud Services.</p>
 </div>
-<div class="listingblock">
-<div class="title">app/grails-app/services/com/example/getstarted/daos/CloudSqlService.groovy</div>
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted.daos
-
-import com.example.getstarted.objects.BookImpl
-import org.grails.plugins.googlecloud.translate.GoogleCloudTranslateService
-import com.example.getstarted.domain.BookGormEntity
-import com.example.getstarted.domain.BookLocalizationGormEntity
-import com.example.getstarted.objects.Book
-import com.example.getstarted.objects.BookLocalization
-import com.example.getstarted.objects.Result
-import grails.config.Config
-import grails.core.support.GrailsConfigurationAware
-import grails.gorm.DetachedCriteria
-import grails.transaction.Transactional
-import groovy.transform.CompileStatic
-import groovy.util.logging.Slf4j
-
-@Slf4j
-@SuppressWarnings('GrailsStatelessService')
-@CompileStatic
-@Transactional
-class CloudSqlService implements BookDao, GrailsConfigurationAware {
-
-    int limit
-    String defaultLanguageCode
-    List&lt;String&gt; localizations
-
-    GoogleCloudTranslateService googleCloudTranslateService
-
-    @Override
-    void setConfiguration(Config co) {
-        limit = co.getProperty('bookshelf.limit', Integer, 10)
-        defaultLanguageCode = co.getProperty('bookshelf.defaultLanguageCode', String, 'en')
-        localizations = co.getProperty('bookshelf.localizations', List)
-    }
-
-    @SuppressWarnings('LineLength')
-    @Override
-    Long createBook(Book book) {
-        BookGormEntity entity = new BookGormEntity()
-        populateEntityWithBook(entity, book)
-        if ( book.title != null ) {
-            entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: defaultLanguageCode,
-                    title: book.title,
-                    description: book.description))
-
-            for (String languageCode : localizations ) {
-                String title = googleCloudTranslateService.translateTextFromSourceToTarget(book.title, defaultLanguageCode, languageCode)
-                String description = googleCloudTranslateService.translateTextFromSourceToTarget(book.description, defaultLanguageCode, languageCode)
-                entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: languageCode,
-                        title: title,
-                        description: description))
-            }
-        }
-
-        entity.save()
-        entity.id
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    Book readBook(Long bookId) {
-        def entity = BookGormEntity.get(bookId)
-        def book = new BookImpl()
-        book.with {
-            id = entity.id
-            author = entity.author
-            createdBy = entity.createdById
-            createdById = entity.createdById
-            publishedDate = entity.publishedDate
-            imageUrl = entity.imageUrl
-        }
-        BookLocalization bookLocalization = getLocalization(bookId, defaultLanguageCode)
-        book.title = bookLocalization?.title
-        book.description = bookLocalization?.description
-        book
-    }
-
-    @SuppressWarnings('LineLength')
-    @Override
-    void updateBook(Book book) {
-        def entity = BookGormEntity.get(book.id)
-        populateEntityWithBook(entity, book)
-        addOrUpdateBookLocalizationWithTitleAndDescriptionByLanguageCode(entity, defaultLanguageCode, book.title, book.description)
-
-        for (String languageCode : localizations ) {
-            String title = googleCloudTranslateService.translateTextFromSourceToTarget(book.title, defaultLanguageCode, languageCode)
-            String description = googleCloudTranslateService.translateTextFromSourceToTarget(book.description, defaultLanguageCode, languageCode)
-            addOrUpdateBookLocalizationWithTitleAndDescriptionByLanguageCode(entity, languageCode, title, description)
-        }
-
-        entity.save()
-    }
-
-    @SuppressWarnings('LineLength')
-    static void addOrUpdateBookLocalizationWithTitleAndDescriptionByLanguageCode(BookGormEntity entity, String languageCode, String title, String description) {
-        BookLocalizationGormEntity defaultBookLocalizationGormEntity = entity.localizations.find { it.languageCode == languageCode }
-        if ( defaultBookLocalizationGormEntity ) {
-            defaultBookLocalizationGormEntity.title = title
-            defaultBookLocalizationGormEntity.description = description
-        } else {
-            entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: languageCode,
-                    title: title,
-                    description: description))
-        }
-    }
-
-    @Override
-    void deleteBook(Long bookId) {
-        def entity = BookGormEntity.get(bookId)
-        entity?.delete()
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    Result&lt;Book&gt; listBooks(String cursor) {
-        def query = listBooksQuery()
-        listBooksByQuery(cursor, query)
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    Result&lt;Book&gt; listBooksByUser(String userId, String cursor) {
-        def query = listBooksByUserQuery(userId)
-        listBooksByQuery(cursor, query)
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    BookLocalization getLocalization(Long bookId, String code) {
-        String language = code ?: defaultLanguageCode
-        def q = BookLocalizationGormEntity.where { book.id == bookId &amp;&amp; languageCode == language }
-        log.info 'code: ' + code + 'size: ' + q.list().size()
-        q.get()
-    }
-
-    private DetachedCriteria&lt;BookGormEntity&gt; listBooksQuery() {
-        BookGormEntity.where { }
-    }
-
-    private DetachedCriteria&lt;BookGormEntity&gt; listBooksByUserQuery(String userId) {
-        BookGormEntity.where { createdById == userId }
-    }
-
-    private Result&lt;Book&gt; listBooksByQuery(String cursor, DetachedCriteria&lt;BookGormEntity&gt; query) {
-        def offset = cursor ? Integer.parseInt(cursor) : 0
-        def max = limit
-        int total = query.count() as int
-        def booksEntities = query.max(max).offset(offset).list()
-        def books = collectBooks(booksEntities)
-        if (total &gt; (offset + limit)) {
-            return new Result&lt;&gt;(books, Integer.toString(offset + limit))
-        }
-        new Result&lt;&gt;(books)
-    }
-
-    private List&lt;Book&gt; collectBooks(List&lt;BookGormEntity&gt; entities) {
-        entities.collect { BookGormEntity entity -&gt;
-            BookImpl book = new BookImpl()
-
-            BookLocalization bookLocalization = getLocalization(entity.id, defaultLanguageCode)
-            book.with {
-                id = entity.id
-                author = entity.author
-                createdBy = entity.createdBy
-                createdById = entity.createdById
-                publishedDate = entity.publishedDate
-                imageUrl = entity.imageUrl
-                title = bookLocalization?.title
-                description = bookLocalization?.description
-            }
-            book
-        } as List&lt;Book&gt;
-    }
-
-    private static void populateEntityWithBook(BookGormEntity entity, Book book) {
-        entity.with {
-            author = book.author
-            createdBy = book.createdBy
-            createdById = book.createdById
-            publishedDate = book.publishedDate
-            imageUrl = book.imageUrl
-        }
-    }
-}</code></pre>
+<div class="ulist">
+<ul>
+<li>
+<p>This sample stores book information in a SQL database. The app&#8217;s web page
+displays a form where the user can enter the title, author, description, and publication date of a book. For each book entered, the app stores this
+information in a database, so it can be retrieved later for viewing or editing.</p>
+</li>
+<li>
+<p>This sample app stores binary data in Cloud Storage. On the app&#8217;s web page, the user can specify a cover image for each book. The app stores the cover images in a Cloud Storage bucket.</p>
+</li>
+<li>
+<p>This sample app uses Cloud Vision API to extract the text present on a book cover image.</p>
+</li>
+<li>
+<p>This sample app uses Cloud Translation API to translate text from English into Spanish and Italian.</p>
+</li>
+</ul>
 </div>
+<div class="paragraph">
+<p>The authorization part of the tutorial demonstrates how the app provides a sign-in flow for the user. When a user is signed in,
+any books entered are associated with the individual user. Signed-in users see only their own books.</p>
+</div>
+<div class="paragraph">
+<p>The logging part of the tutorial demonstrates how the app writes logs that become visible in the Google Cloud Platform Console. Logs of this type can provide diagnostic information during app development.</p>
 </div>
 </div>
 </div>
