@@ -47,7 +47,6 @@ configurations.all {
 // end::guava[]
 // tag::configurations[]
 configurations {
-    compile.exclude module: "spring-boot-starter-tomcat"
     compile.exclude module: "tomcat-juli"
 }
 // end::configurations[]
