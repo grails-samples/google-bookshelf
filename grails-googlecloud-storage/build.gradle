@@ -37,7 +37,7 @@ dependencies {
     testCompile "org.grails:grails-plugin-testing"
     // tag::googlecloudStorageDependency[]
     compile "com.google.cloud:google-cloud-storage:$googleCloudStorageVersion"
-    // tag::googlecloudStorageDependency[]
+    // end::googlecloudStorageDependency[]
 }
 
 bootRun {

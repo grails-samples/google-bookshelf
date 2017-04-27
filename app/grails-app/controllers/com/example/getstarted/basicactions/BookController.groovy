@@ -34,17 +34,20 @@ class BookController {
 
     MessageSource messageSource
 
+    // tag::index[]
     def index(String cursor) {
         Result<Book> result = daoService.listBooks(cursor)
         log.info 'Retrieved list of all books'
         String title = messageSource.getMessage('books', null, 'Books', request.locale)
         [books: result.result, cursor: result.cursor, title: title]
     }
+    // end::index[]
 
+    // tag::create[]
     @SuppressWarnings('EmptyMethod')
     def create() {
-
     }
+    // end::create[]
 
     // tag::save[]
     def save(CreateBookCommand cmd) {
@@ -67,17 +70,20 @@ class BookController {
     }
     // end::save[]
 
-    // tag:show[]
+    // tag::show[]
     def show(Long id) {
-        log.info 'Read book with id {0}', id
+        log.info "Read book with id ${id}"
         [book: daoService.readBook(id)]
     }
-    // tag:show[]
+    // end::show[]
 
+    // tag::edit[]
     def edit(Long id) {
         [book: daoService.readBook(id)]
     }
+    // end::edit[]
 
+    // tag::update[]
     def update(UpdateBookCommand cmd) {
         if ( cmd.hasErrors() ) {
             return
@@ -101,17 +107,22 @@ class BookController {
         daoService.updateBook(book)
         redirect(action: 'show', id: book.id)
     }
+    // end::update[]
 
+    // tag::delete[]
     def delete(Long id) {
         daoService.deleteBook(id)
         redirect action: 'index'
     }
+    // end::delete[]
 
+    // tag::mine[]
     def mine(String cursor) {
         String userId = session[Oauth2CallbackController.SESSION_USER_ID]
         Result<Book> result = daoService.listBooksByUser(userId, cursor)
-        log.info 'Retrieved list of all books for user: {0}', userId
+        log.info "Retrieved list of all books for user: $userId"
         String title = messageSource.getMessage('books.mine', null, 'My Books', request.locale)
         render(view: 'index', model: [books: result.result, cursor: result.cursor, title: title])
     }
+    // end::mine[]
 }

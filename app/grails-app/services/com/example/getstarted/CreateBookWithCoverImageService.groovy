@@ -16,7 +16,7 @@ import groovy.util.logging.Slf4j
 @SuppressWarnings('GrailsStatelessService')
 @Slf4j
 @CompileStatic
-class CreateBookWithCoverImageService implements GrailsConfigurationAware {
+class CreateBookWithCoverImageService {
 
     UploadBookCoverService uploadBookCoverService
 
@@ -24,14 +24,7 @@ class CreateBookWithCoverImageService implements GrailsConfigurationAware {
 
     GoogleCloudVisionService googleCloudVisionService
 
-    String defaultLanguageCode
-
     DaoService daoService
-
-    @Override
-    void setConfiguration(Config co) {
-        defaultLanguageCode = co.getProperty('bookshelf.defaultLanguageCode', String, 'en')
-    }
 
     BookLocalization bookLocalizationWithFile(MultipartFile file) {
         def text = googleCloudVisionService.detectDocumentText(file.inputStream)

@@ -1,0 +1,9 @@
+### Configuration
+
+We setup several configuration values in `application.yml` We use these configuration parameters across multiple services.
+
+[source, groovy]
+.app/grails-app/conf/application.yml
+----
+include::{sourcedir}/app/grails-app/conf/application.yml[tag=configurationSettings]
+----

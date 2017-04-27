@@ -19,6 +19,8 @@ class UpdateBookCommand implements Validateable {
     String createdBy
 
     static constraints = {
+        id nullable: false
+        title nullable: false
         author nullable: true
         description nullable: true
         publishedDate nullable: true

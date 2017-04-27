@@ -1,0 +1,34 @@
+=== Display book
+
+We map the home page to be handled by the `BookController` `show` action.
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy[tag=showMap,indent=0]
+----
+
+The controller's action returns a list of books, along with a URL safe cursor.
+It uses a service to fetch books and handles the model to the view:
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy[tag=show, indent=0]
+----
+
+We use a GSP to render the book:
+
+[source, groovy]
+.app/grails-app/views/book/show.gsp
+----
+include::{sourcedir}/app/grails-app/views/book/show.gsp[]
+----
+
+The GSP uses a custom taglib to renders `title` or `description` depending on the current locale.
+
+[source, groovy]
+.app/grails-app/taglib/com/example/getstarted/BookLocalizationTagLib.groovy
+----
+include::{sourcedir}/app/grails-app/taglib/com/example/getstarted/BookLocalizationTagLib.groovy[]
+----

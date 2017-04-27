@@ -8,18 +8,38 @@ class UrlMappings {
                 // apply constraints here
             }
         }
-
+        // tag::homeMap[]
         '/'(controller: 'book', action: 'index', method: 'GET')
+        // end::homeMap[]
+
         '/oauth2callback'(controller: 'oauth2Callback', action: 'index')
         '/books'(controller: 'book', action: 'index', method: 'GET')
         '/list'(controller: 'book', action: 'index', method: 'GET')
-        "/read/$id"(controller: 'book', action: 'show', method: 'GET')
-        '/create'(controller: 'book', action: 'save', method: 'POST')
-        '/create'(controller: 'book', action: 'create', method: 'GET')
-        "/delete/$id"(controller: 'book', action: 'delete', method: 'GET')
-        "/update/$id"(controller: 'book', action: 'edit', method: 'GET')
-        "/update/$id"(controller: 'book', action: 'update', method: 'POST')
 
+        // tag::showMap[]
+        "/read/$id"(controller: 'book', action: 'show', method: 'GET')
+        // end::showMap[]
+
+        // tag::saveMap[]
+        '/create'(controller: 'book', action: 'save', method: 'POST')
+        // end::saveMap[]
+
+        // tag::createMap[]
+        '/create'(controller: 'book', action: 'create', method: 'GET')
+        // end::createMap[]
+
+        // tag::deleteMap[]
+        "/delete/$id"(controller: 'book', action: 'delete', method: 'GET')
+        // end::deleteMap[]
+
+        // tag::editMap[]
+        "/update/$id"(controller: 'book', action: 'edit', method: 'GET')
+        // end::editMap[]
+        // tag::updateMap[]
+        "/update/$id"(controller: 'book', action: 'update', method: 'POST')
+        // end::updateMap[]
+
+        // tag::ahHealth[]
         '/_ah/health'(controller: 'health') // App Engine flexible environment sends a request to
                                             // the path '/_ah/health' periodically to check if an
                                             // instance is still serving requests.
@@ -48,6 +68,8 @@ class UrlMappings {
                                            // a shutdown script
                                            // https://g.co/cloud/compute/docs/shutdownscript
                                            // can be used.
+        // end::ahHealth[]
+
         '500'(view: '/error')
         '404'(view: '/notFound')
     }

@@ -1,0 +1,24 @@
+=== Update a book
+
+We manage the edit form submission with the Controller's update action.
+
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy[tag=updateMap,indent=0]
+----
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy[tag=update, indent=0]
+----
+
+The update methods gets a Command Object which encapsulates the parameters binding and validation
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/UpdateBookCommand.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/UpdateBookCommand.groovy[]
+----

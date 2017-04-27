@@ -1,0 +1,28 @@
+=== Interact with Cloud SQL: MySQL database with GORM Hibernate implementation
+
+We use http://gorm.grails.org[GORM]. GORM is the data access toolkit used by Grails and provides a rich set of APIs for
+accessing relational and non-relational data including implementations for Hibernate (SQL), MongoDB, Neo4j, Cassandra and
+an in-memory ConcurrentHashMap for testing.
+
+We map books and localizations in a one-to-many relationship with the use of Grails Domain Classes:
+
+[source, groovy]
+.app/grails-app/domain/com/example/getstarted/domain/BookGormEntity.groovy
+----
+include::{sourcedir}/app/grails-app/domain/com/example/getstarted/domain/BookGormEntity.groovy[]
+----
+
+[source, groovy]
+.app/grails-app/domain/com/example/getstarted/domain/BookLocalizationGormEntity.groovy
+----
+include::{sourcedir}/app/grails-app/domain/com/example/getstarted/domain/BookLocalizationGormEntity.groovy[]
+----
+
+We encapsulate the GORM database access in a service:
+
+
+[source, groovy]
+.app/grails-app/services/com/example/getstarted/daos/CloudSqlService.groovy
+----
+include::{sourcedir}/app/grails-app/services/com/example/getstarted/daos/CloudSqlService.groovy[]
+----

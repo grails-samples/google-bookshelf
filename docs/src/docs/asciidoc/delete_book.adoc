@@ -1,0 +1,17 @@
+=== Delete book
+
+We map the home page to be handled by the `BookController` `show` action.
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy[tag=deleteMap,indent=0]
+----
+
+The controller's action deletes a book identify by its id.
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy[tag=delete, indent=0]
+----

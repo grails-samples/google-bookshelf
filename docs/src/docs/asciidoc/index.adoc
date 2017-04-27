@@ -1,9 +1,4 @@
-:toc: left
-:imagesdir: images
-:source-highlighter: pygments
-:sourcedir: ../../../../
-
-= Bookshelf App for Grails
+= Google Cloud Bookshelf with Grails
 
 == Overview
 
@@ -28,7 +23,7 @@ The Bookshelf sample app stores a collection of book titles. Anyone who has acce
 - Users can remove books from the list.
 - Users can add books. They create books uploading a cover image, text int that image is detected and used to populate the book title.
 - Users can edit book metadata such as title, description, author or publication date.
-- A title and description for spanish and italian is generated on the fly.
+- A title and description for Spanish and Italian is generated on the fly.
 - Users can log in with their Google accounts and view the books that they have added to the list.
 
 === Objectives
@@ -52,7 +47,7 @@ This tutorial uses billable components of Cloud Platform including Google Comput
 
 This tutorial has several steps, and each step is documented on its own page. The final page of the tutorial includes
 instructions for cleaning up resources, so you won't continue to be billed for Cloud Platform services.
-If you decide not to complete all the steps of the tutorial, see the link:index.html#_cleaning_up[cleanup instructions]on the final page.
+If you decide not to complete all the steps of the tutorial, see the link:index.html#_cleaning_up[cleanup instructions] on the final page.
 
 === Before you begin
 
@@ -66,17 +61,16 @@ If you decide not to complete all the steps of the tutorial, see the link:index.
 https://cloud.google.com/sdk/docs/[DOWNLOAD THE SDK]
 4. Acquire local credentials for authenticating with Google Cloud Platform services:   
 `gcloud beta auth application-default login`
-5. Verify that your default project is correct:  
-`gcloud config list`  
-If the project ID listed in the output is not the project that you intended to use for this tutorial, set the project by entering this command:  
-`gcloud config set project [YOUR_PROJECT_ID]`
+5. Verify that your default project is correct: +
+`gcloud config list` +
+If the project ID listed in the output is not the project that you intended to use for this tutorial, set the project by entering this command: +
+`gcloud config set project [YOUR_PROJECT_ID]` +
 where [YOUR_PROJECT_ID] is the ID of the project you created or chose to use for this tutorial.
+6. Clone the sample repository: +
+`git clone https://github.com/grails-samples/google-bookshelf.git`
 
 NOTE: You can create Google Cloud SDK configurations to set configuration properties like a Cloud Platform project ID, and then quickly switch between those configurations each time you use the gcloud tool,
 see Managing Cloud SDK Configurations for more information.
-
-6. Clone the sample repository:  
-`git clone https://github.com/grails-samples/google-bookshelf.git`
 
 Alternatively, you can https://github.com/grails-samples/google-bookshelf/archive/master.zip[download the sample] as a zip file and extract it.
 
@@ -84,20 +78,21 @@ This tutorial assumes that you are familiar with Groovy and Grails and that you 
 
 === Tutorial structure
 
-The Bookshelf tutorial has several parts that demonstrate how the sample app uses various Cloud Platform services.
+The Bookshelf tutorial has several parts that demonstrate how the sample app uses various Cloud Platform services and leverages Grails Features.
 
-The forms part of the tutorial demonstrates how the app uses web forms to to receive and store book information.
+The Controllers and Views part demonstrates how the app uses Grails: Controllers, Command Objects and GSPs to generate the UI and handle interaction.
 
-The structured data part of the tutorial demonstrates how the sample app stores book information in a SQL
-//or NoSQL database
-. The app's web page displays a form where the user can enter the title, author, description, and publication date of a book.
-For each book entered, the app stores this information in a database, so it can be retrieved later for viewing or editing.
+The Services part shows how Grails can interact with different Cloud Services.
 
-//For this step of the tutorial, you have your choice of two databases: Cloud Datastore or Cloud SQL. After you complete this step with one of the databases, you can move on to the next step.
+- This sample stores book information in a SQL database. The app's web page
+displays a form where the user can enter the title, author, description, and publication date of a book. For each book entered, the app stores this
+information in a database, so it can be retrieved later for viewing or editing.
+- This sample app stores binary data in Cloud Storage. On the app's web page, the user can specify a cover image for each book. The app stores the cover images in a Cloud Storage bucket.
+- This sample app uses Cloud Vision API to extract the text present on a book cover image.
+- This sample app uses Cloud Translation API to translate text from English into Spanish and Italian.
 
-The Cloud Storage part of the tutorial demonstrates how the sample app stores binary data in Cloud Storage. On the app's web page, the user can specify a cover image for each book. The app stores the cover images in a Cloud Storage bucket.
-
-The authorization part of the tutorial demonstrates how the app provides a sign-in flow for the user. When a user is signed in, any books entered are associated with the individual user. Signed-in users see only their own books.
+The authorization part of the tutorial demonstrates how the app provides a sign-in flow for the user. When a user is signed in,
+any books entered are associated with the individual user. Signed-in users see only their own books.
 
 The logging part of the tutorial demonstrates how the app writes logs that become visible in the Google Cloud Platform Console. Logs of this type can provide diagnostic information during app development.
 
@@ -105,17 +100,18 @@ The logging part of the tutorial demonstrates how the app writes logs that becom
 
 To run the app locally while you are developing:
 
-1. Create a MySQL database and configure its url and username and password in `app/grails-app/conf/application.yml`
-
-2. In the root of the repository, enter this command to start a local web server:
-
+1. Create a MySQL database and configure its url, username and password in `app/grails-app/conf/application.yml`
+2. In the root of the repository, enter this command to start a local web server: +
 `./gradlew app:bootRun`
-
-2. In your web browser, navigate to http://localhost:8080[http://localhost:8080]
+3. In your web browser, navigate to http://localhost:8080[http://localhost:8080]
 
 === Deploying the app to the App Engine flexible environment
 
-1. Create a configuration file for production:
+1. Create a configuration file for production: `app/grails-app/conf/application-production.yml` See code listing below.
+2. Enter this command to deploy the app: +
+`./gradlew app:appengineDeploy`
+3. In your web browser, enter this address. Replace `[YOUR_PROJECT_ID]` with your project ID: +
+`https://[YOUR_PROJECT_ID].appspot-preview.com` +
 
 [source, yaml]
 .app/grails-app/conf/application-production.yml
@@ -152,14 +148,11 @@ dataSource:
 
 NOTE: replace the above placeholders with the values of your configuration.
 
-2. Enter this command to deploy the app:
 
-`./gradlew app:appengineDeploy`
 
-2. In your web browser, enter this address. Replace `[YOUR_PROJECT_ID]` with your project ID:  
-`https://[YOUR_PROJECT_ID].appspot-preview.com`
-
-If you update your app, you can deploy the updated version by entering the same command you used to deploy the app the first time. The new deployment creates a new version of your app and promotes it to the default version. The older versions of your app remain, as do their associated VM instances. Be aware that all of these app versions and VM instances are billable resources.
+If you update your app, you can deploy the updated version by entering the same command you used to deploy the app the first time.
+The new deployment creates a new version of your app and promotes it to the default version. The older versions of your app remain,
+as do their associated VM instances. Be aware that all of these app versions and VM instances are billable resources. +
 
 You can reduce costs by deleting the non-default versions of your app.
 
@@ -168,111 +161,46 @@ To delete an app version:
 1. In the Cloud Platform Console, go to the App Engine Versions page.  
 https://console.cloud.google.com/appengine/versions?_ga=1.17491577.1963584502.1488379440[GO TO THE VERSIONS PAGE]
 2. Click the checkbox next to the non-default app version you want to delete.
-**Note: The only way to delete the default version of your App Engine app is to delete your project. You can, however, stop the default version in the Cloud Platform Console. This will shut down all instances associated with the version. You can restart these instances later if needed.
-You can overwrite the default version of your app by redeploying the app.**
 3. Click the **Delete** button at the top of the page to delete the app version.
+
+Note: The only way to delete the default version of your App Engine app is to delete your project. You can, however, stop the default version in the Cloud Platform Console. This will shut down all instances associated with the version. You can restart these instances later if needed.
+You can overwrite the default version of your app by redeploying the app.
 
 For complete information about cleaning up billable resources, see the Cleaning up section in the final step of this tutorial.
 
-== Service integration Overview
+== Controllers and Views
 
-image::overview.png[]
+include::internationalization.adoc[]
 
-=== Create a book
+include::listing_books.adoc[]
 
-To create a book, we have created a form which allows us to upload a cover image:
+include::create_books.adoc[]
 
-image::create-book.png[]
+include::show_book.adoc[]
 
+include::delete_book.adoc[]
 
-=== Handling Cover Image upload
+include::edit_book.adoc[]
 
-Grails uses a MVC pattern. With the aid of a controller's action and a http://docs.grails.org/latest/guide/single.html#commandObjects[Command Object] we can handle this form's submissions.
+include::update_book.adoc[]
 
-[source, groovy]
-.app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy
-----
-include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy[tag=save]
-----
+== Services
 
-[source, groovy]
-.app/grails-app/controllers/com/example/getstarted/basicactions/CreateBookCommand.groovy
-----
-include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/CreateBookCommand.groovy[]
-----
+As you could see in the previous code snippets the business logic of the application is encapsulated in http://docs.grails.org/latest/guide/single.html#services[Grails Services].
 
-As you can see in the above code snippets the business logic of the application is encapsulated in http://docs.grails.org/latest/guide/single.html#services[Grails Services].
+include::application_configuration.adoc[]
 
-When we upload a book cover image several things will happen:
+include::overview.adoc[]
 
-- The cover image is uploaded to Google https://cloud.google.com/storage/[Cloud Storage]. This will provided use with an image url which
-we will store in the database `book` table row.
-- Text in the cover image is extracted by Google https://cloud.google.com/vision/[Cloud Vision API].
-- The extracted text is translated to spanish and italian with Google https://cloud.google.com/translate/[Cloud Translation API].
-- Save the book entry in a MySQL database provided by Google https://cloud.google.com/sql/[Cloud SQL].
+include::create_book_with_cover_image_service.adoc[]
 
-=== Uploading an image to Cloud Storage
+include::service_cloud_storage.adoc[]
 
-[source, groovy]
-.grails-googlecloud-storage/grails-app/services/org/grails/plugins/googlecloud/storage/GoogleCloudStorageService.groovy
-----
-include::{sourcedir}/grails-googlecloud-storage/grails-app/services/org/grails/plugins/googlecloud/storage/GoogleCloudStorageService.groovy[]
-----
+include::service_cloud_vision.adoc[]
 
-=== Translate Text with Cloud Translation API
+include::service_cloud_translate.adoc[]
 
-[source, groovy]
-.grails-googlecloud-translate/grails-app/services/org/grails/plugins/googlecloud/translate/GoogleCloudTranslateService.groovy
-----
-include::{sourcedir}/grails-googlecloud-translate/grails-app/services/org/grails/plugins/googlecloud/translate/GoogleCloudTranslateService.groovy[]
-----
-
-The previous service method would be invoked with:
-
-[source, groovy]
-----
-assert 'Hola Mundo' == googleCloudTranslateService.translateTextFromSourceToTarget('Hello World', 'en', 'es')
-----
-
-=== Extracting the text of an image with Cloud Vision
-
-We encapsulate the code which extracts the text in a Cover Image in a http://docs.grails.org/latest/guide/single.html#services[Grails Service]
-
-[source, groovy]
-.grails-googlecloud-translate/grails-app/services/org/grails/plugins/googlecloud/translate/GoogleCloudTranslateService.groovy
-----
-include::{sourcedir}/grails-googlecloud-translate/grails-app/services/org/grails/plugins/googlecloud/translate/GoogleCloudTranslateService.groovy[]
-----
-
-=== Translate text with Cloud Translation API
-
-We encapsulate the code which extracts the text in a Cover Image in a http://docs.grails.org/latest/guide/single.html#services[Grails Service]
-
-[source, groovy]
-.grails-googlecloud-vision/grails-app/services/org/grails/plugins/googlecloud/vision/GoogleCloudVisionService.groovy
-----
-include::{sourcedir}/grails-googlecloud-vision/grails-app/services/org/grails/plugins/googlecloud/vision/GoogleCloudVisionService.groovy[]
-----
-
-=== Interact with Cloud SQL: MySQL database with GORM Hibernate implementation
-
-We use http://gorm.grails.org[GORM]. GORM is the data access toolkit used by Grails and provides a rich set of APIs for
-accessing relational and non-relational data including implementations for Hibernate (SQL), MongoDB, Neo4j, Cassandra and
-an in-memory ConcurrentHashMap for testing.
-
-We map books and localizations with the use of Grails Domain Classes:
-
-[source, groovy]
-.app/grails-app/domain/com/example/getstarted/domain/BookGormEntity.groovy
-----
-include::{sourcedir}/app/grails-app/domain/com/example/getstarted/domain/BookGormEntity.groovy[]
-----
-
-[source, groovy]
-.app/grails-app/domain/com/example/getstarted/domain/BookLocalizationGormEntity.groovy
-----
-include::{sourcedir}/app/grails-app/domain/com/example/getstarted/domain/BookLocalizationGormEntity.groovy[]
-----
+include::service_cloud_sql.adoc[]
 
 //=== Handling user submissions with forms
 //
@@ -973,18 +901,20 @@ The easiest way to eliminate billing is to delete the project you created for th
 
 To delete the project:
 
-**Warning: Deleting a project has the following consequences:
-If you used an existing project, you'll also delete any other work you've done in the project.
-You can't reuse the project ID of a deleted project. If you created a custom project ID that you plan to use in the future, you should delete the resources inside the project instead. This ensures that URLs that use the project ID, such as an appspot.com URL, remain available.
-If you are exploring multiple tutorials and quickstarts, reusing projects instead of deleting them prevents you from exceeding project quota limits.**
-
 1. In the Cloud Platform Console, go to the Projects page.  
 https://console.cloud.google.com/iam-admin/projects?_ga=1.77720276.1963584502.1488379440[GO TO THE PROJECTS PAGE]
-2. In the project list, select the project you want to delete and click **Delete project**.
+2. In the project list, select the project you want to delete and click **Delete project**. +
+3. In the dialog, type the project ID, and then click Shut down to delete the project.
 
 image::delete-project-screenshot.png[]
 
-3. In the dialog, type the project ID, and then click Shut down to delete the project.
+
+WARNING: Deleting a project has the following consequences: +
+If you used an existing project, you'll also delete any other work you've done in the project. +
+You can't reuse the project ID of a deleted project. If you created a custom project ID that you plan to
+use in the future, you should delete the resources inside the project instead. This ensures that URLs that
+use the project ID, such as an appspot.com URL, remain available. +
+If you are exploring multiple tutorials and quickstarts, reusing projects instead of deleting them prevents you from exceeding project quota limits.
 
 === Delete non-default versions of your app
 
@@ -995,9 +925,10 @@ To delete an app version:
 1. In the Cloud Platform Console, go to the App Engine Versions page.  
 https://console.cloud.google.com/appengine/versions?_ga=1.121892171.1963584502.1488379440[GO TO THE VERSIONS PAGE]
 2. Click the checkbox next to the non-default app version you want to delete.
-**Note: The only way to delete the default version of your App Engine app is to delete your project. You can, however, stop the default version in the Cloud Platform Console. This will shut down all instances associated with the version. You can restart these instances later if needed.
 You can overwrite the default version of your app by redeploying the app.**
 3. Click the Delete button at the top of the page to delete the app version.
+
+NOTE: The only way to delete the default version of your App Engine app is to delete your project. You can, however, stop the default version in the Cloud Platform Console. This will shut down all instances associated with the version. You can restart these instances later if needed.
 
 === Delete your Cloud Storage bucket
 

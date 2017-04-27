@@ -1,0 +1,49 @@
+=== Create a book
+
+To create a book, we create a form which allows us to upload a cover image:
+
+image::create-book.png[]
+
+We map the display of the form to be handled by the `BookController` `create` action.
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy[tag=createMap, indent=0]
+----
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy[tag=create, indent=0]
+----
+
+We render the form with the help of the https://docs.grails.org/latest/ref/Tags/form.html[Grails Form Tag].
+
+[source, groovy]
+.app/grails-app/views/book/create.gsp
+----
+include::{sourcedir}/app/grails-app/views/book/create.gsp[]
+----
+
+We map the creation of the book to be handled by the `BookController` `save` action.
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy[tag=saveMap, indent=0]
+----
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy[tag=save, indent=0]
+----
+
+We encapsulate the binding and validation of the cover image with a command object:
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/CreateBookCommand.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/CreateBookCommand.groovy[]
+----

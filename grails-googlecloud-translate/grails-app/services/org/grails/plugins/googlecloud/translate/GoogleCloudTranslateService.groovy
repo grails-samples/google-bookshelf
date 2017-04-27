@@ -12,8 +12,8 @@ class GoogleCloudTranslateService {
 
     @SuppressWarnings('ReturnNullFromCatchBlock')
     String translateTextFromSourceToTarget(String text, String source, String target) {
-        if ( text == null ) {
-            return null
+        if ( !text ) {
+            return text
         }
         try {
             return TranslateOptions.defaultInstance.service.translate(text,

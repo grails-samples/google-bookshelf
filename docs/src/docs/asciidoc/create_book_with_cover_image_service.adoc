@@ -1,0 +1,17 @@
+=== Handling Cover Image upload
+
+[source, groovy]
+.app/grails-app/services/com/example/getstarted/CreateBookWithCoverImageService.groovy
+----
+include::{sourcedir}/app/grails-app/services/com/example/getstarted/CreateBookWithCoverImageService.groovy[]
+----
+
+
+When we upload a book cover image several things will happen:
+
+- The cover image is uploaded to Google https://cloud.google.com/storage/[Cloud Storage]. This will provided use with an image url which
+we will store in the database `book` table row.
+- Text in the cover image is extracted by Google https://cloud.google.com/vision/[Cloud Vision API].
+- A book entry in a MySQL database provided by Google https://cloud.google.com/sql/[Cloud SQL].
+- Prior to saving or updating a book, the English title and description are translated to Spanish and Italian with Google https://cloud.google.com/translate/[Cloud Translation API]. Those
+translations are saved to the database.

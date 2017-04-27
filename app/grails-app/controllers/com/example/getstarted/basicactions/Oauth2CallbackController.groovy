@@ -48,7 +48,7 @@ class Oauth2CallbackController implements GrailsConfigurationAware {
         session[SESSION_USER_ID] = userIdResult['sub']
         session[SESSION_USER_IMAGE_URL] = userIdResult['picture']
         def destination = session[LoginController.SESSION_ATTRIBUTE_LOGIN_DESTINATION]
-        log.info 'Login successful, redirecting to {0}', destination
+        log.info "Login successful, redirecting to $destination"
         redirect(uri: destination)
     }
 

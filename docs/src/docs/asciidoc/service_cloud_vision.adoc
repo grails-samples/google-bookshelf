@@ -1,0 +1,19 @@
+=== Extracting the text of an image with Cloud Vision
+
+We encapsulate the code which extracts the text in a Cover Image in a http://docs.grails.org/latest/guide/single.html#services[Grails Service]
+
+[source, groovy]
+.grails-googlecloud-vision/grails-app/services/org/grails/plugins/googlecloud/vision/GoogleCloudVisionService.groovy
+----
+include::{sourcedir}/grails-googlecloud-vision/grails-app/services/org/grails/plugins/googlecloud/vision/GoogleCloudVisionService.groovy[]
+----
+
+In order to use Google Cloud Vision we need to add the next dependency to our compile dependencies:
+
+[source, groovy]
+.grails-googlecloud-vision/build.gradle
+----
+include::{sourcedir}/grails-googlecloud-vision/build.gradle[tag=googlecloudVisionDependency]
+----
+
+Checkout https://cloud.google.com/vision/[Google Cloud Vision] for complete overview of the image analysis options.

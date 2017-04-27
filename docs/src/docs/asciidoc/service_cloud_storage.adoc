@@ -1,0 +1,17 @@
+=== Uploading an image to Cloud Storage
+
+We encapsulate the code which interacts with Google Cloud Storage in its own service:
+
+[source, groovy]
+.grails-googlecloud-storage/grails-app/services/org/grails/plugins/googlecloud/storage/GoogleCloudStorageService.groovy
+----
+include::{sourcedir}/grails-googlecloud-storage/grails-app/services/org/grails/plugins/googlecloud/storage/GoogleCloudStorageService.groovy[]
+----
+
+In order to use Google Cloud Storage we need to add the next dependency to our compile dependencies:
+
+[source, groovy]
+.grails-googlecloud-storage/build.gradle
+----
+include::{sourcedir}/grails-googlecloud-storage/build.gradle[tag=googlecloudStorageDependency]
+----

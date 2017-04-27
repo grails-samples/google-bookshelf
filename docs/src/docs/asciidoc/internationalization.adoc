@@ -1,0 +1,27 @@
+=== Internationalization
+
+http://docs.grails.org/latest/guide/single.html#i18n[Grails supports Internationalization (i18n) out of the box].
+
+Books' titles and descriptions, coming from the persistence layer, are translated by Google Cloud Translation API.
+
+To translate UI elements we use properties files:
+
+[source]
+.app/grails-app/i18n/messages.properties
+----
+include::{sourcedir}/app/grails-app/i18n/messages.properties[tag=booksi18n]
+----
+
+**Spanish**
+[source]
+.app/grails-app/i18n/messages_es.properties
+----
+include::{sourcedir}/app/grails-app/i18n/messages_es.properties[tag=booksi18nEs]
+----
+
+**Italian**
+[source]
+.app/grails-app/i18n/messages_it.properties
+----
+include::{sourcedir}/app/grails-app/i18n/messages_it.properties[tag=booksi18nIt]
+----

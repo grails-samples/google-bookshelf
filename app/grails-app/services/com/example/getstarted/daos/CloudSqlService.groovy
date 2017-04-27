@@ -133,9 +133,8 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
     private Result<Book> listBooksByQuery(String cursor, DetachedCriteria<BookGormEntity> query) {
         def offset = cursor ? Integer.parseInt(cursor) : 0
         def max = limit
-
-        def books = query.list(max: max, offset: offset)
         int total = query.count() as int
+        def books = query.max(max).offset(offset).order(orderBy).list()
         if (total > (offset + limit)) {
             return new Result<>(books, Integer.toString(offset + limit))
         }

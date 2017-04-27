@@ -24,7 +24,7 @@ class HealthController implements GrailsConfigurationAware {
     static allowedMethods = [index: 'GET']
 
     def index() {
-        log.info 'Got request to my ok servlet for {0}', request.requestURI
+        log.info "Got request to my ok servlet for ${request.requestURI}"
 
         response.contentType = contentType
         render 'ok'

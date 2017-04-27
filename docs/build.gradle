@@ -2,6 +2,32 @@ plugins {
   id "org.asciidoctor.convert" version "1.5.3"
 }
 
+def asciidoctorAttributes = [
+        copyright           : 'Apache License, Version 2.0',
+        docinfo1            : 'true',
+        doctype             : 'book',
+        encoding            : 'utf-8',
+        icons               : 'font',
+        lang                : 'en',
+        linkattrs           : true,
+        numbered            : '',
+        producer            : 'Asciidoctor',
+        setanchors          : true,
+        'source-highlighter' : 'prettify',
+        toc                 : 'left',
+        toc2                : '',
+        toclevels           : '2',
+        sourcedir           : '../../../../',
+        imagesdir           : 'images'
+]
+
+import org.asciidoctor.gradle.AsciidoctorTask
+
+tasks.withType(AsciidoctorTask) {
+  attributes asciidoctorAttributes
+}
+
+
 task docs {
   dependsOn 'asciidoctor'
   doLast {

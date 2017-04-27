@@ -20,7 +20,7 @@ class ConfigurationInterceptor implements GrailsConfigurationAware {
     @SuppressWarnings('LineLength')
     boolean before() {
         String instanceId =  System.getenv().containsKey('GAE_MODULE_INSTANCE') ?: '-1'
-        log.info 'ConfigurationInterceptor processing new request for path: {0} and instance {1}', request.requestURI, instanceId
+        log.info "ConfigurationInterceptor processing new request for path: ${request.requestURI} and instance ${instanceId}",
 
         servletContext['isCloudStorageConfigured'] = bucket as boolean
         servletContext['isAuthConfigured'] = clientID as boolean

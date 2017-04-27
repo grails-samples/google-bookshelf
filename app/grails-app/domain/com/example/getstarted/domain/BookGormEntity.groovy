@@ -12,8 +12,6 @@ class BookGormEntity {
     String imageUrl
     static hasMany = [localizations: BookLocalizationGormEntity]
 
-    static transients = ['defaultLanguageCode', 'defaultLocalization']
-
     static constraints = {
         author nullable: true, maxSize: 255
         createdBy nullable: true, maxSize: 255

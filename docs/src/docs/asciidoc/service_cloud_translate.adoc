@@ -1,0 +1,22 @@
+=== Translate Text with Cloud Translation API
+
+The next service method would be invoked with code such as:
+
+[source, groovy]
+----
+assert 'Hola Mundo' == googleCloudTranslateService.translateTextFromSourceToTarget('Hello World', 'en', 'es')
+----
+
+[source, groovy]
+.grails-googlecloud-translate/grails-app/services/org/grails/plugins/googlecloud/translate/GoogleCloudTranslateService.groovy
+----
+include::{sourcedir}/grails-googlecloud-translate/grails-app/services/org/grails/plugins/googlecloud/translate/GoogleCloudTranslateService.groovy[]
+----
+
+In order to use Google Cloud Translation API wee need to add the next dependency:
+
+[source, groovy]
+.grails-googlecloud-translate/build.gradle
+----
+include::{sourcedir}/grails-googlecloud-translate/build.gradle[tag=googlecloudTranslateDependency]
+----

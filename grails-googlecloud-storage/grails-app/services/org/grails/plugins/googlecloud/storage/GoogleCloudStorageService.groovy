@@ -22,13 +22,13 @@ class GoogleCloudStorageService implements GrailsConfigurationAware {
     Storage storage = StorageOptions.defaultInstance.service
 
     String storeMultipartFile(String fileName, MultipartFile multipartFile) {
-        log.info 'Uploaded file {0}', multipartFile.originalFilename
+        log.info "Uploaded file ${multipartFile.originalFilename}"
         storeInputStream(fileName, multipartFile.inputStream)
     }
 
     String storeInputStream(String fileName, InputStream inputStream) {
         BlobInfo blobInfo = storage.create(readableBlobInfo(bucket, fileName), inputStream)
-        log.info 'Uploaded file as {0} with mediaLink {1}', fileName, blobInfo.mediaLink
+        log.info "Uploaded file as ${fileName} with mediaLink ${blobInfo.mediaLink}"
 
         blobInfo.mediaLink
     }

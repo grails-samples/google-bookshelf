@@ -1,0 +1,19 @@
+=== Edit a book
+
+To edit a book, we have a form which allows us to modify the metadata and/or upload a new cover image:
+
+image::edit-book.png[]
+
+We map the display of the form to be handled by the `BookController` `edit` action.
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy[tag=editMap,indent=0]
+----
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy[tag=edit, indent=0]
+----
