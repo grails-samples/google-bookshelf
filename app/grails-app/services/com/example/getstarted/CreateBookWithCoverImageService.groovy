@@ -5,8 +5,6 @@ import com.example.getstarted.objects.BookCurator
 import com.example.getstarted.objects.BookImpl
 import com.example.getstarted.objects.BookLocalization
 import com.example.getstarted.objects.BookLocalizationImpl
-import grails.config.Config
-import grails.core.support.GrailsConfigurationAware
 import org.grails.plugins.googlecloud.storage.GoogleCloudStorageService
 import org.grails.plugins.googlecloud.vision.GoogleCloudVisionService
 import org.springframework.web.multipart.MultipartFile
