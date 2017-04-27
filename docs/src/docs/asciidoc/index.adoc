@@ -126,6 +126,7 @@ bookshelf:
     callback: https://{PROJECT_ID}.appspot.com/oauth2callback
 ---
 dataSource:
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     driverClassName: com.mysql.jdbc.Driver
     dbCreate: update
     url: jdbc:mysql://google/{DATABASENAME}?cloudSqlInstance={CLOUD_SQL_INSTANCENAME}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&user={USERNAME}&password={PASSWORD}&useSSL=false
