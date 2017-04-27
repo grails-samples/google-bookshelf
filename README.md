@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/grails-samples/google-bookshelf.svg)](https://travis-ci.org/grails-samples/google-bookshelf)
+
 # Bookshelf App for Grails on the App Engine Flexible environment
 
 Expanded example of the [Bookshelf App for Java](https://cloud.google.com/java/getting-started/tutorial-app) Google Cloud example.
