@@ -6,7 +6,6 @@ import com.example.getstarted.domain.BookGormEntity
 import com.example.getstarted.domain.BookLocalizationGormEntity
 import com.example.getstarted.objects.Book
 import com.example.getstarted.objects.BookLocalization
-import com.example.getstarted.objects.BookProperties
 import com.example.getstarted.objects.Result
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
