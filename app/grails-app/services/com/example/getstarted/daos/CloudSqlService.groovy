@@ -28,6 +28,14 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
 
     GoogleCloudTranslateService googleCloudTranslateService
 
+    @Override
+    void setConfiguration(Config co) {
+        limit = co.getProperty('bookshelf.limit', Integer, 10)
+        orderBy = co.getProperty('bookshelf.orderBy', String, BookProperties.TITLE)
+        defaultLanguageCode = co.getProperty('bookshelf.defaultLanguageCode', String, 'en')
+        localizations = co.getProperty('bookshelf.localizations', List)
+    }
+
     @SuppressWarnings('LineLength')
     @Override
     Long createBook(Book book) {
@@ -49,16 +57,6 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
 
         entity.save()
         entity.id
-    }
-
-    private static void populateEntityWithBook(BookGormEntity entity, Book book) {
-        entity.with {
-            author = book.author
-            createdBy = book.createdBy
-            createdById = book.createdById
-            publishedDate = book.publishedDate
-            imageUrl = book.imageUrl
-        }
     }
 
     @Transactional(readOnly = true)
@@ -122,25 +120,6 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
         listBooksByQuery(cursor, query)
     }
 
-    private DetachedCriteria<BookGormEntity> listBooksQuery() {
-        BookGormEntity.where { }
-    }
-
-    private DetachedCriteria<BookGormEntity> listBooksByUserQuery(String userId) {
-        BookGormEntity.where { createdById == userId }
-    }
-
-    private Result<Book> listBooksByQuery(String cursor, DetachedCriteria<BookGormEntity> query) {
-        def offset = cursor ? Integer.parseInt(cursor) : 0
-        def max = limit
-        int total = query.count() as int
-        def books = query.max(max).offset(offset).order(orderBy).list()
-        if (total > (offset + limit)) {
-            return new Result<>(books, Integer.toString(offset + limit))
-        }
-        new Result<>(books)
-    }
-
     @Transactional(readOnly = true)
     @Override
     Result<Book> listBooksByUser(String userId, String cursor) {
@@ -157,11 +136,52 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
         q.get()
     }
 
-    @Override
-    void setConfiguration(Config co) {
-        limit = co.getProperty('bookshelf.limit', Integer, 10)
-        orderBy = co.getProperty('bookshelf.orderBy', String, BookProperties.TITLE)
-        defaultLanguageCode = co.getProperty('bookshelf.defaultLanguageCode', String, 'en')
-        localizations = co.getProperty('bookshelf.localizations', List)
+    private DetachedCriteria<BookGormEntity> listBooksQuery() {
+        BookGormEntity.where { }
+    }
+
+    private DetachedCriteria<BookGormEntity> listBooksByUserQuery(String userId) {
+        BookGormEntity.where { createdById == userId }
+    }
+
+    private Result<Book> listBooksByQuery(String cursor, DetachedCriteria<BookGormEntity> query) {
+        def offset = cursor ? Integer.parseInt(cursor) : 0
+        def max = limit
+        int total = query.count() as int
+        def booksEntities = query.max(max).offset(offset).order(orderBy).list()
+        def books = collectBooks(booksEntities)
+        if (total > (offset + limit)) {
+            return new Result<>(books, Integer.toString(offset + limit))
+        }
+        new Result<>(books)
+    }
+
+    private List<Book> collectBooks(List<BookGormEntity> entities) {
+        entities.collect { BookGormEntity entity ->
+            BookImpl book = new BookImpl()
+
+            BookLocalization bookLocalization = getLocalization(entity.id, defaultLanguageCode)
+            book.with {
+                id = entity.id
+                author = entity.author
+                createdBy = entity.createdBy
+                createdById = entity.createdById
+                publishedDate = entity.publishedDate
+                imageUrl = entity.imageUrl
+                title = bookLocalization?.title
+                description = bookLocalization?.description
+            }
+            book
+        } as List<Book>
+    }
+
+    private static void populateEntityWithBook(BookGormEntity entity, Book book) {
+        entity.with {
+            author = book.author
+            createdBy = book.createdBy
+            createdById = book.createdById
+            publishedDate = book.publishedDate
+            imageUrl = book.imageUrl
+        }
     }
 }
