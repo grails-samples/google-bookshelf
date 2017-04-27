@@ -22,7 +22,6 @@ import groovy.util.logging.Slf4j
 class CloudSqlService implements BookDao, GrailsConfigurationAware {
 
     int limit
-    String orderBy
     String defaultLanguageCode
     List<String> localizations
 
@@ -31,7 +30,6 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
     @Override
     void setConfiguration(Config co) {
         limit = co.getProperty('bookshelf.limit', Integer, 10)
-        orderBy = co.getProperty('bookshelf.orderBy', String, BookProperties.TITLE)
         defaultLanguageCode = co.getProperty('bookshelf.defaultLanguageCode', String, 'en')
         localizations = co.getProperty('bookshelf.localizations', List)
     }
@@ -148,7 +146,7 @@ class CloudSqlService implements BookDao, GrailsConfigurationAware {
         def offset = cursor ? Integer.parseInt(cursor) : 0
         def max = limit
         int total = query.count() as int
-        def booksEntities = query.max(max).offset(offset).order(orderBy).list()
+        def booksEntities = query.max(max).offset(offset).list()
         def books = collectBooks(booksEntities)
         if (total > (offset + limit)) {
             return new Result<>(books, Integer.toString(offset + limit))
