@@ -18,3 +18,6 @@ It shows how to use a variety of Google Cloud Platform products, including:
 ## See [documentation](https://grails-samples.github.io/google-bookshelf/) for further information.
 
 To generate docs: `./gradlew docs`
+
+## See [Application Demo](https://grails-bookshelf.appspot.com/books).
+
