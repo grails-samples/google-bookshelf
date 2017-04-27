@@ -1,3 +1,10 @@
 plugins {
   id "org.asciidoctor.convert" version "1.5.3"
 }
+
+task docs {
+  dependsOn 'asciidoctor'
+  doLast {
+    logger.quiet "open docs/build/asciidoc/html5/index.html"
+  }
+}

@@ -7,7 +7,7 @@ export EXIT_STATUS=0
 
 if [[ $EXIT_STATUS -eq 0 ]]; then 
 
-    ./gradlew docs:asciidoc || EXIT_STATUS=$?
+    ./gradlew docs || EXIT_STATUS=$?
 
      if [[ $EXIT_STATUS -eq 0 ]]; then
 
@@ -23,7 +23,7 @@ if [[ $EXIT_STATUS -eq 0 ]]; then
 
                 git clone https://${GH_TOKEN}@github.com/grails-samples/google-bookshelf.git -b gh-pages gh-pages --single-branch > /dev/null
 
-                cp -r build/docs/build/asciidoc/html5/* gh-pages/
+                cp -r docs/build/asciidoc/html5/* gh-pages/
 
                 cd gh-pages
 
