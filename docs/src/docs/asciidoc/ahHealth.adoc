@@ -1,0 +1,46 @@
+== Health Checks
+
+Google Cloud Platform (GCP) health checks determine whether instances are "healthy" and available to do work.
+
+App Engine flexible environment sends a request to the path `/_ah/health` periodically
+to check if an instance is still serving requests.
+
+For Google Compute Engine, we configure the load balancer health checker to use this path.
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy[tag=ahHealth, indent=0]
+----
+
+App Engine flexible environment sends a request to the path '/_ah/start' when an instance starts up. This can
+be useful for warming up resources like in-memory caches and database connection pools.
+
+To acheive a similar result with Google Compute Engine, a https://g.co/cloud/compute/docs/startupscript[startup script]
+or an init() method on a servlet with ``loadOnStartup=1 can be used. See ListBookServlet for an example of this.
+
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy[tag=ahStart, indent=0]
+----
+
+App Engine flexible environment sends a request to the path `/_ah/stop` when an instance is about to be shut
+down.  This can be useful for cleaning up resources and finishing data transactions.
+
+To acheive a similar result with Google Compute Engine,
+https://g.co/cloud/compute/docs/shutdownscript[a shutdown script] can be used.
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy[tag=ahStop, indent=0]
+----
+We implemented a controller to handle these endpoints
+
+[source, groovy]
+.app/grails-app/controllers/com/example/getstarted/basicactions/HealthController.groovy
+----
+include::{sourcedir}/app/grails-app/controllers/com/example/getstarted/basicactions/HealthController.groovy[]
+----

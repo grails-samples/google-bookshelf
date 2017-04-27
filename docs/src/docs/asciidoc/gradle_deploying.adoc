@@ -1,0 +1,79 @@
+### Deployment changes from a regular Grails App
+
+We define the dependencies' versions used in the project in `gradle.properties`
+
+[source, groovy]
+.gradle.properties
+----
+include::{sourcedir}/gradle.properties[]
+----
+
+
+In order to deploy to App Engine Flexible,
+we need to add the buildscript dependency and apply the
+https://cloud.google.com/appengine/docs/standard/java/tools/gradle[Google Cloud Gradle Plugin].
+
+[source, groovy]
+.app/build.gradle
+----
+include::{sourcedir}/app/build.gradle[tag=buildscript]
+
+include::{sourcedir}/app/build.gradle[tag=versionGroup]
+
+include::{sourcedir}/app/build.gradle[tag=applyplugins]
+----
+
+<1> Google Cloud Gradle Plugin buildscript dependency
+<2> Apply Google Cloud Gradle Plugin
+
+We need an AppEngine configuration file too:
+
+[source, groovy]
+.app/src/main/appengine/app.yaml
+----
+include::{sourcedir}/app/src/main/appengine/app.yaml[]
+----
+
+Since we are using Jetty we need to replace the compile dependency:
+
+[source, groovy]
+.app/build.gradle
+----
+provided 'org.springframework.boot:spring-boot-starter-tomcat'
+----
+
+with:
+
+[source, groovy]
+.app/build.gradle
+----
+provided 'org.springframework.boot:spring-boot-starter-jetty'
+----
+
+
+Moreover, we need to fix the https://github.com/google/guava[Google Guava] version
+[source, groovy]
+.app/build.gradle
+----
+include::{sourcedir}/app/build.gradle[tag=guava]
+----
+
+We need to exclude `tomcat-juli` dependency too:
+
+[source, groovy]
+.app/build.gradle
+----
+include::{sourcedir}/app/build.gradle[tag=configurations]
+----
+
+We highlight next the changes regarding `dependencies`
+
+[source, groovy]
+.app/build.gradle
+----
+include::{sourcedir}/app/build.gradle[tag=dependencies]
+----
+
+<1> Jetty dependency
+<2> Runtime depependencies to connect to a MySQL database in Cloud SQL
+<3> Fix Guava dependency

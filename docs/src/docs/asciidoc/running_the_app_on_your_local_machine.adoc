@@ -1,0 +1,8 @@
+=== Running the app on your local machine
+
+To run the app locally while you are developing:
+
+1. Create a MySQL database and configure its url, username and password in `app/grails-app/conf/application.yml`
+2. In the root of the repository, enter this command to start a local web server: +
+`./gradlew app:bootRun`
+3. In your web browser, navigate to http://localhost:8080[http://localhost:8080]

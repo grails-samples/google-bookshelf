@@ -1,0 +1,61 @@
+=== Deploying the app to the App Engine flexible environment
+
+1. Create a configuration file for production: `app/grails-app/conf/application-production.yml` See code listing below.
+2. Enter this command to deploy the app: +
+`./gradlew app:appengineDeploy`
+3. In your web browser, enter this address. Replace `[YOUR_PROJECT_ID]` with your project ID: +
+`https://[YOUR_PROJECT_ID].appspot-preview.com` +
+
+[source, yaml]
+.app/grails-app/conf/application-production.yml
+----
+bookshelf:
+    clientID: {CLIENTID}
+    clientSecret: {CLIENTSECRET}
+    callback: https://{PROJECT_ID}.appspot.com/oauth2callback
+---
+dataSource:
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    driverClassName: com.mysql.jdbc.Driver
+    dbCreate: update
+    url: jdbc:mysql://google/{DATABASENAME}?cloudSqlInstance={CLOUD_SQL_INSTANCENAME}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&user={USERNAME}&password={PASSWORD}&useSSL=false
+    properties:
+        jmxEnabled: true
+        initialSize: 5
+        maxActive: 50
+        minIdle: 5
+        maxIdle: 25
+        maxWait: 10000
+        maxAge: 600000
+        timeBetweenEvictionRunsMillis: 5000
+        minEvictableIdleTimeMillis: 60000
+        validationQuery: SELECT 1
+        validationQueryTimeout: 3
+        validationInterval: 15000
+        testOnBorrow: true
+        testWhileIdle: true
+        testOnReturn: false
+        jdbcInterceptors: ConnectionState
+        defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+----
+
+NOTE: replace the above placeholders with the values of your configuration.
+
+
+If you update your app, you can deploy the updated version by entering the same command you used to deploy the app the first time.
+The new deployment creates a new version of your app and promotes it to the default version. The older versions of your app remain,
+as do their associated VM instances. Be aware that all of these app versions and VM instances are billable resources. +
+
+You can reduce costs by deleting the non-default versions of your app.
+
+To delete an app version:
+
+1. In the Cloud Platform Console, go to the App Engine Versions page.
+https://console.cloud.google.com/appengine/versions?_ga=1.17491577.1963584502.1488379440[GO TO THE VERSIONS PAGE]
+2. Click the checkbox next to the non-default app version you want to delete.
+3. Click the **Delete** button at the top of the page to delete the app version.
+
+Note: The only way to delete the default version of your App Engine app is to delete your project. You can, however, stop the default version in the Cloud Platform Console. This will shut down all instances associated with the version. You can restart these instances later if needed.
+You can overwrite the default version of your app by redeploying the app.
+
+For complete information about cleaning up billable resources, see the Cleaning up section in the final step of this tutorial.

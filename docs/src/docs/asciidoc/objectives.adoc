@@ -1,0 +1,12 @@
+=== Objectives
+
+- Clone or download the sample app.
+- Build the app and run it on your local machine.
+- Deploy the app to App Engine.
+- Walk through the sample code.
+- Learn how the app stores structured data.
+- Learn how the app stores binary data in Google Cloud Storage.
+- Learn how the app uses Cloud Translate API to translate English text into Spanish and Italian
+- Learn how the app uses Cloud Vision to extract text from a cover image
+- Learn how the app authenticates users.
+- Learn how the app creates event logs that are visible in the Google Cloud Platform Console.

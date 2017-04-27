@@ -26,147 +26,23 @@ The Bookshelf sample app stores a collection of book titles. Anyone who has acce
 - A title and description for Spanish and Italian is generated on the fly.
 - Users can log in with their Google accounts and view the books that they have added to the list.
 
-=== Objectives
+include::objectives.adoc[]
 
-- Clone or download the sample app.
-- Build the app and run it on your local machine.
-- Deploy the app to App Engine.
-- Walk through the sample code.
-- Learn how the app stores structured data.
-- Learn how the app stores binary data in Google Cloud Storage.
-- Learn how the app uses Cloud Translate API to translate English text into Spanish and Italian
-- Learn how the app uses Cloud Vision to extract text from a cover image
+include::costs.adoc[]
 
+include::beforeyoubegin.adoc[]
 
-- Learn how the app authenticates users.
-- Learn how the app creates event logs that are visible in the Google Cloud Platform Console.
+include::tutorialstructure.adoc[]
 
-=== Costs
+include::running_the_app_on_your_local_machine.adoc[]
 
-This tutorial uses billable components of Cloud Platform including Google Compute Engine.
+//include::ahHealth.adoc[]
 
-This tutorial has several steps, and each step is documented on its own page. The final page of the tutorial includes
-instructions for cleaning up resources, so you won't continue to be billed for Cloud Platform services.
-If you decide not to complete all the steps of the tutorial, see the link:index.html#_cleaning_up[cleanup instructions] on the final page.
+== Deploying
 
-=== Before you begin
+include::deploying.adoc[]
 
-1. Use the Cloud Platform Console to set up your Google Cloud Platform project:
-    * Create a new Cloud Platform project, and then create an App Engine application and enable billing in that project:
-    https://console.cloud.google.com/projectselector/appengine/create?lang=flex_java&st=true&_ga=1.20629880.1963584502.1488379440[GO TO APP ENGINE]
-    * Enable the Cloud Datastore, Cloud Pub/Sub, Cloud Storage JSON, Stackdriver Logging, and Google+ APIs.
-    https://console.cloud.google.com/flows/enableapi?apiid=datastore.googleapis.com,datastore,pubsub,storage_api,translate,vision.googleapis.com,logging,plus,sqladmin.googleapis.com&redirect=https://console.cloud.google.com&_ga=1.20629880.1963584502.1488379440[ENABLE THE APIS]
-2. To deploy a Java app to App Engine, you must first setup your environment, see https://cloud.google.com/appengine/docs/standard/java/tools/gradle[Using Gradle and the App Engine Plugin] for details.
-3. Download, install, and initialize the Google Cloud SDK:
-https://cloud.google.com/sdk/docs/[DOWNLOAD THE SDK]
-4. Acquire local credentials for authenticating with Google Cloud Platform services:   
-`gcloud beta auth application-default login`
-5. Verify that your default project is correct: +
-`gcloud config list` +
-If the project ID listed in the output is not the project that you intended to use for this tutorial, set the project by entering this command: +
-`gcloud config set project [YOUR_PROJECT_ID]` +
-where [YOUR_PROJECT_ID] is the ID of the project you created or chose to use for this tutorial.
-6. Clone the sample repository: +
-`git clone https://github.com/grails-samples/google-bookshelf.git`
-
-NOTE: You can create Google Cloud SDK configurations to set configuration properties like a Cloud Platform project ID, and then quickly switch between those configurations each time you use the gcloud tool,
-see Managing Cloud SDK Configurations for more information.
-
-Alternatively, you can https://github.com/grails-samples/google-bookshelf/archive/master.zip[download the sample] as a zip file and extract it.
-
-This tutorial assumes that you are familiar with Groovy and Grails and that you have http://www.oracle.com/technetwork/java/javase/downloads/[Java 8] and http://gradle.org/[Gradle] installed.
-
-=== Tutorial structure
-
-The Bookshelf tutorial has several parts that demonstrate how the sample app uses various Cloud Platform services and leverages Grails Features.
-
-The Controllers and Views part demonstrates how the app uses Grails: Controllers, Command Objects and GSPs to generate the UI and handle interaction.
-
-The Services part shows how Grails can interact with different Cloud Services.
-
-- This sample stores book information in a SQL database. The app's web page
-displays a form where the user can enter the title, author, description, and publication date of a book. For each book entered, the app stores this
-information in a database, so it can be retrieved later for viewing or editing.
-- This sample app stores binary data in Cloud Storage. On the app's web page, the user can specify a cover image for each book. The app stores the cover images in a Cloud Storage bucket.
-- This sample app uses Cloud Vision API to extract the text present on a book cover image.
-- This sample app uses Cloud Translation API to translate text from English into Spanish and Italian.
-
-The authorization part of the tutorial demonstrates how the app provides a sign-in flow for the user. When a user is signed in,
-any books entered are associated with the individual user. Signed-in users see only their own books.
-
-The logging part of the tutorial demonstrates how the app writes logs that become visible in the Google Cloud Platform Console. Logs of this type can provide diagnostic information during app development.
-
-=== Running the app on your local machine
-
-To run the app locally while you are developing:
-
-1. Create a MySQL database and configure its url, username and password in `app/grails-app/conf/application.yml`
-2. In the root of the repository, enter this command to start a local web server: +
-`./gradlew app:bootRun`
-3. In your web browser, navigate to http://localhost:8080[http://localhost:8080]
-
-=== Deploying the app to the App Engine flexible environment
-
-1. Create a configuration file for production: `app/grails-app/conf/application-production.yml` See code listing below.
-2. Enter this command to deploy the app: +
-`./gradlew app:appengineDeploy`
-3. In your web browser, enter this address. Replace `[YOUR_PROJECT_ID]` with your project ID: +
-`https://[YOUR_PROJECT_ID].appspot-preview.com` +
-
-[source, yaml]
-.app/grails-app/conf/application-production.yml
-----
-bookshelf:
-    clientID: {CLIENTID}
-    clientSecret: {CLIENTSECRET}
-    callback: https://{PROJECT_ID}.appspot.com/oauth2callback
----
-dataSource:
-    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    driverClassName: com.mysql.jdbc.Driver
-    dbCreate: update
-    url: jdbc:mysql://google/{DATABASENAME}?cloudSqlInstance={CLOUD_SQL_INSTANCENAME}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&user={USERNAME}&password={PASSWORD}&useSSL=false
-    properties:
-        jmxEnabled: true
-        initialSize: 5
-        maxActive: 50
-        minIdle: 5
-        maxIdle: 25
-        maxWait: 10000
-        maxAge: 600000
-        timeBetweenEvictionRunsMillis: 5000
-        minEvictableIdleTimeMillis: 60000
-        validationQuery: SELECT 1
-        validationQueryTimeout: 3
-        validationInterval: 15000
-        testOnBorrow: true
-        testWhileIdle: true
-        testOnReturn: false
-        jdbcInterceptors: ConnectionState
-        defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
-----
-
-NOTE: replace the above placeholders with the values of your configuration.
-
-
-
-If you update your app, you can deploy the updated version by entering the same command you used to deploy the app the first time.
-The new deployment creates a new version of your app and promotes it to the default version. The older versions of your app remain,
-as do their associated VM instances. Be aware that all of these app versions and VM instances are billable resources. +
-
-You can reduce costs by deleting the non-default versions of your app.
-
-To delete an app version:
-
-1. In the Cloud Platform Console, go to the App Engine Versions page.  
-https://console.cloud.google.com/appengine/versions?_ga=1.17491577.1963584502.1488379440[GO TO THE VERSIONS PAGE]
-2. Click the checkbox next to the non-default app version you want to delete.
-3. Click the **Delete** button at the top of the page to delete the app version.
-
-Note: The only way to delete the default version of your App Engine app is to delete your project. You can, however, stop the default version in the Cloud Platform Console. This will shut down all instances associated with the version. You can restart these instances later if needed.
-You can overwrite the default version of your app by redeploying the app.
-
-For complete information about cleaning up billable resources, see the Cleaning up section in the final step of this tutorial.
+include::gradle_deploying.adoc[]
 
 == Controllers and Views
 

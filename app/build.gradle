@@ -1,3 +1,4 @@
+// tag::buildscript[]
 buildscript {
     repositories {
         mavenLocal()
@@ -7,22 +8,28 @@ buildscript {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:$assetPipelineGrailsVersion"
         classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
-        classpath "com.google.cloud.tools:appengine-gradle-plugin:$appengineGradlePluginVersion"
+        classpath "com.google.cloud.tools:appengine-gradle-plugin:$appengineGradlePluginVersion" // <1>
         classpath "net.saliman:gradle-cobertura-plugin:$coberturaPluginVersion"
     }
 }
+// end::buildscript[]
 
+
+// tag::versionGroup[]
 version "0.1"
 group "app"
+// end::versionGroup[]
 
+// tag::applyplugins[]
 apply plugin:"eclipse"
 apply plugin:"idea"
 apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.grails-gsp"
 apply plugin:"asset-pipeline"
-apply plugin: 'com.google.cloud.tools.appengine'
+apply plugin: 'com.google.cloud.tools.appengine' // <2>
 apply from: "${rootProject.projectDir}/gradle/codenarc.gradle"
+// end::applyplugins[]
 
 repositories {
     mavenLocal()
@@ -30,24 +37,28 @@ repositories {
     jcenter()
 }
 
+// tag::guava[]
 configurations.all {
     resolutionStrategy {
         force "com.google.guava:guava:$guavaVersion"
     }
     exclude group: 'com.google.guava', module: 'guava-jdk5'
 }
-
+// end::guava[]
+// tag::configurations[]
 configurations {
     compile.exclude module: "spring-boot-starter-tomcat"
     compile.exclude module: "tomcat-juli"
 }
+// end::configurations[]
 
+// tag::dependencies[]
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
     compile "org.grails:grails-core"
     compile "org.springframework.boot:spring-boot-starter-actuator"
-    provided "org.springframework.boot:spring-boot-starter-jetty"
+    provided "org.springframework.boot:spring-boot-starter-jetty" // <1>
     compile "org.grails:grails-dependencies"
     compile "org.grails:grails-web-boot"
     compile "org.grails.plugins:cache"
@@ -58,17 +69,19 @@ dependencies {
     console "org.grails:grails-console"
     profile "org.grails.profiles:web"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:$assetPipelineGrailsVersion"
-    runtime "mysql:mysql-connector-java:$mysqlConnectorJavaVersion"
-    runtime "com.google.cloud.sql:mysql-socket-factory-connector-j-6:$mysqlSocketFactoryConnectorJ6Version"
     testRuntime "com.h2database:h2"
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:$seleniumHtmlunitDriver"
     testRuntime "net.sourceforge.htmlunit:htmlunit:$htmlunitVersion"
     testCompile "org.grails:grails-datastore-rest-client"
-    compile "com.google.guava:guava:$guavaVersion"
+    runtime "mysql:mysql-connector-java:$mysqlConnectorJavaVersion" // <2>
+    runtime "com.google.cloud.sql:mysql-socket-factory-connector-j-6:$mysqlSocketFactoryConnectorJ6Version" // <2>
+    compile "com.google.guava:guava:$guavaVersion" // <3>
     compile project(':bookshelf-dao')
 }
+// end::dependencies[]
+
 
 grails {
     plugins {

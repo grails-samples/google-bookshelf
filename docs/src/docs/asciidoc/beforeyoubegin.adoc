@@ -1,0 +1,26 @@
+=== Before you begin
+
+1. Use the Cloud Platform Console to set up your Google Cloud Platform project:
+    * Create a new Cloud Platform project, and then create an App Engine application and enable billing in that project:
+    https://console.cloud.google.com/projectselector/appengine/create?lang=flex_java&st=true&_ga=1.20629880.1963584502.1488379440[GO TO APP ENGINE]
+    * Enable the Cloud Datastore, Cloud Pub/Sub, Cloud Storage JSON, Stackdriver Logging, and Google+ APIs.
+    https://console.cloud.google.com/flows/enableapi?apiid=datastore.googleapis.com,datastore,pubsub,storage_api,translate,vision.googleapis.com,logging,plus,sqladmin.googleapis.com&redirect=https://console.cloud.google.com&_ga=1.20629880.1963584502.1488379440[ENABLE THE APIS]
+2. To deploy a Java app to App Engine, you must first setup your environment, see https://cloud.google.com/appengine/docs/standard/java/tools/gradle[Using Gradle and the App Engine Plugin] for details.
+3. Download, install, and initialize the Google Cloud SDK:
+https://cloud.google.com/sdk/docs/[DOWNLOAD THE SDK]
+4. Acquire local credentials for authenticating with Google Cloud Platform services:
+`gcloud beta auth application-default login`
+5. Verify that your default project is correct: +
+`gcloud config list` +
+If the project ID listed in the output is not the project that you intended to use for this tutorial, set the project by entering this command: +
+`gcloud config set project [YOUR_PROJECT_ID]` +
+where [YOUR_PROJECT_ID] is the ID of the project you created or chose to use for this tutorial.
+6. Clone the sample repository: +
+`git clone https://github.com/grails-samples/google-bookshelf.git`
+
+NOTE: You can create Google Cloud SDK configurations to set configuration properties like a Cloud Platform project ID, and then quickly switch between those configurations each time you use the gcloud tool,
+see Managing Cloud SDK Configurations for more information.
+
+Alternatively, you can https://github.com/grails-samples/google-bookshelf/archive/master.zip[download the sample] as a zip file and extract it.
+
+This tutorial assumes that you are familiar with Groovy and Grails and that you have http://www.oracle.com/technetwork/java/javase/downloads/[Java 8] and http://gradle.org/[Gradle] installed.

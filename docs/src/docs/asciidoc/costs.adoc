@@ -1,0 +1,7 @@
+=== Costs
+
+This tutorial uses billable components of Cloud Platform including Google Compute Engine.
+
+This tutorial has several steps, and each step is documented on its own page. The final page of the tutorial includes
+instructions for cleaning up resources, so you won't continue to be billed for Cloud Platform services.
+If you decide not to complete all the steps of the tutorial, see the link:index.html#_cleaning_up[cleanup instructions] on the final page.

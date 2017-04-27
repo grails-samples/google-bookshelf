@@ -1,0 +1,19 @@
+=== Tutorial structure
+
+The Bookshelf tutorial has several parts that demonstrate how the sample app uses various Cloud Platform services and leverages Grails Features.
+
+The Controllers and Views part demonstrates how the app uses Grails: Controllers, Command Objects and GSPs to generate the UI and handle interaction.
+
+The Services part shows how Grails can interact with different Cloud Services.
+
+- This sample stores book information in a SQL database. The app's web page
+displays a form where the user can enter the title, author, description, and publication date of a book. For each book entered, the app stores this
+information in a database, so it can be retrieved later for viewing or editing.
+- This sample app stores binary data in Cloud Storage. On the app's web page, the user can specify a cover image for each book. The app stores the cover images in a Cloud Storage bucket.
+- This sample app uses Cloud Vision API to extract the text present on a book cover image.
+- This sample app uses Cloud Translation API to translate text from English into Spanish and Italian.
+
+The authorization part of the tutorial demonstrates how the app provides a sign-in flow for the user. When a user is signed in,
+any books entered are associated with the individual user. Signed-in users see only their own books.
+
+The logging part of the tutorial demonstrates how the app writes logs that become visible in the Google Cloud Platform Console. Logs of this type can provide diagnostic information during app development.
