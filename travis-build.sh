@@ -13,7 +13,7 @@ if [[ $EXIT_STATUS -eq 0 ]]; then
 
         if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
     
-            # if [[ -n $TRAVIS_TAG ]]; then
+            if [[ $TRAVIS_TAG == doc_*  ]]; then
 
                 echo "Publishing Documentation"
                 git config --global user.name "$GIT_NAME"
@@ -33,7 +33,7 @@ if [[ $EXIT_STATUS -eq 0 ]]; then
                 git push origin HEAD
                 cd ..
                 rm -rf gh-pages
-            # fi    
+            fi
         fi    
     fi    
 fi    
