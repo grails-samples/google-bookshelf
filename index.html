@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.3">
-<title>Bookshelf App for Grails</title>
+<meta name="copyright" content="Apache License, Version 2.0">
+<title>Google Cloud Bookshelf with Grails</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -416,58 +417,67 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<style>
-/* Pygments styles disabled. Pygments is not available. */
-</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
-<body class="article toc2 toc-left">
+<body class="book toc2 toc-left">
 <div id="header">
-<h1>Bookshelf App for Grails</h1>
+<h1>Google Cloud Bookshelf with Grails</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_overview">Overview</a>
+<li><a href="#_overview">1. Overview</a>
 <ul class="sectlevel2">
-<li><a href="#_objectives">Objectives</a></li>
-<li><a href="#_costs">Costs</a></li>
-<li><a href="#_before_you_begin">Before you begin</a></li>
-<li><a href="#_tutorial_structure">Tutorial structure</a></li>
-<li><a href="#_running_the_app_on_your_local_machine">Running the app on your local machine</a></li>
-<li><a href="#_deploying_the_app_to_the_app_engine_flexible_environment">Deploying the app to the App Engine flexible environment</a></li>
+<li><a href="#_objectives">1.1. Objectives</a></li>
+<li><a href="#_costs">1.2. Costs</a></li>
+<li><a href="#_before_you_begin">1.3. Before you begin</a></li>
+<li><a href="#_tutorial_structure">1.4. Tutorial structure</a></li>
+<li><a href="#_running_the_app_on_your_local_machine">1.5. Running the app on your local machine</a></li>
+<li><a href="#_deploying_the_app_to_the_app_engine_flexible_environment">1.6. Deploying the app to the App Engine flexible environment</a></li>
 </ul>
 </li>
-<li><a href="#_service_integration_overview">Service integration Overview</a>
+<li><a href="#_controllers_and_views">2. Controllers and Views</a>
 <ul class="sectlevel2">
-<li><a href="#_create_a_book">Create a book</a></li>
-<li><a href="#_handling_cover_image_upload">Handling Cover Image upload</a></li>
-<li><a href="#_uploading_an_image_to_cloud_storage">Uploading an image to Cloud Storage</a></li>
-<li><a href="#_translate_text_with_cloud_translation_api">Translate Text with Cloud Translation API</a></li>
-<li><a href="#_extracting_the_text_of_an_image_with_cloud_vision">Extracting the text of an image with Cloud Vision</a></li>
-<li><a href="#_translate_text_with_cloud_translation_api_2">Translate text with Cloud Translation API</a></li>
-<li><a href="#_interact_with_cloud_sql_mysql_database_with_gorm_hibernate_implementation">Interact with Cloud SQL: MySQL database with GORM Hibernate implementation</a></li>
+<li><a href="#_internationalization">2.1. Internationalization</a></li>
+<li><a href="#_listing_books">2.2. Listing books</a></li>
+<li><a href="#_create_a_book">2.3. Create a book</a></li>
+<li><a href="#_display_book">2.4. Display book</a></li>
+<li><a href="#_delete_book">2.5. Delete book</a></li>
+<li><a href="#_edit_a_book">2.6. Edit a book</a></li>
+<li><a href="#_update_a_book">2.7. Update a book</a></li>
 </ul>
 </li>
-<li><a href="#_authenticating_users_with_grails">Authenticating Users with Grails</a>
+<li><a href="#_services">3. Services</a>
 <ul class="sectlevel2">
-<li><a href="#_creating_a_web_application_client_id">Creating a web application client ID</a></li>
-<li><a href="#_configuring_settings">Configuring settings</a></li>
-<li><a href="#_application_structure">Application structure</a></li>
-<li><a href="#_understanding_the_code">Understanding the code</a></li>
+<li><a href="#_configuration">3.1. Configuration</a></li>
+<li><a href="#_service_integration_overview">3.2. Service integration Overview</a></li>
+<li><a href="#_handling_cover_image_upload">3.3. Handling Cover Image upload</a></li>
+<li><a href="#_uploading_an_image_to_cloud_storage">3.4. Uploading an image to Cloud Storage</a></li>
+<li><a href="#_extracting_the_text_of_an_image_with_cloud_vision">3.5. Extracting the text of an image with Cloud Vision</a></li>
+<li><a href="#_translate_text_with_cloud_translation_api">3.6. Translate Text with Cloud Translation API</a></li>
+<li><a href="#_interact_with_cloud_sql_mysql_database_with_gorm_hibernate_implementation">3.7. Interact with Cloud SQL: MySQL database with GORM Hibernate implementation</a></li>
 </ul>
 </li>
-<li><a href="#_logging_application_events_with_grails">Logging Application Events with Grails</a>
+<li><a href="#_authenticating_users_with_grails">4. Authenticating Users with Grails</a>
 <ul class="sectlevel2">
-<li><a href="#_viewing_logs">Viewing logs</a></li>
-<li><a href="#_application_structure_2">Application structure</a></li>
-<li><a href="#_understanding_the_code_2">Understanding the code</a></li>
-<li><a href="#_understanding_the_logging_configuration">Understanding the logging configuration</a></li>
+<li><a href="#_creating_a_web_application_client_id">4.1. Creating a web application client ID</a></li>
+<li><a href="#_configuring_settings">4.2. Configuring settings</a></li>
+<li><a href="#_application_structure">4.3. Application structure</a></li>
+<li><a href="#_understanding_the_code">4.4. Understanding the code</a></li>
 </ul>
 </li>
-<li><a href="#_cleaning_up">Cleaning up</a>
+<li><a href="#_logging_application_events_with_grails">5. Logging Application Events with Grails</a>
 <ul class="sectlevel2">
-<li><a href="#_delete_the_project">Delete the project</a></li>
-<li><a href="#_delete_non_default_versions_of_your_app">Delete non-default versions of your app</a></li>
-<li><a href="#_delete_your_cloud_storage_bucket">Delete your Cloud Storage bucket</a></li>
+<li><a href="#_viewing_logs">5.1. Viewing logs</a></li>
+<li><a href="#_application_structure_2">5.2. Application structure</a></li>
+<li><a href="#_understanding_the_code_2">5.3. Understanding the code</a></li>
+<li><a href="#_understanding_the_logging_configuration">5.4. Understanding the logging configuration</a></li>
+</ul>
+</li>
+<li><a href="#_cleaning_up">6. Cleaning up</a>
+<ul class="sectlevel2">
+<li><a href="#_delete_the_project">6.1. Delete the project</a></li>
+<li><a href="#_delete_non_default_versions_of_your_app">6.2. Delete non-default versions of your app</a></li>
+<li><a href="#_delete_your_cloud_storage_bucket">6.3. Delete your Cloud Storage bucket</a></li>
 </ul>
 </li>
 </ul>
@@ -475,7 +485,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_overview">Overview</h2>
+<h2 id="_overview">1. Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Bookshelf app is a sample web app written in <a href="http://groovy-lang.org">Groovy</a> with the <a href="http://grails.org">Grails framework</a>.
@@ -526,7 +536,7 @@ It shows how to use a variety of Google Cloud Platform products, including:</p>
 <p>Users can edit book metadata such as title, description, author or publication date.</p>
 </li>
 <li>
-<p>A title and description for spanish and italian is generated on the fly.</p>
+<p>A title and description for Spanish and Italian is generated on the fly.</p>
 </li>
 <li>
 <p>Users can log in with their Google accounts and view the books that they have added to the list.</p>
@@ -534,7 +544,7 @@ It shows how to use a variety of Google Cloud Platform products, including:</p>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_objectives">Objectives</h3>
+<h3 id="_objectives">1.1. Objectives</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -571,18 +581,18 @@ It shows how to use a variety of Google Cloud Platform products, including:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_costs">Costs</h3>
+<h3 id="_costs">1.2. Costs</h3>
 <div class="paragraph">
 <p>This tutorial uses billable components of Cloud Platform including Google Compute Engine.</p>
 </div>
 <div class="paragraph">
 <p>This tutorial has several steps, and each step is documented on its own page. The final page of the tutorial includes
 instructions for cleaning up resources, so you won&#8217;t continue to be billed for Cloud Platform services.
-If you decide not to complete all the steps of the tutorial, see the <a href="index.html#_cleaning_up">cleanup instructions</a>on the final page.</p>
+If you decide not to complete all the steps of the tutorial, see the <a href="index.html#_cleaning_up">cleanup instructions</a> on the final page.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_before_you_begin">Before you begin</h3>
+<h3 id="_before_you_begin">1.3. Before you begin</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -612,11 +622,15 @@ If you decide not to complete all the steps of the tutorial, see the <a href="in
 <code>gcloud beta auth application-default login</code></p>
 </li>
 <li>
-<p>Verify that your default project is correct:
-<code>gcloud config list</code>
-If the project ID listed in the output is not the project that you intended to use for this tutorial, set the project by entering this command:
-<code>gcloud config set project [YOUR_PROJECT_ID]</code>
+<p>Verify that your default project is correct:<br>
+<code>gcloud config list</code><br>
+If the project ID listed in the output is not the project that you intended to use for this tutorial, set the project by entering this command:<br>
+<code>gcloud config set project [YOUR_PROJECT_ID]</code><br>
 where [YOUR_PROJECT_ID] is the ID of the project you created or chose to use for this tutorial.</p>
+</li>
+<li>
+<p>Clone the sample repository:<br>
+<code>git clone <a href="https://github.com/grails-samples/google-bookshelf.git" class="bare">https://github.com/grails-samples/google-bookshelf.git</a></code></p>
 </li>
 </ol>
 </div>
@@ -624,7 +638,7 @@ where [YOUR_PROJECT_ID] is the ID of the project you created or chose to use for
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 You can create Google Cloud SDK configurations to set configuration properties like a Cloud Platform project ID, and then quickly switch between those configurations each time you use the gcloud tool,
@@ -632,14 +646,6 @@ see Managing Cloud SDK Configurations for more information.
 </td>
 </tr>
 </table>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Clone the sample repository:
-<code>git clone <a href="https://github.com/grails-samples/google-bookshelf.git" class="bare">https://github.com/grails-samples/google-bookshelf.git</a></code></p>
-</li>
-</ol>
 </div>
 <div class="paragraph">
 <p>Alternatively, you can <a href="https://github.com/grails-samples/google-bookshelf/archive/master.zip">download the sample</a> as a zip file and extract it.</p>
@@ -649,48 +655,56 @@ see Managing Cloud SDK Configurations for more information.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_tutorial_structure">Tutorial structure</h3>
+<h3 id="_tutorial_structure">1.4. Tutorial structure</h3>
 <div class="paragraph">
-<p>The Bookshelf tutorial has several parts that demonstrate how the sample app uses various Cloud Platform services.</p>
+<p>The Bookshelf tutorial has several parts that demonstrate how the sample app uses various Cloud Platform services and leverages Grails Features.</p>
 </div>
 <div class="paragraph">
-<p>The forms part of the tutorial demonstrates how the app uses web forms to to receive and store book information.</p>
+<p>The Controllers and Views part demonstrates how the app uses Grails: Controllers, Command Objects and GSPs to generate the UI and handle interaction.</p>
 </div>
 <div class="paragraph">
-<p>The structured data part of the tutorial demonstrates how the sample app stores book information in a SQL
-. The app&#8217;s web page displays a form where the user can enter the title, author, description, and publication date of a book.
-For each book entered, the app stores this information in a database, so it can be retrieved later for viewing or editing.</p>
+<p>The Services part shows how Grails can interact with different Cloud Services.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>This sample stores book information in a SQL database. The app&#8217;s web page
+displays a form where the user can enter the title, author, description, and publication date of a book. For each book entered, the app stores this
+information in a database, so it can be retrieved later for viewing or editing.</p>
+</li>
+<li>
+<p>This sample app stores binary data in Cloud Storage. On the app&#8217;s web page, the user can specify a cover image for each book. The app stores the cover images in a Cloud Storage bucket.</p>
+</li>
+<li>
+<p>This sample app uses Cloud Vision API to extract the text present on a book cover image.</p>
+</li>
+<li>
+<p>This sample app uses Cloud Translation API to translate text from English into Spanish and Italian.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>The Cloud Storage part of the tutorial demonstrates how the sample app stores binary data in Cloud Storage. On the app&#8217;s web page, the user can specify a cover image for each book. The app stores the cover images in a Cloud Storage bucket.</p>
-</div>
-<div class="paragraph">
-<p>The authorization part of the tutorial demonstrates how the app provides a sign-in flow for the user. When a user is signed in, any books entered are associated with the individual user. Signed-in users see only their own books.</p>
+<p>The authorization part of the tutorial demonstrates how the app provides a sign-in flow for the user. When a user is signed in,
+any books entered are associated with the individual user. Signed-in users see only their own books.</p>
 </div>
 <div class="paragraph">
 <p>The logging part of the tutorial demonstrates how the app writes logs that become visible in the Google Cloud Platform Console. Logs of this type can provide diagnostic information during app development.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_running_the_app_on_your_local_machine">Running the app on your local machine</h3>
+<h3 id="_running_the_app_on_your_local_machine">1.5. Running the app on your local machine</h3>
 <div class="paragraph">
 <p>To run the app locally while you are developing:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Create a MySQL database and configure its url and username and password in <code>app/grails-app/conf/application.yml</code></p>
+<p>Create a MySQL database and configure its url, username and password in <code>app/grails-app/conf/application.yml</code></p>
 </li>
 <li>
-<p>In the root of the repository, enter this command to start a local web server:</p>
+<p>In the root of the repository, enter this command to start a local web server:<br>
+<code>./gradlew app:bootRun</code></p>
 </li>
-</ol>
-</div>
-<div class="paragraph">
-<p><code>./gradlew app:bootRun</code></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
 <li>
 <p>In your web browser, navigate to <a href="http://localhost:8080">http://localhost:8080</a></p>
 </li>
@@ -698,18 +712,26 @@ For each book entered, the app stores this information in a database, so it can 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_deploying_the_app_to_the_app_engine_flexible_environment">Deploying the app to the App Engine flexible environment</h3>
+<h3 id="_deploying_the_app_to_the_app_engine_flexible_environment">1.6. Deploying the app to the App Engine flexible environment</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Create a configuration file for production:</p>
+<p>Create a configuration file for production: <code>app/grails-app/conf/application-production.yml</code> See code listing below.</p>
+</li>
+<li>
+<p>Enter this command to deploy the app:<br>
+<code>./gradlew app:appengineDeploy</code></p>
+</li>
+<li>
+<p>In your web browser, enter this address. Replace <code>[YOUR_PROJECT_ID]</code> with your project ID:<br>
+<code>https://[YOUR_PROJECT_ID].appspot-preview.com</code><br></p>
 </li>
 </ol>
 </div>
 <div class="listingblock">
 <div class="title">app/grails-app/conf/application-production.yml</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="yaml">bookshelf:
+<pre class="prettyprint highlight"><code class="language-yaml" data-lang="yaml">bookshelf:
     clientID: {CLIENTID}
     clientSecret: {CLIENTSECRET}
     callback: https://{PROJECT_ID}.appspot.com/oauth2callback
@@ -743,7 +765,7 @@ dataSource:
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 replace the above placeholders with the values of your configuration.
@@ -751,26 +773,10 @@ replace the above placeholders with the values of your configuration.
 </tr>
 </table>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Enter this command to deploy the app:</p>
-</li>
-</ol>
-</div>
 <div class="paragraph">
-<p><code>./gradlew app:appengineDeploy</code></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>In your web browser, enter this address. Replace <code>[YOUR_PROJECT_ID]</code> with your project ID:
-<code>https://[YOUR_PROJECT_ID].appspot-preview.com</code></p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>If you update your app, you can deploy the updated version by entering the same command you used to deploy the app the first time. The new deployment creates a new version of your app and promotes it to the default version. The older versions of your app remain, as do their associated VM instances. Be aware that all of these app versions and VM instances are billable resources.</p>
+<p>If you update your app, you can deploy the updated version by entering the same command you used to deploy the app the first time.
+The new deployment creates a new version of your app and promotes it to the default version. The older versions of your app remain,
+as do their associated VM instances. Be aware that all of these app versions and VM instances are billable resources.<br></p>
 </div>
 <div class="paragraph">
 <p>You can reduce costs by deleting the non-default versions of your app.</p>
@@ -785,14 +791,16 @@ replace the above placeholders with the values of your configuration.
 <a href="https://console.cloud.google.com/appengine/versions?_ga=1.17491577.1963584502.1488379440">GO TO THE VERSIONS PAGE</a></p>
 </li>
 <li>
-<p>Click the checkbox next to the non-default app version you want to delete.
-<strong>Note: The only way to delete the default version of your App Engine app is to delete your project. You can, however, stop the default version in the Cloud Platform Console. This will shut down all instances associated with the version. You can restart these instances later if needed.
-You can overwrite the default version of your app by redeploying the app.</strong></p>
+<p>Click the checkbox next to the non-default app version you want to delete.</p>
 </li>
 <li>
 <p>Click the <strong>Delete</strong> button at the top of the page to delete the app version.</p>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>Note: The only way to delete the default version of your App Engine app is to delete your project. You can, however, stop the default version in the Cloud Platform Console. This will shut down all instances associated with the version. You can restart these instances later if needed.
+You can overwrite the default version of your app by redeploying the app.</p>
 </div>
 <div class="paragraph">
 <p>For complete information about cleaning up billable resources, see the Cleaning up section in the final step of this tutorial.</p>
@@ -801,56 +809,277 @@ You can overwrite the default version of your app by redeploying the app.</stron
 </div>
 </div>
 <div class="sect1">
-<h2 id="_service_integration_overview">Service integration Overview</h2>
+<h2 id="_controllers_and_views">2. Controllers and Views</h2>
 <div class="sectionbody">
-<div class="imageblock">
+<div class="sect2">
+<h3 id="_internationalization">2.1. Internationalization</h3>
+<div class="paragraph">
+<p><a href="http://docs.grails.org/latest/guide/single.html#i18n">Grails supports Internationalization (i18n) out of the box</a>.</p>
+</div>
+<div class="paragraph">
+<p>Books' titles and descriptions, coming from the persistence layer, are translated by Google Cloud Translation API.</p>
+</div>
+<div class="paragraph">
+<p>To translate UI elements we use properties files:</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/i18n/messages.properties</div>
 <div class="content">
-<img src="images/overview.png" alt="overview">
+<pre class="prettyprint highlight"><code>books=Books
+books.mine=My books
+login=Login
+bookshelf=Bookshelf
+book=Book
+book.title=Title
+book.author=Author
+book.description=Description
+book.cover.image=Cover Image
+book.cover.image.url=Cover Image URL
+book.date.published=Date Published
+book.list.more=More
+book.list.notFound=No books found
+book.add=Add book
+book.create=Create book
+book.save=Save
+book.edit=Edit book
+book.delete=Delete book
+book.author.by=By {0}
+book.author.unknown=By Unknown
+book.added.by=Added by {0}
+book.added.by.anonymous=Added by Anonymous</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Spanish</strong></p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/i18n/messages_es.properties</div>
+<div class="content">
+<pre class="prettyprint highlight"><code>books=Libros
+books.mine=Mis Libros
+login=Entrar
+bookshelf=Biblioteca
+book=Libro
+book.title=Título
+book.author=Autor
+book.description=Descripción
+book.cover.image=Portada
+book.cover.image.url=URL Portada
+book.date.published=Fecha Publicación
+book.list.more=Más
+book.list.notFound=Libros no encontrados
+book.add=Añadir libro
+book.create=Crear libro
+book.save=Guardar
+book.edit=Editar libro
+book.delete=Borrar libro
+book.author.by=por {0}
+book.author.unknown=por desconocido
+book.added.by=Añadido por {0}
+book.added.by.anonymous=Añadido porAnónimo</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Italian</strong></p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/i18n/messages_it.properties</div>
+<div class="content">
+<pre class="prettyprint highlight"><code>books=Libri
+books.mine=I miei libri
+login=Accesso
+bookshelf=Libretto
+book=Libro
+book.title=Titolo
+book.author=Autore
+book.description=Descrizione
+book.cover.image=Immagine di copertina
+book.cover.image.url=Immagine di copertina URL
+book.date.published=Data Pubblicata
+book.list.more=Di Più
+book.list.notFound=Nessun libro trovato
+book.add=Aggiungi Libro
+book.create=Aggiungi Libro
+book.save=Salvare
+book.edit=Modifica il libro
+book.delete=Elimina il libro
+book.author.by=By {0}
+book.author.unknown=Per sconosciuto
+book.added.by=Aggiunto da {0}
+book.added.by.anonymous=Aggiunto da Anonimo</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_create_a_book">Create a book</h3>
+<h3 id="_listing_books">2.2. Listing books</h3>
 <div class="paragraph">
-<p>To create a book, we have created a form which allows us to upload a cover image:</p>
+<p>We map the home page to be handled by the <code>BookController</code> <code>index</code> action.</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">'/'(controller: 'book', action: 'index', method: 'GET')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The controller&#8217;s action returns a list of books, along with a URL safe cursor.
+It uses a service to fetch books and handles the model to the view:</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def index(String cursor) {
+    Result&lt;Book&gt; result = daoService.listBooks(cursor)
+    log.info 'Retrieved list of all books'
+    String title = messageSource.getMessage('books', null, 'Books', request.locale)
+    [books: result.result, cursor: result.cursor, title: title]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see in the next code snippet, we use the <a href="http://docs.grails.org/latest/ref/Tags/message.html">message tag</a>
+to reference the codes defined in the internationalization section.</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/views/book/index.gsp</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">&lt;%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta name="layout" content="main" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="container"&gt;
+    &lt;h3&gt;${title}&lt;/h3&gt;
+    &lt;a href="/create"&gt;
+        &lt;i class="glyphicon glyphicon-plus"&gt;&lt;/i&gt;
+        &lt;g:message code="book.add" default="Add book"/&gt;
+    &lt;/a&gt;
+    &lt;g:if test="${books}"&gt;
+        &lt;g:each in="${books}" var="book"&gt;
+            &lt;div class="media"&gt;
+                &lt;g:link controller="book" action="show" id="${book.id}"&gt;
+                    &lt;div class="media-left"&gt;
+                        &lt;img alt="ahhh" src="${book?.imageUrl ?: 'http://placekitten.com/g/128/192'}"&gt;
+                    &lt;/div&gt;
+                    &lt;div class="media-body"&gt;
+                        &lt;h4&gt;&lt;bookshelf:bookTitle id="${book?.id}" languageCode="${RequestContextUtils.getLocale(request).language}"/&gt;&lt;/h4&gt;
+                        &lt;p&gt;${book.author}&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/g:link&gt;
+            &lt;/div&gt;
+        &lt;/g:each&gt;
+        &lt;g:if test="${cursor}"&gt;
+            &lt;nav&gt;
+                &lt;ul class="pager"&gt;
+                    &lt;li&gt;&lt;a href="?cursor=${cursor}"&gt;&lt;g:message code="book.list.more" default="More"/&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/nav&gt;
+        &lt;/g:if&gt;
+    &lt;/g:if&gt;
+    &lt;g:else&gt;
+        &lt;p&gt;&lt;g:message code="book.list.notFound" default="No books found"/&gt;&lt;/p&gt;
+    &lt;/g:else&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_a_book">2.3. Create a book</h3>
+<div class="paragraph">
+<p>To create a book, we create a form which allows us to upload a cover image:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/create-book.png" alt="create book">
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_handling_cover_image_upload">Handling Cover Image upload</h3>
 <div class="paragraph">
-<p>Grails uses a MVC pattern. With the aid of a controller&#8217;s action and a <a href="http://docs.grails.org/latest/guide/single.html#commandObjects">Command Object</a> we can handle this form&#8217;s submissions.</p>
+<p>We map the display of the form to be handled by the <code>BookController</code> <code>create</code> action.</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">'/create'(controller: 'book', action: 'create', method: 'GET')</code></pre>
+</div>
 </div>
 <div class="listingblock">
 <div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">    def save(CreateBookCommand cmd) {
-        if ( cmd.hasErrors() ) {
-            respond cmd.errors
-            return
-        }
-
-        BookCurator curator = new BookCurator()
-        if ( session[Oauth2CallbackController.SESSION_ATTRIBUTE_TOKEN] ) {
-            curator.createdBy = session[Oauth2CallbackController.SESSION_USER_EMAIL]
-            curator.createdById = session[Oauth2CallbackController.SESSION_USER_ID]
-        }
-
-        Long id = createBookWithCoverImageService.saveBookWithCover(cmd.file, curator)
-
-        log.info "Created book ${id}"
-
-        redirect(action: 'show', id: id)
-    }</code></pre>
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">@SuppressWarnings('EmptyMethod')
+def create() {
+}</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>We render the form with the help of the <a href="https://docs.grails.org/latest/ref/Tags/form.html">Grails Form Tag</a>.</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/views/book/create.gsp</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta name="layout" content="main" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="container"&gt;
+    &lt;h3&gt;&lt;g:message code="book.create" default="Create book"/&gt;&lt;/h3&gt;
+    &lt;g:form method="POST" url="/create${book?.id ? ('/' + book.id) : ''}" enctype="multipart/form-data"&gt;
+        &lt;div class="form-group ${application.isCloudStorageConfigured ? '' : 'hidden'}"&gt;
+            &lt;label for="file"&gt;&lt;g:message code="book.cover.image" default="Cover Image"/&gt;&lt;/label&gt;
+            &lt;input type="file" name="file" id="file" class="form-control" /&gt;
+        &lt;/div&gt;
+        &lt;button type="submit" class="btn btn-success"&gt;&lt;g:message code="book.save" default="Save"/&gt;&lt;/button&gt;
+
+    &lt;/g:form&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We map the creation of the book to be handled by the <code>BookController</code> <code>save</code> action.</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">'/create'(controller: 'book', action: 'save', method: 'POST')</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def save(CreateBookCommand cmd) {
+    if ( cmd.hasErrors() ) {
+        respond cmd.errors
+        return
+    }
+
+    BookCurator curator = new BookCurator()
+    if ( session[Oauth2CallbackController.SESSION_ATTRIBUTE_TOKEN] ) {
+        curator.createdBy = session[Oauth2CallbackController.SESSION_USER_EMAIL]
+        curator.createdById = session[Oauth2CallbackController.SESSION_USER_ID]
+    }
+
+    Long id = createBookWithCoverImageService.saveBookWithCover(cmd.file, curator)
+
+    log.info "Created book ${id}"
+
+    redirect(action: 'show', id: id)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We encapsulate the binding and validation of the cover image with a command object:</p>
 </div>
 <div class="listingblock">
 <div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/CreateBookCommand.groovy</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">package com.example.getstarted.basicactions
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted.basicactions
 
 import grails.compiler.GrailsCompileStatic
 import grails.validation.Validateable
@@ -867,8 +1096,410 @@ class CreateBookCommand implements Validateable {
 }</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_display_book">2.4. Display book</h3>
 <div class="paragraph">
-<p>As you can see in the above code snippets the business logic of the application is encapsulated in <a href="http://docs.grails.org/latest/guide/single.html#services">Grails Services</a>.</p>
+<p>We map the home page to be handled by the <code>BookController</code> <code>show</code> action.</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">"/read/$id"(controller: 'book', action: 'show', method: 'GET')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The controller&#8217;s action returns a list of books, along with a URL safe cursor.
+It uses a service to fetch books and handles the model to the view:</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def show(Long id) {
+    log.info "Read book with id ${id}"
+    [book: daoService.readBook(id)]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We use a GSP to render the book:</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/views/book/show.gsp</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">&lt;%@ page import="com.example.getstarted.domain.BookGormEntity" %&gt;
+&lt;%@ page import="com.example.getstarted.domain.BookLocalizationGormEntity" %&gt;
+&lt;%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta name="layout" content="main" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="container"&gt;
+    &lt;h3&gt;&lt;g:message code="book" default="Book"/&gt;&lt;/h3&gt;
+    &lt;div class="btn-group"&gt;
+        &lt;g:link controller="book" action="edit" id="${book?.id}"  class="btn btn-primary btn-sm"&gt;
+            &lt;i class="glyphicon glyphicon-edit"&gt;&lt;/i&gt;
+            &lt;g:message code="book.edit" default="Edit book"/&gt;
+        &lt;/g:link&gt;
+        &lt;g:link controller="book" action="delete" id="${book?.id}"  class="btn btn-danger btn-sm"&gt;
+            &lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;
+            &lt;g:message code="book.delete" default="Delete book"/&gt;
+        &lt;/g:link&gt;
+    &lt;/div&gt;
+
+    &lt;div class="media"&gt;
+        &lt;div class="media-left"&gt;
+            &lt;img class="book-image" src="${book?.imageUrl ?: 'http://placekitten.com/g/128/192'}"&gt;
+        &lt;/div&gt;
+        &lt;div class="media-body"&gt;
+            &lt;h4 class="book-title"&gt;&lt;bookshelf:bookTitle id="${book?.id}" languageCode="${RequestContextUtils.getLocale(request).language}"/&gt; &lt;small&gt;${book?.publishedDate}&lt;/small&gt;&lt;/h4&gt;
+            &lt;h5 class="book-author"&gt;
+                &lt;g:if test="${book?.author}"&gt;
+                    &lt;g:message code="book.author.by" args="${[book.author]}"/&gt;
+                &lt;/g:if&gt;
+                &lt;g:else&gt;
+                    &lt;g:message code="book.author.unknown" default="By Unknown"/&gt;
+                &lt;/g:else&gt;
+            &lt;/h5&gt;
+            &lt;p class="book-description"&gt;&lt;bookshelf:bookDescription  id="${book?.id}" languageCode="${RequestContextUtils.getLocale(request).language}"/&gt;&lt;/p&gt;
+
+            &lt;small&gt;Locale: ${RequestContextUtils.getLocale(request).language}&lt;/small&gt;&lt;br/&gt;
+
+            &lt;small class="book-added-by"&gt;
+                &lt;g:if test="${book?.createdBy}"&gt;
+                    &lt;g:message code="book.added.by" args="${[book.createdBy]}"/&gt;
+                &lt;/g:if&gt;
+                &lt;g:else&gt;
+                    &lt;g:message code="book.added.by.anonymous" default="Added by Anonymous"/&gt;
+                &lt;/g:else&gt;
+            &lt;/small&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The GSP uses a custom taglib to renders <code>title</code> or <code>description</code> depending on the current locale.</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/taglib/com/example/getstarted/BookLocalizationTagLib.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted
+
+import com.example.getstarted.daos.DaoService
+import com.example.getstarted.objects.BookLocalization
+import grails.config.Config
+import grails.core.support.GrailsConfigurationAware
+import groovy.util.logging.Slf4j
+
+@Slf4j
+class BookLocalizationTagLib implements GrailsConfigurationAware {
+
+    static namespace = 'bookshelf'
+
+    static defaultEncodeAs = [taglib: 'html']
+
+    String defaultLanguageCode
+
+    DaoService daoService
+
+    def bookTitle = { args -&gt;
+        String languageCode = args.languageCode ?: defaultLanguageCode
+        Long bookId = args.id
+        BookLocalization bookLocalization = daoService.getLocalization(bookId, languageCode)
+        out &lt;&lt; bookLocalization?.title
+    }
+
+    def bookDescription = { args -&gt;
+        String languageCode = args.languageCode ?: defaultLanguageCode
+        Long bookId = args.id
+        BookLocalization bookLocalization = daoService.getLocalization(bookId, languageCode)
+        out &lt;&lt; bookLocalization?.description
+    }
+
+    @Override
+    void setConfiguration(Config co) {
+        defaultLanguageCode = co.getProperty('bookshelf.defaultLanguageCode', String, 'en')
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_delete_book">2.5. Delete book</h3>
+<div class="paragraph">
+<p>We map the home page to be handled by the <code>BookController</code> <code>show</code> action.</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">"/delete/$id"(controller: 'book', action: 'delete', method: 'GET')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The controller&#8217;s action deletes a book identify by its id.</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def delete(Long id) {
+    daoService.deleteBook(id)
+    redirect action: 'index'
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_edit_a_book">2.6. Edit a book</h3>
+<div class="paragraph">
+<p>To edit a book, we have a form which allows us to modify the metadata and/or upload a new cover image:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/edit-book.png" alt="edit book">
+</div>
+</div>
+<div class="paragraph">
+<p>We map the display of the form to be handled by the <code>BookController</code> <code>edit</code> action.</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">"/update/$id"(controller: 'book', action: 'edit', method: 'GET')</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def edit(Long id) {
+    [book: daoService.readBook(id)]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_a_book">2.7. Update a book</h3>
+<div class="paragraph">
+<p>We manage the edit form submission with the Controller&#8217;s update action.</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/UrlMappings.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">"/update/$id"(controller: 'book', action: 'update', method: 'POST')</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def update(UpdateBookCommand cmd) {
+    if ( cmd.hasErrors() ) {
+        return
+    }
+    def book = cmd as Book
+
+    if ( (
+            book.createdById == null ||
+                    book.createdBy == null
+         ) &amp;&amp; session[Oauth2CallbackController.SESSION_ATTRIBUTE_TOKEN] ) {
+        book.createdBy = session[Oauth2CallbackController.SESSION_USER_EMAIL]
+        book.createdById = session[Oauth2CallbackController.SESSION_USER_ID]
+    }
+
+    if ( cmd.file &amp;&amp; !cmd.file.isEmpty() ) {
+        String fileName = uploadBookCoverService.nameForFile(cmd.file)
+        String imageUrl = googleCloudStorageService.storeMultipartFile(fileName, cmd.file)
+        book.imageUrl = imageUrl
+    }
+
+    daoService.updateBook(book)
+    redirect(action: 'show', id: book.id)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The update methods gets a Command Object which encapsulates the parameters binding and validation</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/UpdateBookCommand.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted.basicactions
+
+import com.example.getstarted.objects.Book
+import com.example.getstarted.objects.BookImpl
+import grails.compiler.GrailsCompileStatic
+import grails.validation.Validateable
+import org.springframework.web.multipart.MultipartFile
+
+@GrailsCompileStatic
+class UpdateBookCommand implements Validateable {
+    Long id
+    String author
+    String description
+    String publishedDate
+    String title
+    MultipartFile file
+    String imageUrl
+    String createdById
+    String createdBy
+
+    static constraints = {
+        id nullable: false
+        title nullable: false
+        author nullable: true
+        description nullable: true
+        publishedDate nullable: true
+        file nullable: true
+        imageUrl nullable: true
+        createdById nullable: true
+        createdBy nullable: true
+    }
+
+    Object asType(Class clazz) {
+        if (clazz == Book) {
+            def book = new BookImpl()
+            copyProperties(this, book)
+            return book
+        }
+        super.asType(clazz)
+    }
+
+    def copyProperties(source, target) {
+        source.properties.each { key, value -&gt;
+            if (target.hasProperty(key as String) &amp;&amp; !(key in ['class', 'metaClass'])) {
+                target[key as String] = value
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_services">3. Services</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As you could see in the previous code snippets the business logic of the application is encapsulated in <a href="http://docs.grails.org/latest/guide/single.html#services">Grails Services</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_configuration">3.1. Configuration</h3>
+<div class="paragraph">
+<p>We setup several configuration values in <code>application.yml</code> We use these configuration parameters across multiple services.</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/conf/application.yml</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">org:
+    grails:
+        plugins:
+            googlecloud:
+                storage:
+                    bucket: grails-bookshelf.appspot.com
+---
+bookshelf:
+    storageType: cloudSQL
+    limit: 10
+    orderBy: title
+    callback: http://localhost:8080/oauth2callback
+    defaultLanguageCode: en
+    localizations:
+        - it
+        - es
+---</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_service_integration_overview">3.2. Service integration Overview</h3>
+<div class="paragraph">
+<p>Grails integrates with multiple Google Cloud Service to power the application.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/overview.png" alt="overview">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_handling_cover_image_upload">3.3. Handling Cover Image upload</h3>
+<div class="listingblock">
+<div class="title">app/grails-app/services/com/example/getstarted/CreateBookWithCoverImageService.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted
+
+import com.example.getstarted.daos.DaoService
+import com.example.getstarted.objects.BookCurator
+import com.example.getstarted.objects.BookImpl
+import com.example.getstarted.objects.BookLocalization
+import com.example.getstarted.objects.BookLocalizationImpl
+import org.grails.plugins.googlecloud.storage.GoogleCloudStorageService
+import org.grails.plugins.googlecloud.vision.GoogleCloudVisionService
+import org.springframework.web.multipart.MultipartFile
+import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
+
+@SuppressWarnings('GrailsStatelessService')
+@Slf4j
+@CompileStatic
+class CreateBookWithCoverImageService {
+
+    UploadBookCoverService uploadBookCoverService
+
+    GoogleCloudStorageService googleCloudStorageService
+
+    GoogleCloudVisionService googleCloudVisionService
+
+    DaoService daoService
+
+    BookLocalization bookLocalizationWithFile(MultipartFile file) {
+        def text = googleCloudVisionService.detectDocumentText(file.inputStream)
+        bookLocalizationWithText(text)
+    }
+
+    BookLocalization bookLocalizationWithText(String text) {
+        if (text == null ) {
+            return null
+        }
+        final int titleMaxSize = 255
+
+        String title = null
+        String description = null
+
+        if ( text.size() &gt;= (titleMaxSize + 1) ) {
+            title = text[0 .. (titleMaxSize - 1)]
+            description = text[titleMaxSize .. (text.size() - 1)]
+
+        } else {
+            title = text
+        }
+
+        new BookLocalizationImpl(title: title, description: description)
+    }
+
+    String imageUrlWithFile(MultipartFile file) {
+        String fileName = uploadBookCoverService.nameForFile(file)
+        googleCloudStorageService.storeMultipartFile(fileName, file)
+    }
+
+    Long saveBookWithCover(MultipartFile file, BookCurator curator) {
+        def book = new BookImpl()
+        book.createdBy = curator.createdBy
+        book.createdById = curator.createdById
+        book.imageUrl = imageUrlWithFile(file)
+        def bookLocalization = bookLocalizationWithFile(file)
+        if ( bookLocalization ) {
+            book.title = bookLocalization.title
+            book.description = bookLocalization.description
+        }
+        daoService.createBook(book)
+    }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>When we upload a book cover image several things will happen:</p>
@@ -883,20 +1514,24 @@ we will store in the database <code>book</code> table row.</p>
 <p>Text in the cover image is extracted by Google <a href="https://cloud.google.com/vision/">Cloud Vision API</a>.</p>
 </li>
 <li>
-<p>The extracted text is translated to spanish and italian with Google <a href="https://cloud.google.com/translate/">Cloud Translation API</a>.</p>
+<p>A book entry in a MySQL database provided by Google <a href="https://cloud.google.com/sql/">Cloud SQL</a>.</p>
 </li>
 <li>
-<p>Save the book entry in a MySQL database provided by Google <a href="https://cloud.google.com/sql/">Cloud SQL</a>.</p>
+<p>Prior to saving or updating a book, the English title and description are translated to Spanish and Italian with Google <a href="https://cloud.google.com/translate/">Cloud Translation API</a>. Those
+translations are saved to the database.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_uploading_an_image_to_cloud_storage">Uploading an image to Cloud Storage</h3>
+<h3 id="_uploading_an_image_to_cloud_storage">3.4. Uploading an image to Cloud Storage</h3>
+<div class="paragraph">
+<p>We encapsulate the code which interacts with Google Cloud Storage in its own service:</p>
+</div>
 <div class="listingblock">
 <div class="title">grails-googlecloud-storage/grails-app/services/org/grails/plugins/googlecloud/storage/GoogleCloudStorageService.groovy</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">package org.grails.plugins.googlecloud.storage
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package org.grails.plugins.googlecloud.storage
 
 import groovy.transform.CompileStatic
 
@@ -920,13 +1555,13 @@ class GoogleCloudStorageService implements GrailsConfigurationAware {
     Storage storage = StorageOptions.defaultInstance.service
 
     String storeMultipartFile(String fileName, MultipartFile multipartFile) {
-        log.info 'Uploaded file {0}', multipartFile.originalFilename
+        log.info "Uploaded file ${multipartFile.originalFilename}"
         storeInputStream(fileName, multipartFile.inputStream)
     }
 
     String storeInputStream(String fileName, InputStream inputStream) {
         BlobInfo blobInfo = storage.create(readableBlobInfo(bucket, fileName), inputStream)
-        log.info 'Uploaded file as {0} with mediaLink {1}', fileName, blobInfo.mediaLink
+        log.info "Uploaded file as ${fileName} with mediaLink ${blobInfo.mediaLink}"
 
         blobInfo.mediaLink
     }
@@ -956,97 +1591,25 @@ class GoogleCloudStorageService implements GrailsConfigurationAware {
 }</code></pre>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_translate_text_with_cloud_translation_api">Translate Text with Cloud Translation API</h3>
-<div class="listingblock">
-<div class="title">grails-googlecloud-translate/grails-app/services/org/grails/plugins/googlecloud/translate/GoogleCloudTranslateService.groovy</div>
-<div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">package org.grails.plugins.googlecloud.translate
-
-import com.google.cloud.translate.Translate.TranslateOption
-import com.google.cloud.translate.TranslateException
-import com.google.cloud.translate.TranslateOptions
-import groovy.transform.CompileStatic
-import groovy.util.logging.Slf4j
-
-@Slf4j
-@CompileStatic
-class GoogleCloudTranslateService {
-
-    @SuppressWarnings('ReturnNullFromCatchBlock')
-    String translateTextFromSourceToTarget(String text, String source, String target) {
-        if ( text == null ) {
-            return null
-        }
-        try {
-            return TranslateOptions.defaultInstance.service.translate(text,
-                    TranslateOption.sourceLanguage(source),
-                    TranslateOption.targetLanguage(target)).translatedText
-        } catch (TranslateException e) {
-            log.error(e.message, e)
-            return null
-        }
-    }
-}</code></pre>
-</div>
-</div>
 <div class="paragraph">
-<p>The previous service method would be invoked with:</p>
+<p>In order to use Google Cloud Storage we need to add the next dependency to our compile dependencies:</p>
 </div>
 <div class="listingblock">
+<div class="title">grails-googlecloud-storage/build.gradle</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">assert 'Hola Mundo' == googleCloudTranslateService.translateTextFromSourceToTarget('Hello World', 'en', 'es')</code></pre>
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">    compile "com.google.cloud:google-cloud-storage:$googleCloudStorageVersion"</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_extracting_the_text_of_an_image_with_cloud_vision">Extracting the text of an image with Cloud Vision</h3>
-<div class="paragraph">
-<p>We encapsulate the code which extracts the text in a Cover Image in a <a href="http://docs.grails.org/latest/guide/single.html#services">Grails Service</a></p>
-</div>
-<div class="listingblock">
-<div class="title">grails-googlecloud-translate/grails-app/services/org/grails/plugins/googlecloud/translate/GoogleCloudTranslateService.groovy</div>
-<div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">package org.grails.plugins.googlecloud.translate
-
-import com.google.cloud.translate.Translate.TranslateOption
-import com.google.cloud.translate.TranslateException
-import com.google.cloud.translate.TranslateOptions
-import groovy.transform.CompileStatic
-import groovy.util.logging.Slf4j
-
-@Slf4j
-@CompileStatic
-class GoogleCloudTranslateService {
-
-    @SuppressWarnings('ReturnNullFromCatchBlock')
-    String translateTextFromSourceToTarget(String text, String source, String target) {
-        if ( text == null ) {
-            return null
-        }
-        try {
-            return TranslateOptions.defaultInstance.service.translate(text,
-                    TranslateOption.sourceLanguage(source),
-                    TranslateOption.targetLanguage(target)).translatedText
-        } catch (TranslateException e) {
-            log.error(e.message, e)
-            return null
-        }
-    }
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_translate_text_with_cloud_translation_api_2">Translate text with Cloud Translation API</h3>
+<h3 id="_extracting_the_text_of_an_image_with_cloud_vision">3.5. Extracting the text of an image with Cloud Vision</h3>
 <div class="paragraph">
 <p>We encapsulate the code which extracts the text in a Cover Image in a <a href="http://docs.grails.org/latest/guide/single.html#services">Grails Service</a></p>
 </div>
 <div class="listingblock">
 <div class="title">grails-googlecloud-vision/grails-app/services/org/grails/plugins/googlecloud/vision/GoogleCloudVisionService.groovy</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">package org.grails.plugins.googlecloud.vision
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package org.grails.plugins.googlecloud.vision
 
 import com.google.cloud.vision.spi.v1.ImageAnnotatorClient
 import com.google.cloud.vision.v1.AnnotateImageRequest
@@ -1102,21 +1665,85 @@ class GoogleCloudVisionService {
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>In order to use Google Cloud Vision we need to add the next dependency to our compile dependencies:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-googlecloud-vision/build.gradle</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">    compile "com.google.cloud:google-cloud-vision:$googleCloudVisionVersion"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Checkout <a href="https://cloud.google.com/vision/">Google Cloud Vision</a> for complete overview of the image analysis options.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_interact_with_cloud_sql_mysql_database_with_gorm_hibernate_implementation">Interact with Cloud SQL: MySQL database with GORM Hibernate implementation</h3>
+<h3 id="_translate_text_with_cloud_translation_api">3.6. Translate Text with Cloud Translation API</h3>
+<div class="paragraph">
+<p>The next service method would be invoked with code such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">assert 'Hola Mundo' == googleCloudTranslateService.translateTextFromSourceToTarget('Hello World', 'en', 'es')</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">grails-googlecloud-translate/grails-app/services/org/grails/plugins/googlecloud/translate/GoogleCloudTranslateService.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package org.grails.plugins.googlecloud.translate
+
+import com.google.cloud.translate.Translate.TranslateOption
+import com.google.cloud.translate.TranslateException
+import com.google.cloud.translate.TranslateOptions
+import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
+
+@Slf4j
+@CompileStatic
+class GoogleCloudTranslateService {
+
+    @SuppressWarnings('ReturnNullFromCatchBlock')
+    String translateTextFromSourceToTarget(String text, String source, String target) {
+        if ( !text ) {
+            return text
+        }
+        try {
+            return TranslateOptions.defaultInstance.service.translate(text,
+                    TranslateOption.sourceLanguage(source),
+                    TranslateOption.targetLanguage(target)).translatedText
+        } catch (TranslateException e) {
+            log.error(e.message, e)
+            return null
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to use Google Cloud Translation API wee need to add the next dependency:</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-googlecloud-translate/build.gradle</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">    compile "com.google.cloud:google-cloud-translate:$googleCloudTranslateVersion"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_interact_with_cloud_sql_mysql_database_with_gorm_hibernate_implementation">3.7. Interact with Cloud SQL: MySQL database with GORM Hibernate implementation</h3>
 <div class="paragraph">
 <p>We use <a href="http://gorm.grails.org">GORM</a>. GORM is the data access toolkit used by Grails and provides a rich set of APIs for
 accessing relational and non-relational data including implementations for Hibernate (SQL), MongoDB, Neo4j, Cassandra and
 an in-memory ConcurrentHashMap for testing.</p>
 </div>
 <div class="paragraph">
-<p>We map books and localizations with the use of Grails Domain Classes:</p>
+<p>We map books and localizations in a one-to-many relationship with the use of Grails Domain Classes:</p>
 </div>
 <div class="listingblock">
 <div class="title">app/grails-app/domain/com/example/getstarted/domain/BookGormEntity.groovy</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">package com.example.getstarted.domain
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted.domain
 
 import grails.compiler.GrailsCompileStatic
 
@@ -1129,8 +1756,6 @@ class BookGormEntity {
     String publishedDate
     String imageUrl
     static hasMany = [localizations: BookLocalizationGormEntity]
-
-    static transients = ['defaultLanguageCode', 'defaultLocalization']
 
     static constraints = {
         author nullable: true, maxSize: 255
@@ -1149,7 +1774,7 @@ class BookGormEntity {
 <div class="listingblock">
 <div class="title">app/grails-app/domain/com/example/getstarted/domain/BookLocalizationGormEntity.groovy</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">package com.example.getstarted.domain
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted.domain
 
 import com.example.getstarted.objects.BookLocalization
 import grails.compiler.GrailsCompileStatic
@@ -1173,11 +1798,186 @@ class BookLocalizationGormEntity implements BookLocalization {
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>We encapsulate the GORM database access in a service:</p>
+</div>
+<div class="listingblock">
+<div class="title">app/grails-app/services/com/example/getstarted/daos/CloudSqlService.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted.daos
+
+import com.example.getstarted.objects.BookImpl
+import org.grails.plugins.googlecloud.translate.GoogleCloudTranslateService
+import com.example.getstarted.domain.BookGormEntity
+import com.example.getstarted.domain.BookLocalizationGormEntity
+import com.example.getstarted.objects.Book
+import com.example.getstarted.objects.BookLocalization
+import com.example.getstarted.objects.BookProperties
+import com.example.getstarted.objects.Result
+import grails.config.Config
+import grails.core.support.GrailsConfigurationAware
+import grails.gorm.DetachedCriteria
+import grails.transaction.Transactional
+import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
+
+@Slf4j
+@SuppressWarnings('GrailsStatelessService')
+@CompileStatic
+@Transactional
+class CloudSqlService implements BookDao, GrailsConfigurationAware {
+
+    int limit
+    String orderBy
+    String defaultLanguageCode
+    List&lt;String&gt; localizations
+
+    GoogleCloudTranslateService googleCloudTranslateService
+
+    @SuppressWarnings('LineLength')
+    @Override
+    Long createBook(Book book) {
+        BookGormEntity entity = new BookGormEntity()
+        populateEntityWithBook(entity, book)
+        if ( book.title != null ) {
+            entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: defaultLanguageCode,
+                    title: book.title,
+                    description: book.description))
+
+            for (String languageCode : localizations ) {
+                String title = googleCloudTranslateService.translateTextFromSourceToTarget(book.title, defaultLanguageCode, languageCode)
+                String description = googleCloudTranslateService.translateTextFromSourceToTarget(book.description, defaultLanguageCode, languageCode)
+                entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: languageCode,
+                        title: title,
+                        description: description))
+            }
+        }
+
+        entity.save()
+        entity.id
+    }
+
+    private static void populateEntityWithBook(BookGormEntity entity, Book book) {
+        entity.with {
+            author = book.author
+            createdBy = book.createdBy
+            createdById = book.createdById
+            publishedDate = book.publishedDate
+            imageUrl = book.imageUrl
+        }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    Book readBook(Long bookId) {
+        def entity = BookGormEntity.get(bookId)
+        def book = new BookImpl()
+        book.with {
+            id = entity.id
+            author = entity.author
+            createdBy = entity.createdById
+            createdById = entity.createdById
+            publishedDate = entity.publishedDate
+            imageUrl = entity.imageUrl
+        }
+        BookLocalization bookLocalization = getLocalization(bookId, defaultLanguageCode)
+        book.title = bookLocalization?.title
+        book.description = bookLocalization?.description
+        book
+    }
+
+    @SuppressWarnings('LineLength')
+    @Override
+    void updateBook(Book book) {
+        def entity = BookGormEntity.get(book.id)
+        populateEntityWithBook(entity, book)
+        addOrUpdateBookLocalizationWithTitleAndDescriptionByLanguageCode(entity, defaultLanguageCode, book.title, book.description)
+
+        for (String languageCode : localizations ) {
+            String title = googleCloudTranslateService.translateTextFromSourceToTarget(book.title, defaultLanguageCode, languageCode)
+            String description = googleCloudTranslateService.translateTextFromSourceToTarget(book.description, defaultLanguageCode, languageCode)
+            addOrUpdateBookLocalizationWithTitleAndDescriptionByLanguageCode(entity, languageCode, title, description)
+        }
+
+        entity.save()
+    }
+
+    @SuppressWarnings('LineLength')
+    static void addOrUpdateBookLocalizationWithTitleAndDescriptionByLanguageCode(BookGormEntity entity, String languageCode, String title, String description) {
+        BookLocalizationGormEntity defaultBookLocalizationGormEntity = entity.localizations.find { it.languageCode == languageCode }
+        if ( defaultBookLocalizationGormEntity ) {
+            defaultBookLocalizationGormEntity.title = title
+            defaultBookLocalizationGormEntity.description = description
+        } else {
+            entity.addToLocalizations(new BookLocalizationGormEntity(languageCode: languageCode,
+                    title: title,
+                    description: description))
+        }
+    }
+
+    @Override
+    void deleteBook(Long bookId) {
+        def entity = BookGormEntity.get(bookId)
+        entity?.delete()
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    Result&lt;Book&gt; listBooks(String cursor) {
+        def query = listBooksQuery()
+        listBooksByQuery(cursor, query)
+    }
+
+    private DetachedCriteria&lt;BookGormEntity&gt; listBooksQuery() {
+        BookGormEntity.where { }
+    }
+
+    private DetachedCriteria&lt;BookGormEntity&gt; listBooksByUserQuery(String userId) {
+        BookGormEntity.where { createdById == userId }
+    }
+
+    private Result&lt;Book&gt; listBooksByQuery(String cursor, DetachedCriteria&lt;BookGormEntity&gt; query) {
+        def offset = cursor ? Integer.parseInt(cursor) : 0
+        def max = limit
+        int total = query.count() as int
+        def books = query.max(max).offset(offset).order(orderBy).list()
+        if (total &gt; (offset + limit)) {
+            return new Result&lt;&gt;(books, Integer.toString(offset + limit))
+        }
+        new Result&lt;&gt;(books)
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    Result&lt;Book&gt; listBooksByUser(String userId, String cursor) {
+        def query = listBooksByUserQuery(userId)
+        listBooksByQuery(cursor, query)
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    BookLocalization getLocalization(Long bookId, String code) {
+        String language = code ?: defaultLanguageCode
+        def q = BookLocalizationGormEntity.where { book.id == bookId &amp;&amp; languageCode == language }
+        log.info 'code: ' + code + 'size: ' + q.list().size()
+        q.get()
+    }
+
+    @Override
+    void setConfiguration(Config co) {
+        limit = co.getProperty('bookshelf.limit', Integer, 10)
+        orderBy = co.getProperty('bookshelf.orderBy', String, BookProperties.TITLE)
+        defaultLanguageCode = co.getProperty('bookshelf.defaultLanguageCode', String, 'en')
+        localizations = co.getProperty('bookshelf.localizations', List)
+    }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_authenticating_users_with_grails">Authenticating Users with Grails</h2>
+<h2 id="_authenticating_users_with_grails">4. Authenticating Users with Grails</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This part of the Bookshelf tutorial for Java shows how to create a sign-in flow for users and how to use profile information to provide users with personalized functionality.</p>
@@ -1188,7 +1988,7 @@ credentials are safely managed by Google. <a href="https://developers.google.com
 users of your app and provides your application with access to basic profile information about authenticated users.</p>
 </div>
 <div class="sect2">
-<h3 id="_creating_a_web_application_client_id">Creating a web application client ID</h3>
+<h3 id="_creating_a_web_application_client_id">4.1. Creating a web application client ID</h3>
 <div class="paragraph">
 <p>A web application client ID allows your application to authorize users and access Google APIs on behalf of your users.</p>
 </div>
@@ -1227,7 +2027,7 @@ https://[YOUR_PROJECT_ID].appspot-preview.com/oauth2callback`</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuring_settings">Configuring settings</h3>
+<h3 id="_configuring_settings">4.2. Configuring settings</h3>
 <div class="paragraph">
 <p>In the <code>app/grails-app/conf/</code> directory, open <code>application-production.yml</code> for editing.</p>
 </div>
@@ -1249,7 +2049,7 @@ https://[YOUR_PROJECT_ID].appspot-preview.com/oauth2callback`</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_application_structure">Application structure</h3>
+<h3 id="_application_structure">4.3. Application structure</h3>
 <div class="paragraph">
 <p>The following diagram shows the application&#8217;s components and how they connect to one another.</p>
 </div>
@@ -1260,7 +2060,7 @@ https://[YOUR_PROJECT_ID].appspot-preview.com/oauth2callback`</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_understanding_the_code">Understanding the code</h3>
+<h3 id="_understanding_the_code">4.4. Understanding the code</h3>
 <div class="paragraph">
 <p>This section walks you through the application code and explains how it works.</p>
 </div>
@@ -1270,7 +2070,7 @@ https://[YOUR_PROJECT_ID].appspot-preview.com/oauth2callback`</p>
 <div class="listingblock">
 <div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/LoginController.groovy</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">package com.example.getstarted.basicactions
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted.basicactions
 
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
@@ -1291,12 +2091,12 @@ class LoginController implements GrailsConfigurationAware {
     GoogleAuthorizationService googleAuthorizationService
 
     def index(String loginDestination) {
-        String state = googleAuthorizationService.randomState() <b class="conum">(1)</b>
+        String state = googleAuthorizationService.randomState() <i class="conum" data-value="1"></i><b>(1)</b>
         def url = googleAuthorizationService.authorizationRedirectUrl(state)
         session.setAttribute(SESSION_ATTRIBUTE_STATE, state)
         String destination = loginDestination ?: defaultLoginDestination
-        log.info 'logging destination {0}', destination
-        session.setAttribute(SESSION_ATTRIBUTE_LOGIN_DESTINATION, destination) <b class="conum">(2)</b>
+        log.info "logging destination $destination"
+        session.setAttribute(SESSION_ATTRIBUTE_LOGIN_DESTINATION, destination) <i class="conum" data-value="2"></i><b>(2)</b>
         redirect(url: url)
     }
 
@@ -1311,14 +2111,16 @@ class LoginController implements GrailsConfigurationAware {
 <p>It does the following:</p>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>Save some random <em>state</em> to help <a href="https://developers.google.com/identity/protocols/OpenIDConnect#authenticationuriparameters">prevent request forgeries</a>.</p>
-</li>
-<li>
-<p>Save the destination of where to go after sign in.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Save some random <em>state</em> to help <a href="https://developers.google.com/identity/protocols/OpenIDConnect#authenticationuriparameters">prevent request forgeries</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Save the destination of where to go after sign in.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>A service encapsulates the interaction with <a href="https://developers.google.com/api-client-library/java/google-api-java-client/reference/1.19.1/?overview-summary.html">Google API Client Library</a>,
@@ -1328,7 +2130,7 @@ to generate a callback request to Google to handle signing in to a Google accoun
 <div class="listingblock">
 <div class="title">grails-googlecloud-authorization/grails-app/services/org/grails/plugins/googlecloud/authorization/GoogleAuthorizationService.groovy</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">package org.grails.plugins.googlecloud.authorization
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package org.grails.plugins.googlecloud.authorization
 
 import com.fasterxml.jackson.databind.ObjectMapper
 
@@ -1451,7 +2253,7 @@ class GoogleAuthorizationService implements GrailsConfigurationAware {
 <div class="listingblock">
 <div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/Oauth2CallbackController.groovy</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">package com.example.getstarted.basicactions
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted.basicactions
 
 import com.google.api.client.auth.oauth2.TokenResponse
 import grails.config.Config
@@ -1501,7 +2303,7 @@ class Oauth2CallbackController implements GrailsConfigurationAware {
         session[SESSION_USER_ID] = userIdResult['sub']
         session[SESSION_USER_IMAGE_URL] = userIdResult['picture']
         def destination = session[LoginController.SESSION_ATTRIBUTE_LOGIN_DESTINATION]
-        log.info 'Login successful, redirecting to {0}', destination
+        log.info "Login successful, redirecting to $destination"
         redirect(uri: destination)
     }
 
@@ -1518,7 +2320,7 @@ class Oauth2CallbackController implements GrailsConfigurationAware {
 <div class="listingblock">
 <div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/LogoutController.groovy</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy">package com.example.getstarted.basicactions
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package com.example.getstarted.basicactions
 
 import groovy.transform.CompileStatic
 
@@ -1538,13 +2340,13 @@ class LogoutController {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_logging_application_events_with_grails">Logging Application Events with Grails</h2>
+<h2 id="_logging_application_events_with_grails">5. Logging Application Events with Grails</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This part of the Bookshelf tutorial for Grails shows how an app can incorporate detailed logging to help with detecting, debugging, and monitoring potential issues.</p>
 </div>
 <div class="sect2">
-<h3 id="_viewing_logs">Viewing logs</h3>
+<h3 id="_viewing_logs">5.1. Viewing logs</h3>
 <div class="paragraph">
 <p>As the bookshelf app runs, it writes logging data that is collected and made available in the Cloud Platform Console. You can use the <a href="https://console.cloud.google.com/logs?_ga=1.80399703.1963584502.1488379440">log monitoring tools</a> in the Cloud Platform Console to analyze the logs directly. If you want more detailed analysis, you can use the Cloud Platform Console to stream or import the app&#8217;s logs into <a href="https://cloud.google.com/logging/docs/install/logs_export">BigQuery</a> or export them to a <a href="https://cloud.google.com/logging/docs/install/logs_export">Cloud Storage Bucket</a>.</p>
 </div>
@@ -1555,7 +2357,7 @@ class LogoutController {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_application_structure_2">Application structure</h3>
+<h3 id="_application_structure_2">5.2. Application structure</h3>
 <div class="paragraph">
 <p>The following diagram shows how the app handles logging when deployed to the App Engine flexible environment.</p>
 </div>
@@ -1566,7 +2368,7 @@ class LogoutController {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_understanding_the_code_2">Understanding the code</h3>
+<h3 id="_understanding_the_code_2">5.3. Understanding the code</h3>
 <div class="paragraph">
 <p>There are many Java logging packages that are compatible with the App Engine flexible environment.
 Grails 3 uses <a href="http://logback.qos.ch/">Logback logging framework</a></p>
@@ -1584,7 +2386,10 @@ in any Groovy Class with the  <a href="http://docs.groovy-lang.org/latest/html/g
 <div class="listingblock">
 <div class="title">app/grails-app/controllers/com/example/getstarted/basicactions/BookController.groovy</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy"></code></pre>
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">    def show(Long id) {
+        log.info "Read book with id ${id}"
+        [book: daoService.readBook(id)]
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1592,7 +2397,7 @@ in any Groovy Class with the  <a href="http://docs.groovy-lang.org/latest/html/g
 </div>
 </div>
 <div class="sect2">
-<h3 id="_understanding_the_logging_configuration">Understanding the logging configuration</h3>
+<h3 id="_understanding_the_logging_configuration">5.4. Understanding the logging configuration</h3>
 <div class="paragraph">
 <p>When the sample app runs in the App Engine flexible environment, anything logged to <code>stderr</code> and <code>stdout</code> is automatically collected by Cloud Logging and
 available for viewing, searching, and exporting in the <a href="https://console.cloud.google.com/logs?_ga=1.79946327.1963584502.1488379440">logs viewer in the Cloud Platform Console</a>.</p>
@@ -1604,24 +2409,18 @@ available for viewing, searching, and exporting in the <a href="https://console.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_cleaning_up">Cleaning up</h2>
+<h2 id="_cleaning_up">6. Cleaning up</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To avoid incurring charges to your Google Cloud Platform account for the resources used in this tutorial:</p>
 </div>
 <div class="sect2">
-<h3 id="_delete_the_project">Delete the project</h3>
+<h3 id="_delete_the_project">6.1. Delete the project</h3>
 <div class="paragraph">
 <p>The easiest way to eliminate billing is to delete the project you created for the tutorial.</p>
 </div>
 <div class="paragraph">
 <p>To delete the project:</p>
-</div>
-<div class="paragraph">
-<p><strong>Warning: Deleting a project has the following consequences:
-If you used an existing project, you&#8217;ll also delete any other work you&#8217;ve done in the project.
-You can&#8217;t reuse the project ID of a deleted project. If you created a custom project ID that you plan to use in the future, you should delete the resources inside the project instead. This ensures that URLs that use the project ID, such as an appspot.com URL, remain available.
-If you are exploring multiple tutorials and quickstarts, reusing projects instead of deleting them prevents you from exceeding project quota limits.</strong></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1630,7 +2429,10 @@ If you are exploring multiple tutorials and quickstarts, reusing projects instea
 <a href="https://console.cloud.google.com/iam-admin/projects?_ga=1.77720276.1963584502.1488379440">GO TO THE PROJECTS PAGE</a></p>
 </li>
 <li>
-<p>In the project list, select the project you want to delete and click <strong>Delete project</strong>.</p>
+<p>In the project list, select the project you want to delete and click <strong>Delete project</strong>.<br></p>
+</li>
+<li>
+<p>In the dialog, type the project ID, and then click Shut down to delete the project.</p>
 </li>
 </ol>
 </div>
@@ -1639,16 +2441,26 @@ If you are exploring multiple tutorials and quickstarts, reusing projects instea
 <img src="images/delete-project-screenshot.png" alt="delete project screenshot">
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>In the dialog, type the project ID, and then click Shut down to delete the project.</p>
-</li>
-</ol>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Deleting a project has the following consequences:<br>
+If you used an existing project, you&#8217;ll also delete any other work you&#8217;ve done in the project.<br>
+You can&#8217;t reuse the project ID of a deleted project. If you created a custom project ID that you plan to
+use in the future, you should delete the resources inside the project instead. This ensures that URLs that
+use the project ID, such as an appspot.com URL, remain available.<br>
+If you are exploring multiple tutorials and quickstarts, reusing projects instead of deleting them prevents you from exceeding project quota limits.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_delete_non_default_versions_of_your_app">Delete non-default versions of your app</h3>
+<h3 id="_delete_non_default_versions_of_your_app">6.2. Delete non-default versions of your app</h3>
 <div class="paragraph">
 <p>If you don&#8217;t want to delete your project, you can reduce costs by deleting the non-default versions of your app.</p>
 </div>
@@ -1663,17 +2475,28 @@ If you are exploring multiple tutorials and quickstarts, reusing projects instea
 </li>
 <li>
 <p>Click the checkbox next to the non-default app version you want to delete.
-<strong>Note: The only way to delete the default version of your App Engine app is to delete your project. You can, however, stop the default version in the Cloud Platform Console. This will shut down all instances associated with the version. You can restart these instances later if needed.
-You can overwrite the default version of your app by redeploying the app.</strong></p>
+You can overwrite the default version of your app by redeploying the app.**</p>
 </li>
 <li>
 <p>Click the Delete button at the top of the page to delete the app version.</p>
 </li>
 </ol>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The only way to delete the default version of your App Engine app is to delete your project. You can, however, stop the default version in the Cloud Platform Console. This will shut down all instances associated with the version. You can restart these instances later if needed.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_delete_your_cloud_storage_bucket">Delete your Cloud Storage bucket</h3>
+<h3 id="_delete_your_cloud_storage_bucket">6.3. Delete your Cloud Storage bucket</h3>
 <div class="paragraph">
 <p>To delete a Cloud Storage bucket:</p>
 </div>
@@ -1697,8 +2520,11 @@ You can overwrite the default version of your app by redeploying the app.</stron
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-27 07:54:22 UTC
+Last updated 2017-04-27 10:57:21 UTC
 </div>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script>prettyPrint()</script>
 </body>
 </html>
