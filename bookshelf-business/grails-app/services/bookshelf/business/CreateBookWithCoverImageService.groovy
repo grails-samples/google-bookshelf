@@ -21,8 +21,13 @@ class CreateBookWithCoverImageService {
     DaoService daoService
 
     BookLocalization bookLocalizationWithFile(MultipartFile file) {
-        def text = googleCloudVisionService.detectDocumentText(file.inputStream)
-        bookLocalizationWithText(text)
+        try {
+            def text = googleCloudVisionService.detectDocumentText(file.inputStream)
+            return bookLocalizationWithText(text)
+
+        } catch (FileNotFoundException e) {
+        }
+        null
     }
 
     BookLocalization bookLocalizationWithText(String text) {
