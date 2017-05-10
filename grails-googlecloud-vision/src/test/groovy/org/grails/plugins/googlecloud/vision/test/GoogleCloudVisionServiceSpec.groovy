@@ -33,6 +33,6 @@ class GoogleCloudVisionServiceSpec extends Specification {
         text = service.detectDocumentText(f.newInputStream())
 
         then:
-        text.contains('Groovy for Domain-Specific languages')
+        text?.contains('Groovy for Domain-Specific languages')
     }
 }

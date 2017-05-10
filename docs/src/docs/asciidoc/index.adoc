@@ -258,7 +258,7 @@ include::service_cloud_sql.adoc[]
 //
 //=== Configuring settings
 //
-//The `pom.xml` holds configuration information for all parts of the Bookshelf tutorial. For this part of the tutorial, you don't have to add any configuration information. The only requirement is that the `bookshelf.storageType` property be set to `datastore`, which is already done for you.
+//The `pom.xml` holds configuration information for all parts of the Bookshelf tutorial. For this part of the tutorial, you don't have to add any configuration information. The only requirement is that the `bookshelf.persistenceType` property be set to `datastore`, which is already done for you.
 //
 //=== Running the app on your local machine
 //

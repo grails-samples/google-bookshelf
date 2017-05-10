@@ -9,5 +9,5 @@ build/
 .project
 .settings
 .classpath
-/app/grails-app/conf/application-production.yml
+application-production.yml
 /classes

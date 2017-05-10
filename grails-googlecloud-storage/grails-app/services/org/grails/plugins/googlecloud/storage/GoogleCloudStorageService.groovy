@@ -15,17 +15,24 @@ import org.springframework.web.multipart.MultipartFile
 @Slf4j
 @SuppressWarnings('GrailsStatelessService')
 @CompileStatic
-class GoogleCloudStorageService implements GrailsConfigurationAware {
+class GoogleCloudStorageService implements GrailsConfigurationAware, CloudStorage {
     // Cloud Storage Bucket
     String bucket
 
     Storage storage = StorageOptions.defaultInstance.service
 
+    @Override
+    void setConfiguration(Config co) {
+        bucket = co.getProperty('org.grails.plugins.googlecloud.storage.bucket', String)
+    }
+
+    @Override
     String storeMultipartFile(String fileName, MultipartFile multipartFile) {
         log.info "Uploaded file ${multipartFile.originalFilename}"
         storeInputStream(fileName, multipartFile.inputStream)
     }
 
+    @Override
     String storeInputStream(String fileName, InputStream inputStream) {
         BlobInfo blobInfo = storage.create(readableBlobInfo(bucket, fileName), inputStream)
         log.info "Uploaded file as ${fileName} with mediaLink ${blobInfo.mediaLink}"
@@ -33,6 +40,7 @@ class GoogleCloudStorageService implements GrailsConfigurationAware {
         blobInfo.mediaLink
     }
 
+    @Override
     String storeBytes(String fileName, byte[] bytes) {
         BlobInfo blobInfo = storage.create(readableBlobInfo(bucket, fileName), bytes)
         blobInfo.mediaLink
@@ -46,13 +54,9 @@ class GoogleCloudStorageService implements GrailsConfigurationAware {
                 .build()
     }
 
+    @Override
     boolean deleteFile(String fileName) {
         BlobId blobId = BlobId.of(bucket, fileName)
         storage.delete(blobId)
-    }
-
-    @Override
-    void setConfiguration(Config co) {
-        bucket = co.getProperty('org.grails.plugins.googlecloud.storage.bucket', String)
     }
 }

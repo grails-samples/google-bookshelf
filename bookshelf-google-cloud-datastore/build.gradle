@@ -34,7 +34,7 @@ dependencies {
     // tag::googlecloudDatastoreDependency[]
     compile("com.google.cloud:google-cloud-datastore:$googleCloudDatastoreVersion")
     // tag::googlecloudDatastoreDependency[]
-    compile project(':bookshelf-dao')
+    compile project(':bookshelf-model')
 }
 
 bootRun {
