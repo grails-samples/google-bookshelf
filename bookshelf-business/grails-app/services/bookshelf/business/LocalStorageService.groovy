@@ -39,8 +39,8 @@ class LocalStorageService implements CloudStorage, GrailsConfigurationAware {
     String storeMultipartFile(String fileName, MultipartFile file) {
         def path = "${localStorageFolder}/${fileName}" as String
         log.info "saving file: ${path}"
-        //file.transferTo(new File(path))
-        "${localDataUrl}/${path}"
+        file.transferTo(new File(path))
+        "${localDataUrl}/${fileName}"
     }
 
     @Override
