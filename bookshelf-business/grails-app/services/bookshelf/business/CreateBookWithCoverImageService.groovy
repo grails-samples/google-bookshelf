@@ -26,6 +26,7 @@ class CreateBookWithCoverImageService {
             return bookLocalizationWithText(text)
 
         } catch (FileNotFoundException e) {
+            log.error("file not found, thus text could not be extracted", e)
         }
         null
     }
