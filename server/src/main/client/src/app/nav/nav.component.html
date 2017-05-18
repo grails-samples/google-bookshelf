@@ -1,5 +1,18 @@
 <nav>
-  <md-toolbar color="primary">
-    <span>Bookshelf</span>
+  <md-toolbar color="primary" fxLayout="column">
+    <span fxFlex="0 0 100px">Bookshelf</span>
+    <span fxFlex="0 0 100px" class="main-buttons">
+      <a fxFlex md-button routerLink=".">Books</a>
+      <a fxFlex md-button routerLink=".">My Books</a>
+    </span>
+    <span fxFlex></span>
+    <span fxFlex="0 0 175px">
+      <button md-button>Login</button>
+      <button md-button [mdMenuTriggerFor]="localeMenu">en</button>
+      <md-menu #localeMenu="mdMenu">
+        <button md-menu-item>es</button>
+        <button md-menu-item>it</button>
+      </md-menu>
+    </span>
   </md-toolbar>
 </nav>
