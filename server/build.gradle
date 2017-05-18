@@ -105,7 +105,7 @@ war.dependsOn(buildClient)
 
 test.dependsOn(clientTest)
 
-integrationTest.dependsOn(clientIntegrationTest)
+//integrationTest.dependsOn(clientIntegrationTest)
 
 clean {
     delete fileTree(dir: "src/main/webapp")
