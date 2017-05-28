@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { BookService } from '../book/book.service';
+import { Book } from '../book/book.model';
+
 @Component({
   selector: 'app-books-route',
   templateUrl: './books-route.component.html',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BooksRouteComponent implements OnInit {
 
-  constructor() { }
+  books: Book[];
+
+  constructor(private bookService: BookService) { }
 
   ngOnInit() {
+    this.bookService.getGeneralBooks().then(books => this.books = books);
   }
 
 }

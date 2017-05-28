@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { IndexComponent } from './index/index.component';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { NavService } from './nav/nav.service';
@@ -14,14 +13,18 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppMaterialModule } from '../material/material.module';
 import { BooksRouteComponent } from './books-route/books-route.component';
 import { MyBooksRouteComponent } from './my-books-route/my-books-route.component';
+import { BooksListComponent } from './books-list/books-list.component';
+import { BookComponent } from './book/book.component';
+import { BookService } from './book/book.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    IndexComponent,
     BooksRouteComponent,
-    MyBooksRouteComponent
+    MyBooksRouteComponent,
+    BooksListComponent,
+    BookComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import { MyBooksRouteComponent } from './my-books-route/my-books-route.component
     FlexLayoutModule,
     AppMaterialModule
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService, BookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

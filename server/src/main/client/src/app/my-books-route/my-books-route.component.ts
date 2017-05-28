@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BookService } from '../book/book.service';
+import { Book } from '../book/book.model';
 
 @Component({
   selector: 'app-my-books-route',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyBooksRouteComponent implements OnInit {
 
-  constructor() { }
+  books: Book[];
+
+  constructor(private bookService: BookService) { }
 
   ngOnInit() {
+    this.bookService.getBooksForUser('12345').then(books => this.books = books);
   }
 
 }
