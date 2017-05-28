@@ -10,23 +10,33 @@ export class BookService {
     return Promise.resolve([
       new Book(
         1, 
-        'Title 1', 
-        'Author 1', 
-        'createdBy 1', 
-        'createdById 1', 
-        'publishedDate 1', 
-        'description 1', 
-        'imageUrl 1'
+        'Practical Grails 3', 
+        'Eric Helgeson', 
+        'createdByUser', 
+        'createdByUserId', 
+        'publishedDate', 
+        'The first book dedicated to Grails 3. You will learn the concepts behind building Grails applications. Real, up-to-date code examples are provided so you can easily follow along.', 
+        '/assets/images/practical-grails-3-book-cover.png'
       ),
       new Book(
         2, 
-        'Title 2', 
-        'Author 2', 
-        'createdBy 2', 
-        'createdById 2', 
-        'publishedDate 2', 
-        'description 2', 
-        'imageUrl 2'
+        'Grails 3 - Step by Step', 
+        'Cristian Olaru', 
+        'createdByUser', 
+        'createdByUserId', 
+        'publishedDate', 
+        'We try to describe here how a complete greenfield application can be implemented with Grails 3 in a fast way using profiles and plugins - and we do this in the sample application that accompanies this book.', 
+        '/assets/images/grails-step-by-step.png'
+      ),
+      new Book(
+        3, 
+        'Grails: A Quick-Start Guide', 
+        'Dave Klein', 
+        'createdByUser', 
+        'createdByUserId', 
+        'publishedDate', 
+        'We try to describe here how a complete greenfield application can be implemented with Grails 3 in a fast way using profiles and plugins - and we do this in the sample application that accompanies this book.', 
+        '/assets/images/grails-quick-start.jpg'
       )
     ]);
   }

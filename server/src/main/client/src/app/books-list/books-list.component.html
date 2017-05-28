@@ -1,5 +1,8 @@
-<ul>
-  <li *ngFor="let book of books">
-    <app-book [book]="book"></app-book>
-  </li>
-</ul>
+<div 
+  class="book-list-container"
+  fxLayout="row"
+  fxLayoutAlign="space-around center"
+  fxLayoutWrap
+>
+  <app-book *ngFor="let book of books" fxFlex [book]="book"></app-book>
+</div>

@@ -1,1 +1,10 @@
-<span>This is for {{ book.title }}</span>
+<md-card class="book-card">
+  <md-card-header>
+    <md-card-title>{{ book.title }}</md-card-title>
+    <md-card-subtitle>{{ book.author }}</md-card-subtitle>
+  </md-card-header>
+  <img class="book-image" md-card-image src="{{ book.imageUrl }}">
+  <md-card-content>
+    <p>{{ book.description }}</p>
+  </md-card-content>
+</md-card>

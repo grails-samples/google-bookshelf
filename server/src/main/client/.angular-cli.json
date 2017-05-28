@@ -8,7 +8,7 @@
       "root": "src",
       "outDir": "../webapp",
       "assets": [
-        "images",
+        "assets",
         "favicon.ico"
       ],
       "index": "index.html",
