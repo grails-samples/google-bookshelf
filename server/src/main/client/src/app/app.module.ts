@@ -11,7 +11,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { AppMaterialModule } from './material.module';
+import { AppMaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [
