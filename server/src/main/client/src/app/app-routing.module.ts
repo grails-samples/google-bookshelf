@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import {RouterModule,Routes} from '@angular/router';
-import {IndexComponent} from "./index/index.component";
+
+import {BooksRouteComponent} from "./books-route/books-route.component";
+import {MyBooksRouteComponent} from "./my-books-route/my-books-route.component";
 
 const routes: Routes = [
-  {path: '', redirectTo: 'index', pathMatch: 'full'},
-  {path: 'index', component: IndexComponent}
+  {path: '', redirectTo: 'books', pathMatch: 'full'},
+  {path: 'books', component: BooksRouteComponent},
+  {path: 'my-books', component: MyBooksRouteComponent}
 ];
 
 @NgModule({

@@ -12,12 +12,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppMaterialModule } from '../material/material.module';
+import { BooksRouteComponent } from './books-route/books-route.component';
+import { MyBooksRouteComponent } from './my-books-route/my-books-route.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    IndexComponent
+    IndexComponent,
+    BooksRouteComponent,
+    MyBooksRouteComponent
   ],
   imports: [
     BrowserModule,
