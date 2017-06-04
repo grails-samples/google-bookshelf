@@ -1,0 +1,29 @@
+@import '~@angular/material/theming';
+
+.book-item-card {
+  padding: 12px;
+}
+
+md-card-title {
+  font-weight: 700;
+  font-size: 18px !important;
+}
+
+.book-header-image {
+  display: block;
+  width: auto;
+  max-height: 80px;
+  margin-left: 5px;
+  margin-right: auto;
+}
+
+.image-title-group {
+  min-width: 80px;
+  margin: 5px;
+  padding: 5px;
+}
+
+md-card-actions {
+  margin: 0 !important;
+  text-align: right;
+}

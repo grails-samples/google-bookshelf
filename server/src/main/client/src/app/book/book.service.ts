@@ -35,7 +35,7 @@ export class BookService {
         'createdByUser', 
         'createdByUserId', 
         'publishedDate', 
-        'We try to describe here how a complete greenfield application can be implemented with Grails 3 in a fast way using profiles and plugins - and we do this in the sample application that accompanies this book.', 
+        "In Grails: A Quick-Start Guide, you'll see how to use Grails by iteratively building an unique, working application. By the time we're done, you'll have built and deployed a real, functioning website.", 
         '/assets/images/grails-quick-start.jpg'
       )
     ]);

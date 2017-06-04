@@ -16,6 +16,7 @@ import { MyBooksRouteComponent } from './my-books-route/my-books-route.component
 import { BooksListComponent } from './books-list/books-list.component';
 import { BookComponent } from './book/book.component';
 import { BookService } from './book/book.service';
+import { BookListItemComponent } from './book-list-item/book-list-item.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { BookService } from './book/book.service';
     BooksRouteComponent,
     MyBooksRouteComponent,
     BooksListComponent,
-    BookComponent
+    BookComponent,
+    BookListItemComponent
   ],
   imports: [
     BrowserModule,
