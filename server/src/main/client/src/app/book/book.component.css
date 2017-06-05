@@ -6,8 +6,11 @@ md-card-title {
 
 .book-image {
   display: block;
-  max-height: 300px;
-  width: auto;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 350px;
+  height: auto;
+}
+
+.book-details {
+  padding-top: 20px;
+  min-width: 350px;
 }

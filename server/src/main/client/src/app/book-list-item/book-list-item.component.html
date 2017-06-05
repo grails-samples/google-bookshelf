@@ -1,14 +1,17 @@
 <md-card class="book-item-card">
-  <md-card-header>
-    <md-card-title-group class="image-title-group">
-      <img class="book-header-image" md-card-sm-image src="{{ book.imageUrl }}"/>
-    </md-card-title-group>
-    <md-card-title-group>
-      <md-card-title>{{ book.title }}</md-card-title>
-      <md-card-subtitle>{{ book.author }}</md-card-subtitle>
-    </md-card-title-group>
-  </md-card-header>
+    <md-card-header>
+      <md-card-title-group class="image-title-group">
+          <a class="book-header-image-link" routerLink="/book/{{ book.id }}">
+            <img class="book-header-image" md-card-sm-image src="{{ book.imageUrl }}"/>
+          </a>
+      </md-card-title-group>
+      <md-card-title-group>
+        <md-card-title>{{ book.title }}</md-card-title>
+        <md-card-subtitle>{{ book.author }}</md-card-subtitle>
+      </md-card-title-group>
+    </md-card-header>
   <md-card-actions>
+    <a md-button routerLink="/book/{{ book.id }}">View</a>
     <button md-button>Edit</button>
     <button class="delete-button" md-button>Delete</button>
   </md-card-actions>

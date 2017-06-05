@@ -11,6 +11,10 @@ md-card-title {
   display: block;
   width: auto;
   max-height: 80px;
+}
+
+.book-header-image-link {
+  display: block;
   margin-left: 5px;
   margin-right: auto;
 }

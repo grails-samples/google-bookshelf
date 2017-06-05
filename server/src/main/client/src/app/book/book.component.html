@@ -3,8 +3,28 @@
     <md-card-title>{{ book.title }}</md-card-title>
     <md-card-subtitle>{{ book.author }}</md-card-subtitle>
   </md-card-header>
-  <img class="book-image" md-card-image src="{{ book.imageUrl }}">
-  <md-card-content>
-    <p>{{ book.description }}</p>
+  <md-card-content
+    fxLayout="row"
+    fxLayoutAlign="space-around"
+    fxLayoutGap="20px"
+    fxLayoutWrap
+  >
+    <div>
+      <img class="book-image" src="{{ book.imageUrl }}"/>
+    </div>
+    
+    <div 
+      class="book-details" 
+      fxFlex
+      fxLayout="column"
+      fxLayoutAlign="space-around"
+      fxLayoutGap="20px"
+    >
+      <div fxFlex>{{ book.description }}</div>
+      <div class="actions" fxFlex>
+        <button md-button>Edit</button>
+        <button md-button>Delete</button>
+      </div>
+    </div>
   </md-card-content>
 </md-card>
